@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>EHS领读卡 - material safety data sheet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#1499B0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:18px;width:100%;max-width:380px;padding:24px 22px 20px;box-shadow:0 6px 24px rgba(0,0,0,.15)}
+.tag{display:inline-block;background:#f0f0f0;color:#333;font-size:13px;padding:4px 12px;border-radius:10px}
+.en-title{font-size:24px;font-weight:700;color:#1a1a1a;margin:12px 0 10px}
+.divider{height:1px;background:#e8e8e8;margin-bottom:12px}
+.cn-title{font-size:18px;color:#333;text-align:center;margin-bottom:16px}
+.play-btn{display:block;margin:0 auto 20px;background:#1499B0;color:#fff;border:none;border-radius:24px;padding:10px 32px;font-size:16px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.play-btn:active{background:#0d7a8a}
+.ex-section{border-top:1px solid #eee;padding-top:14px}
+.ex-item{padding-left:10px;border-left:3px solid #1499B0}
+.ex-en{font-size:14px;color:#1a1a1a;line-height:1.5;margin-bottom:2px}
+.ex-cn{font-size:13px;color:#666;line-height:1.5}
+.brand{margin-top:16px;font-size:10px;color:rgba(255,255,255,.5);text-align:center}
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="tag">化学与环境</span>
+  <div class="en-title">material safety data sheet</div>
+  <div class="divider"></div>
+  <div class="cn-title">物料安全数据表（MSDS）</div>
+  <button class="play-btn" onclick="play()">🔊 点击发音</button>
+  <div class="ex-section">
+    <div class="ex-item">
+      <div class="ex-en">Consult the material safety data sheet before using any hazardous chemical.</div>
+      <div class="ex-cn">使用任何危险化学品前，请查阅物料安全数据表。</div>
+    </div>
+  </div>
+</div>
+<div class="brand">安全五点半 · EHS英语领读卡</div>
+<script>
+function play(){
+  var a=new Audio('https://dict.youdao.com/dictvoice?audio=material%20safety%20data%20sheet&type=1');
+  a.play().catch(function(){});
+}
+</script>
+</body>
+</html>
