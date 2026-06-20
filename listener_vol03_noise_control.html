@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.03 | 职业噪声管控</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px;
+    z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan);
+    font-size: 12px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .player-bar audio {
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+  }
+  
+  .sections { padding: 16px; }
+  
+  .section-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active {
+    border-color: var(--active-border);
+    box-shadow: 0 2px 16px rgba(224,122,95,0.2);
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    background: var(--charcoal);
+    color: white;
+    gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  
+  .section-body { padding: 16px; }
+  
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.03</div>
+  <h1>职业噪声管控</h1>
+  <div class="subtitle">Occupational Noise Exposure Control Program</div>
+  <div class="brand">GET YOU · AI试驾 出品 | 安全五点半</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+  <div class="dot" data-section="5"></div>
+  <div class="dot" data-section="6"></div>
+</div>
+
+<div class="sections" id="sections">
+
+  <div class="section-card" data-section="0" data-start="0" data-end="55">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">噪声辨识与监测<small>Noise Identification & Monitoring</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we implement an overall occupational Noise Exposure Control Program in our factory currently?</div>
+        <div class="zh">我们目前该如何在本厂落地一套完整的职业噪声暴露管控方案？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We conduct noise hazard identification and risk assessment every year, file all high-noise equipment such as air compressors, grinders and stamping machines, monitor noise levels annually for all noise-exposed posts and semi-annually for high-noise posts, and complete risk classification assessment.</div>
+        <div class="zh">我们每年全域排查噪声源，空压机、打磨机和冲压机等高噪设备全部建档，每年噪声岗位监测一次，高噪岗位半年监测一回，做完风险分级评估。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">noise hazard identification<small>噪声危害辨识</small></span>
+        <span class="kw">risk assessment<small>风险评估</small></span>
+        <span class="kw">noise monitoring<small>噪声监测</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1" data-start="55" data-end="95">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">风险分级<small>Risk Classification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What standards do we adopt for risk ranking? And what corresponding measures will be taken for each ranking?</div>
+        <div class="zh">是依据什么标准划分风险等级，不同等级分别采取什么相应的举措？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Four risk levels are ranked by 8h A-weighted equivalent sound level.</div>
+        <div class="zh">以8小时等效A声级划分四档风险。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">risk ranking<small>风险分级</small></span>
+        <span class="kw">8h A-weighted<small>8小时等效A声级</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2" data-start="95" data-end="155">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">管控层级<small>Hierarchy of Controls</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What priority hierarchy do we follow for noise control, and what solutions are prioritized?</div>
+        <div class="zh">噪声治理遵循什么管控顺序，优先用哪些治理手段？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We follow the priority: Elimination > Substitution > Engineering Control (Source Control > Transmission Path Control) > Administrative Control > PPE. We prioritize purchasing low-noise equipment and installing vibration damping and sound absorption facilities.</div>
+        <div class="zh">遵从消除>替代>工程控制(源头控制>传播路径)>管理手段>个体防护的优先级，优先采购低噪设备、加装减震消音设施这类工程改造方式。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">hierarchy of controls<small>管控层级</small></span>
+        <span class="kw">engineering control<small>工程控制</small></span>
+        <span class="kw">hearing conservation program<small>听力保护计划</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3" data-start="155" data-end="195">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">管理控制与个体防护<small>Administrative Control & PPE</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What specific measures have been developed from administrative control and employees' personal protection perspective?</div>
+        <div class="zh">管理层面和员工个人防护方面采取了哪些具体措施？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">In the high-noise areas, implement job rotation & working hour limits. Earplugs or earmuffs are mandatory for posts over 85 dB(A), with regular fit-test and unified replacement of protective equipment.</div>
+        <div class="zh">划定高噪区域、执行轮岗限制作业时长；85dB(A)以上岗位强制佩戴耳塞耳罩，定期做防护用品密合度测试与统一更换。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">administrative control<small>管理控制</small></span>
+        <span class="kw">PPE fit-test<small>密合度测试</small></span>
+        <span class="kw">job rotation<small>轮岗</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4" data-start="195" data-end="280">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">职业健康监护<small>Health Surveillance</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we conduct occupational health surveillance for frontline staff working in high-noise-exposed posts?</div>
+        <div class="zh">一线高噪岗位员工的职业健康监护工作如何推进？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">All employees receive pre-employment, routine and exit audiometric tests with independent health files. Staff with hearing abnormalities are transferred promptly, and noise protection training is conducted regularly.</div>
+        <div class="zh">全员落实上岗、在岗、离岗三次听力检测，一人一档建立健康台账，听力异常人员及时调岗，常态化开展噪声防护培训。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">occupational health surveillance<small>职业健康监护</small></span>
+        <span class="kw">audiometric test<small>听力检测</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="5" data-start="280" data-end="330">
+    <div class="section-header" onclick="playSection(5)">
+      <div class="num">6</div>
+      <div class="title">档案管理<small>Records Management</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we manage daily inspection and relevant documents & records?</div>
+        <div class="zh">日常检查和相关资料档案是如何管理的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Monthly on-site walkthrough and annual procedure revision are conducted with closed-loop hazard control mechanism. Noise logs, monitoring records, medical exam records, and training records are uniformly archived, with retention period no less than 30 years.</div>
+        <div class="zh">每月现场巡查，每年修订管控程序，建立隐患闭环整改；噪声台账、监测、体检、培训记录统一归档，留存年限不少于30年。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">records management<small>档案管理</small></span>
+        <span class="kw">closed-loop<small>闭环</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="6" data-start="330" data-end="374">
+    <div class="section-header" onclick="playSection(6)">
+      <div class="num">7</div>
+      <div class="title">变更管理<small>Management of Change</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Are there supplementary noise control procedures after new processes or new equipment are put into use?</div>
+        <div class="zh">新工艺、新增设备进场后，噪声管控有没有追加流程？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Additional noise hazard identification, monitoring and control will be launched immediately after process or equipment changes, re-assess risk levels, and update control plans to eliminate or control noise hazards.</div>
+        <div class="zh">一旦工艺、设备变更，立刻追加噪声辨识、监测和控制，重新评估风险等级，同步更新管控方案，消除或控制噪声隐患。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">management of change<small>变更管理</small></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.03 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="audio/vol03_noise_control.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+const audio = document.getElementById('audioPlayer');
+const cards = document.querySelectorAll('.section-card');
+const dots = document.querySelectorAll('.progress-dots .dot');
+const nowPlaying = document.getElementById('nowPlaying');
+const sectionTitles = [
+  '1. 噪声辨识与监测',
+  '2. 风险分级',
+  '3. 管控层级',
+  '4. 管理控制与个体防护',
+  '5. 职业健康监护',
+  '6. 档案管理',
+  '7. 变更管理'
+];
+
+function getSectionTimes() {
+  const times = [];
+  cards.forEach(card => {
+    times.push({
+      start: parseFloat(card.dataset.start),
+      end: parseFloat(card.dataset.end),
+      index: parseInt(card.dataset.section)
+    });
+  });
+  return times;
+}
+
+const sectionTimes = getSectionTimes();
+let currentSection = -1;
+
+function playSection(idx) {
+  const t = sectionTimes[idx];
+  audio.currentTime = t.start;
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  cards.forEach((card, i) => { card.classList.toggle('active', i === idx); });
+  dots.forEach((dot, i) => {
+    dot.classList.remove('active', 'done');
+    if (i === idx) dot.classList.add('active');
+    else if (i < idx) dot.classList.add('done');
+  });
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  const t = audio.currentTime;
+  for (let i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i].start) {
+      if (currentSection !== i) {
+        setActive(i);
+        const card = cards[i];
+        const rect = card.getBoundingClientRect();
+        if (rect.top < 0 || rect.bottom > window.innerHeight - 100) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      break;
+    }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  cards.forEach(card => card.classList.remove('active'));
+  dots.forEach(dot => { dot.classList.remove('active'); dot.classList.add('done'); });
+  nowPlaying.textContent = '播放完毕 ✓';
+  currentSection = -1;
+});
+
+// Double-click to calibrate section start time
+cards.forEach(card => {
+  card.querySelector('.section-header').addEventListener('dblclick', function(e) {
+    e.preventDefault();
+    const idx = parseInt(card.dataset.section);
+    const newStart = audio.currentTime.toFixed(1);
+    card.dataset.start = newStart;
+    sectionTimes[idx].start = parseFloat(newStart);
+    nowPlaying.textContent = '已校准 ' + sectionTitles[idx] + ' 起始: ' + newStart + 's';
+  });
+});
+</script>
+</body>
+</html>
