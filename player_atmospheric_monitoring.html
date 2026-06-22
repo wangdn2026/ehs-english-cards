@@ -27,7 +27,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   <div class="en-title">Atmospheric Monitoring</div>
   <div class="divider"></div>
   <div class="cn-title">大气监测</div>
-  <button class="play-btn" onclick="play()">🔊 点击发音</button>
+  <button class="play-btn" onclick="play()">暂无音频</button>
   <div class="ex-section">
     <div class="ex-item">
       <div class="ex-en">Continuous atmospheric monitoring is required in confined spaces.</div>
@@ -37,9 +37,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 </div>
 <div class="brand">安全五点半 · EHS英语领读卡</div>
 <script>
-function play(){
-  var a=new Audio('https://dict.youdao.com/dictvoice?audio=atmospheric%20monitoring&type=2');
-  a.play().catch(function(){});
+function play(){alert('该词暂无TTS音频')});
 }
 </script>
 </body>
