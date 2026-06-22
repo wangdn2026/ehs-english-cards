@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>disinfection - EHS英语词卡发音</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(135deg,#2980b9,#3498db);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:20px;padding:32px 24px;max-width:400px;width:100%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.en{font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:8px}
+.cn{font-size:22px;color:#333;margin-bottom:24px}
+.btn{display:inline-block;background:#2980b9;color:#fff;border:none;border-radius:28px;padding:14px 36px;font-size:18px;font-weight:600;cursor:pointer;margin-bottom:20px}
+.btn:active{transform:scale(.95)}
+.qr{margin:16px auto}
+.hint{font-size:13px;color:#999;margin-top:12px}
+.ex{text-align:left;margin-top:20px;padding-top:16px;border-top:1px solid #eee}
+.ex p{font-size:15px;color:#1a1a1a;line-height:1.6;margin-bottom:4px}
+.ex .t{font-size:13px;color:#999;margin-bottom:12px}
+.nav{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid #eee}
+.nav a{color:#2980b9;text-decoration:none;font-size:14px}
+.brand{text-align:center;color:rgba(255,255,255,.6);font-size:12px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="en">disinfection</div>
+  <div class="cn">消杀/消毒</div>
+  <button class="btn" onclick="play()">🔊 点击发音</button>
+  <div class="qr" id="qr"></div>
+  <div class="hint">扫码听发音 · Scan to listen</div>
+  <div class="ex">
+    <p>The medical room disinfects operating tables after each use.</p>
+    <p class="t">医务室操作台每次使用后都会进行消毒。</p>
+    <p>Regular cleaning and disinfection of all equipment is required.</p>
+    <p class="t">要求对所有设备开展常态化清洁消杀。</p>
+  </div>
+  <div class="nav">
+    <a href="javascript:history.back()">◀ 上一个</a>
+    <span style="color:#999">#6</span>
+    <a href="javascript:history.forward()">下一个 ▶</a>
+  </div>
+</div>
+<div class="brand">安全五点半 · EHS职场英语词卡</div>
+<script>
+function play(){var a=new Audio('https://dict.youdao.com/dictvoice?audio=disinfection&type=1');a.play()}
+// QR code will be added after URL is known
+var url=window.location.href;
+if(url&&url.startsWith('http')){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';s.onload=function(){new QRCode(document.getElementById('qr'),{text:url,width:160,height:160,colorDark:'#1a1a1a',colorLight:'#ffffff'})};document.head.appendChild(s)}
+</script>
+</body>
+</html>
