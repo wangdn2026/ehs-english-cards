@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Vol.05 人体功效学 - 分级阅读</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f5f5;min-height:100vh;padding:16px}
+.header{text-align:center;padding:20px 0 16px}
+.header .vol{font-size:12px;color:#7BA7BC;margin-bottom:4px}
+.header .title{font-size:22px;font-weight:700;color:#3D405B;margin-bottom:4px}
+.header .subtitle{font-size:13px;color:#999}
+.tabs{display:flex;gap:8px;margin:16px 0;justify-content:center}
+.tab{padding:8px 18px;border-radius:20px;font-size:14px;font-weight:600;cursor:pointer;border:2px solid #7BA7BC;color:#7BA7BC;background:#fff;transition:all .2s}
+.tab.active{background:#7BA7BC;color:#fff}
+.tab .star{color:#E07A5F}
+.panel{display:none;background:#fff;border-radius:16px;padding:24px 20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.panel.active{display:block}
+.level-badge{display:inline-block;padding:4px 14px;border-radius:12px;font-size:13px;font-weight:600;margin-bottom:16px}
+.level-1{background:#E8F5E9;color:#2E7D32}
+.level-2{background:#FFF3E0;color:#E65100}
+.level-3{background:#FCE4EC;color:#C62828}
+.section{margin-bottom:24px}
+.section-title{font-size:15px;font-weight:700;color:#3D405B;margin-bottom:10px;padding-left:10px;border-left:3px solid #E07A5F}
+.question{margin-bottom:16px;line-height:1.8}
+.question .en{font-size:15px;color:#3D405B}
+.question .zh{font-size:13px;color:#888;margin-top:2px}
+.blank{display:inline-block;min-width:80px;border-bottom:2px solid #E07A5F;color:#E07A5F;font-weight:600;text-align:center;padding:0 4px;margin:0 2px}
+.highlight{color:#E07A5F;font-weight:600}
+.keyword-bar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 20px;justify-content:center}
+.keyword{padding:3px 10px;border-radius:10px;font-size:12px;font-weight:600}
+.keyword.en{background:#E3F2FD;color:#1565C0}
+.keyword.zh{background:#FFF3E0;color:#E65100}
+.tip{font-size:12px;color:#999;text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid #f0f0f0}
+.footer{text-align:center;font-size:11px;color:#bbb;margin-top:20px;padding:12px 0}
+.answer-toggle{display:inline-block;padding:4px 12px;border-radius:10px;background:#f0f0f0;color:#666;font-size:12px;cursor:pointer;margin-top:8px}
+.answer-toggle:hover{background:#e0e0e0}
+.answer-text{display:none;margin-top:8px;padding:10px;background:#f8f9fa;border-radius:8px;font-size:13px;color:#3D405B;line-height:1.7}
+.answer-text.show{display:block}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="vol">Vol.05</div>
+  <div class="title">人体功效学</div>
+  <div class="subtitle">Ergonomic Risk Control · 分级阅读</div>
+</div>
+
+<div class="keyword-bar">
+  <span class="keyword en">ergonomic hazard</span>
+  <span class="keyword zh">工效危害</span>
+  <span class="keyword en">repetitive motion</span>
+  <span class="keyword zh">重复性动作</span>
+  <span class="keyword en">excessive force</span>
+  <span class="keyword zh">过度施力</span>
+  <span class="keyword en">MSDs</span>
+  <span class="keyword zh">肌肉骨骼疾患</span>
+  <span class="keyword en">job rotation</span>
+  <span class="keyword zh">岗位轮换</span>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab(1)"><span class="star">★</span> 基础级</div>
+  <div class="tab" onclick="switchTab(2)"><span class="star">★★</span> 进阶级</div>
+  <div class="tab" onclick="switchTab(3)"><span class="star">★★★</span> 挑战级</div>
+</div>
+
+<!-- ★ 基础级 -->
+<div class="panel active" id="panel-1">
+  <div class="level-badge level-1">★ 基础级 · 关键词填空</div>
+  <p class="tip" style="text-align:left;border:none;margin:0 0 16px;padding:0">根据中文提示，用上方关键词填入空白处</p>
+
+  <div class="section">
+    <div class="section-title">1. 危害识别</div>
+    <div class="question">
+      <div class="en">We cannot achieve absolute zero <span class="blank" data-answer="ergonomic hazard">______</span> risk.</div>
+      <div class="zh">我们无法实现绝对的工效零风险。</div>
+    </div>
+    <div class="question">
+      <div class="en">Some positions still have typical <span class="blank" data-answer="ergonomic hazard">______</span>s.</div>
+      <div class="zh">部分岗位仍然存在典型的工效危害。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. 五大风险因子</div>
+    <div class="question">
+      <div class="en">We have five main factors: <span class="blank" data-answer="repetitive motion">______</span>, <span class="blank" data-answer="excessive force">______</span>, awkward postures, contact stress and vibration.</div>
+      <div class="zh">五大因子：重复性动作、过度施力、不良体态、接触应力和振动。</div>
+    </div>
+    <div class="question">
+      <div class="en"><span class="blank" data-answer="repetitive motion">______</span> means doing the same movement over and over.</div>
+      <div class="zh">重复性动作意味着一遍遍做同样的动作。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. 健康后果</div>
+    <div class="question">
+      <div class="en">Long-term micro-traumas will cause Work-related <span class="blank" data-answer="MSDs">______</span>.</div>
+      <div class="zh">长期微小创伤会引发工作相关肌肉骨骼疾患。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. 管控措施</div>
+    <div class="question">
+      <div class="en">We adopt <span class="blank" data-answer="job rotation">______</span> management to reduce risks.</div>
+      <div class="zh">我们执行岗位轮换管理来降低风险。</div>
+    </div>
+  </div>
+
+  <div class="answer-toggle" onclick="toggleAnswers(this)">显示答案</div>
+  <div class="answer-text">
+    1-1: ergonomic hazard &nbsp; 1-2: ergonomic hazard<br>
+    2-1: repetitive motion / excessive force &nbsp; 2-2: repetitive motion<br>
+    3-1: MSDs<br>
+    4-1: job rotation
+  </div>
+</div>
+
+<!-- ★★ 进阶级 -->
+<div class="panel" id="panel-2">
+  <div class="level-badge level-2">★★ 进阶级 · 句型理解</div>
+  <p class="tip" style="text-align:left;border:none;margin:0 0 16px;padding:0">阅读改写段落，选择正确答案</p>
+
+  <div class="section">
+    <div class="section-title">1. 工效学风险认知</div>
+    <div class="question">
+      <div class="en">In our workplace, it is unrealistic to expect <span class="highlight">zero ergonomic risk</span>. Certain positions still face typical hazards such as <span class="highlight">repetitive motion</span> and <span class="highlight">excessive force</span>.</div>
+      <div class="zh" style="margin-top:6px">Q: According to the passage, which statement is TRUE?</div>
+      <div class="en" style="margin-top:4px">
+        A) All positions have achieved zero ergonomic risk.<br>
+        B) Some positions still have ergonomic hazards.<br>
+        C) Repetitive motion is not an ergonomic hazard.<br>
+        D) Excessive force only happens in offices.
+      </div>
+    </div>
+    <div class="answer-toggle" onclick="toggleAnswers(this)">显示答案</div>
+    <div class="answer-text">答案：B — 原文明确说"部分岗位仍存在典型工效危害"</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. MSDs成因与分类</div>
+    <div class="question">
+      <div class="en">When employees experience long-term <span class="highlight">micro-traumas</span> from poor workplace design, these can develop into <span class="highlight">Work-related MSDs</span>, also called <span class="highlight">cumulative trauma disorders (CTDs)</span> in ergonomics.</div>
+      <div class="zh" style="margin-top:6px">Q: What does "cumulative" mean in CTDs?</div>
+      <div class="en" style="margin-top:4px">
+        A) Happening suddenly at one time<br>
+        B) Building up gradually over time<br>
+        C) Affecting only one body part<br>
+        D) Caused by a single accident
+      </div>
+    </div>
+    <div class="answer-toggle" onclick="toggleAnswers(this)">显示答案</div>
+    <div class="answer-text">答案：B — cumulative意为"累积的"，指伤害随时间逐步累积</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. 管控层级与措施</div>
+    <div class="question">
+      <div class="en">The company implements <span class="highlight">full-cycle controls</span> including engineering modification, <span class="highlight">job rotation</span>, ergonomics training and PPE. Among these, engineering modification targets the hazard source, while job rotation reduces individual exposure time.</div>
+      <div class="zh" style="margin-top:6px">Q: What is the main difference between engineering modification and job rotation?</div>
+      <div class="en" style="margin-top:4px">
+        A) Engineering is cheaper than job rotation<br>
+        B) Engineering targets the source; job rotation limits exposure time<br>
+        C) Job rotation eliminates the hazard completely<br>
+        D) They are the same thing with different names
+      </div>
+    </div>
+    <div class="answer-toggle" onclick="toggleAnswers(this)">显示答案</div>
+    <div class="answer-text">答案：B — 工程改造针对危害源头，岗位轮换减少个人暴露时长</div>
+  </div>
+</div>
+
+<!-- ★★★ 挑战级 -->
+<div class="panel" id="panel-3">
+  <div class="level-badge level-3">★★★ 挑战级 · 场景迁移</div>
+  <p class="tip" style="text-align:left;border:none;margin:0 0 16px;padding:0">将所学表达迁移到新场景，用英文回答</p>
+
+  <div class="section">
+    <div class="section-title">场景1：办公室工效学</div>
+    <div class="question">
+      <div class="en">You are an EHS officer in a tech company. Several employees complain about wrist pain and back ache after long hours at their desks. Use <span class="highlight">at least 3 key expressions</span> from this lesson to write a short recommendation (3-4 sentences).</div>
+      <div class="zh">提示关键词：repetitive motion / awkward posture / engineering modification / job rotation</div>
+    </div>
+    <div class="answer-toggle" onclick="toggleAnswers(this)">参考答案</div>
+    <div class="answer-text">
+      Their wrist pain is likely caused by <b>repetitive motion</b> from continuous typing, and back ache may result from <b>awkward posture</b> at poorly adjusted desks. I recommend <b>engineering modification</b> such as providing adjustable chairs and monitor stands, along with <b>job rotation</b> to alternate desk work with other tasks.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">场景2：车间风险评估汇报</div>
+    <div class="question">
+      <div class="en">You need to report to the GM about ergonomic risks in the assembly line. Write a 2-sentence summary covering: 1) what the hazards are, 2) what controls you recommend.</div>
+      <div class="zh">提示关键词：ergonomic hazard / excessive force / MSDs / full-cycle controls</div>
+    </div>
+    <div class="answer-toggle" onclick="toggleAnswers(this)">参考答案</div>
+    <div class="answer-text">
+      The assembly line has <b>ergonomic hazards</b> including <b>excessive force</b> from heavy lifting, which may lead to <b>Work-related MSDs</b>. We should implement <b>full-cycle controls</b> including mechanical assists and <b>job rotation</b> to continually reduce risk.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">场景3：新员工培训</div>
+    <div class="question">
+      <div class="en">A new colleague asks: "I've heard of CTDs but don't understand them. Can you explain in simple English?" Write a 2-3 sentence explanation.</div>
+      <div class="zh">提示关键词：cumulative trauma disorder / micro-traumas / ergonomic hazard</div>
+    </div>
+    <div class="answer-toggle" onclick="toggleAnswers(this)">参考答案</div>
+    <div class="answer-text">
+      CTDs stand for <b>cumulative trauma disorders</b>. They happen when small injuries — called <b>micro-traumas</b> — build up over time because of <b>ergonomic hazards</b> like repetitive movements or poor posture. If we fix the workplace design early, we can prevent these injuries before they become serious.
+    </div>
+  </div>
+</div>
+
+<div class="footer">安全五点半 · EHS英语口袋书 · 分级阅读</div>
+
+<script>
+function switchTab(n){
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('active',i===n-1)});
+  document.querySelectorAll('.panel').forEach((p,i)=>{p.classList.toggle('active',i===n-1)});
+  // Reset answers when switching tabs
+  document.querySelectorAll('.answer-text').forEach(a=>a.classList.remove('show'));
+  document.querySelectorAll('.answer-toggle').forEach(a=>a.textContent='显示答案');
+}
+function toggleAnswers(el){
+  var ans=el.nextElementSibling;
+  var show=ans.classList.toggle('show');
+  el.textContent=show?'收起答案':'显示答案';
+}
+</script>
+</body>
+</html>
