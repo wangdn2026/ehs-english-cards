@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.05 | 人体功效管理</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px;
+    z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan);
+    font-size: 12px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .player-bar audio {
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+  }
+  
+  .sections { padding: 16px; }
+  
+  .section-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active {
+    border-color: var(--active-border);
+    box-shadow: 0 2px 16px rgba(224,122,95,0.2);
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    background: var(--charcoal);
+    color: white;
+    gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  
+  .section-body { padding: 16px; }
+  
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.05</div>
+  <h1>人体功效管理</h1>
+  <div class="subtitle">Ergonomic Hazard Management</div>
+  <div class="brand">GET YOU · AI试驾 出品 | 安全五点半</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</div>
+
+<div class="sections" id="sections">
+
+  <div class="section-card" data-section="0" data-start="0" data-end="49">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">识别危害<small>Ergonomic Hazard Identification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Does our factory achieve zero ergonomic risk for all working positions?</div>
+        <div class="zh">我们工厂所有岗位是否已经实现人体工效学零风险？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We cannot achieve absolute zero ergonomic risk. Some operational positions still have typical ergonomic hazards.</div>
+        <div class="zh">我们无法实现绝对的工效零风险，部分作业岗位仍然存在典型的人体工效学危害。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What kind of ergonomic risks exist in our workplace?</div>
+        <div class="zh">我们现场主要存在哪些工效学风险？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We have five main ergonomic hazard factors: repetitive motion, excessive force, awkward static postures, contact stress and hand-tool vibration.</div>
+        <div class="zh">现场主要存在五大工效风险因子：重复性动作、过度施力、不良静态体态、接触压迫应力以及手持设备振动。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Who is most at risk?</div>
+        <div class="zh">哪些岗位接触风险最大？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Assembly line workers, maintenance staff, and warehouse handlers face the highest ergonomic risk.</div>
+        <div class="zh">流水线操作工、维修人员和仓库搬运工面临的工效风险最大。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">ergonomic hazard<small>工效危害</small></span>
+        <span class="kw">repetitive motion<small>重复性动作</small></span>
+        <span class="kw">excessive force<small>过度施力</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1" data-start="49" data-end="98">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">健康后果<small>Health Consequences</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What potential injuries will these ergonomic hazards bring to our employees?</div>
+        <div class="zh">这些工效危害，会给员工带来哪些职业伤害？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">These long-term accumulated micro-traumas will cause Work-related MSDs, also known as cumulative trauma disorders in ergonomics.</div>
+        <div class="zh">这类长期累积的微小创伤，会引发工作相关肌肉骨骼疾患，也就是工效学中的累积性创伤障碍。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What does MSDs stand for exactly?</div>
+        <div class="zh">MSDs具体指什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">MSDs stands for Musculoskeletal Disorders. It covers injuries to muscles, tendons, nerves, and joints caused by workplace factors.</div>
+        <div class="zh">MSDs是肌肉骨骼疾患的缩写，涵盖因工作因素导致的肌肉、肌腱、神经和关节损伤。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Are these injuries reversible?</div>
+        <div class="zh">这些损伤可逆吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Most early-stage MSDs are reversible with proper intervention, but chronic cases may become permanent disabilities.</div>
+        <div class="zh">早期MSDs经过适当干预多数可逆，但慢性病例可能发展为永久性功能丧失。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">MSDs<small>肌肉骨骼疾患</small></span>
+        <span class="kw">cumulative trauma disorder<small>累积性创伤障碍</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2" data-start="98" data-end="147">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">风险评估方法<small>Risk Assessment Methods</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Do we have a procedure for ergonomic risk management?</div>
+        <div class="zh">针对工效学风险，我们是否建立了管控程序？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Yes, we have a complete ergonomic risk control procedure based on OSHA standards.</div>
+        <div class="zh">有的，我们依据OSHA标准，建立了完整的工效风险管控程序。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What methods do you use to identify ergonomic hazards and assess risks on site?</div>
+        <div class="zh">你们通过哪些方式，对现场工效风险进行识别和评估？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We confirm job tasks, identify risk factors, and complete professional evaluation with standardized ergonomics checklists and assessment tools.</div>
+        <div class="zh">我们先确认岗位作业内容、识别风险因子，再使用标准化工效核查清单和专业工具完成风险评估。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How often do we conduct these assessments?</div>
+        <div class="zh">多久做一次评估？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We perform full assessments annually and targeted reviews whenever there are process or equipment changes.</div>
+        <div class="zh">每年做一次全面评估，工艺或设备变更时随时追加专项评估。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">ergonomic risk control procedure<small>工效风险管控程序</small></span>
+        <span class="kw">standardized ergonomics checklists<small>标准化工效核查清单</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3" data-start="147" data-end="196">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">管控措施<small>Control Measures</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">After risk assessment, what systematic control measures have we implemented?</div>
+        <div class="zh">风险评估完成后，我们落地了哪些系统化的管控措施？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We adopt full-cycle controls including engineering modification, job rotation management, ergonomics training and necessary PPE protection to reduce MSDs risks continually.</div>
+        <div class="zh">我们执行全周期管控措施，包含工程改造、岗位轮换管理、工效安全培训、按需配备个人防护用品，持续降低肌肉骨骼疾患风险。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What does engineering modification include specifically?</div>
+        <div class="zh">工程改造具体包括什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">It covers adjustable workstations, mechanical lifting aids, anti-fatigue mats, and tool redesign to reduce force and repetition.</div>
+        <div class="zh">包括可调节工作台、机械升降辅助设备、防疲劳地垫，以及降低施力和重复度的工具改造。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How does job rotation help?</div>
+        <div class="zh">岗位轮换有什么作用？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">By rotating workers through different tasks, we limit their exposure time to specific ergonomic risk factors and allow muscle groups to recover.</div>
+        <div class="zh">通过轮换不同岗位，限制员工对特定工效风险因子的接触时长，让肌群得到恢复。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">engineering modification<small>工程改造</small></span>
+        <span class="kw">job rotation<small>岗位轮换</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4" data-start="196" data-end="278">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">完整讨论<small>Full Discussion</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What's the most challenging part of ergonomic risk management?</div>
+        <div class="zh">工效风险管理中最有挑战性的部分是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Getting workers to maintain proper posture and use ergonomic equipment correctly. Many revert to old habits when unsupervised.</div>
+        <div class="zh">最难的是让员工保持正确体态、正确使用工效设备。很多人无人监督时又回到老习惯。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we address this?</div>
+        <div class="zh">这个问题怎么解决？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Through regular ergonomics training and buddy systems. We also post visual reminders at workstations showing correct postures.</div>
+        <div class="zh">通过常态化工效培训和伙伴互助机制，在工位张贴正确体态的视觉提示。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we monitor effectiveness?</div>
+        <div class="zh">如何监测管控效果？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We track MSDs incidence rates quarterly and conduct follow-up risk assessments after each engineering modification.</div>
+        <div class="zh">每季度追踪MSDs发病率，每次工程改造后做后续风险评估。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Any continuous improvement plans?</div>
+        <div class="zh">有持续改进计划吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Yes, we plan to introduce wearable posture monitors, upgrade all standing desks, and expand job rotation to more departments.</div>
+        <div class="zh">有。计划引入可穿戴体态监测设备、全面升级站立式办公桌，并把岗位轮换推广到更多部门。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Great. Ergonomic management is a long-term commitment.</div>
+        <div class="zh">很好，工效管理不是短期任务，需要长期坚持。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Exactly. With proper controls and worker engagement, we can protect everyone's musculoskeletal health for a lifetime.</div>
+        <div class="zh">没错，只要管控到位、员工自觉配合，就能保障每一位工人的肌肉骨骼健康。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">proper posture<small>正确体态</small></span>
+        <span class="kw">visual reminders<small>视觉提示</small></span>
+        <span class="kw">wearable posture monitors<small>可穿戴体态监测设备</small></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.05 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="audio/vol05_ergonomic_management.mp3" type="audio/mpeg">
+    <source src="audio/vol05_tts_backup.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+const audio = document.getElementById('audioPlayer');
+const cards = document.querySelectorAll('.section-card');
+const dots = document.querySelectorAll('.progress-dots .dot');
+const nowPlaying = document.getElementById('nowPlaying');
+const sectionTitles = [
+  '1. 识别危害',
+  '2. 健康后果',
+  '3. 风险评估方法',
+  '4. 管控措施',
+  '5. 完整讨论'
+];
+
+function getSectionTimes() {
+  const times = [];
+  cards.forEach(card => {
+    times.push({
+      start: parseFloat(card.dataset.start),
+      end: parseFloat(card.dataset.end),
+      index: parseInt(card.dataset.section)
+    });
+  });
+  return times;
+}
+
+const sectionTimes = getSectionTimes();
+let currentSection = -1;
+
+function playSection(idx) {
+  const t = sectionTimes[idx];
+  audio.currentTime = t.start;
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  cards.forEach((card, i) => { card.classList.toggle('active', i === idx); });
+  dots.forEach((dot, i) => {
+    dot.classList.remove('active', 'done');
+    if (i === idx) dot.classList.add('active');
+    else if (i < idx) dot.classList.add('done');
+  });
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  const t = audio.currentTime;
+  for (let i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i].start) {
+      if (currentSection !== i) {
+        setActive(i);
+        const card = cards[i];
+        const rect = card.getBoundingClientRect();
+        if (rect.top < 0 || rect.bottom > window.innerHeight - 100) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      break;
+    }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  cards.forEach(card => card.classList.remove('active'));
+  dots.forEach(dot => { dot.classList.remove('active'); dot.classList.add('done'); });
+  nowPlaying.textContent = '播放完毕 ✓';
+  currentSection = -1;
+});
+
+// Double-click to calibrate section start time
+cards.forEach(card => {
+  card.querySelector('.section-header').addEventListener('dblclick', function(e) {
+    e.preventDefault();
+    const idx = parseInt(card.dataset.section);
+    const newStart = audio.currentTime.toFixed(1);
+    card.dataset.start = newStart;
+    sectionTimes[idx].start = parseFloat(newStart);
+    nowPlaying.textContent = '已校准 ' + sectionTitles[idx] + ' 起始: ' + newStart + 's';
+  });
+});
+</script>
+</body>
+</html>
