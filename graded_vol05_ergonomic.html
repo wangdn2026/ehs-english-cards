@@ -2,173 +2,155 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>10分钟对话练习：人体功效学</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人体功效学 · 安全五点半 Frank聊EHS</title>
+<meta property="og:title" content="人体功效学 · 安全五点半 Frank聊EHS">
+<meta property="og:description" content="🔒 工效危害识别、MSDs防控、岗位轮换——人体功效学风险不可忽视。中英双语对话，掌握ergonomic hazard, MSDs, job rotation等核心词汇。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f8f9fa;color:#3D405B;line-height:1.8;padding:0}
-.header{background:linear-gradient(135deg,#7BA7BC,#5a8fa8);color:#fff;padding:28px 20px 20px;text-align:center}
-.header h1{font-size:20px;font-weight:700;margin-bottom:4px}
-.header .sub{font-size:13px;opacity:.85}
-.nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #e8e8e8;display:flex;overflow-x:auto;z-index:10;padding:0}
-.nav a{flex:1;min-width:0;text-align:center;padding:12px 4px;font-size:12px;font-weight:600;color:#999;text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
-.nav a.active{color:#7BA7BC;border-bottom-color:#7BA7BC}
-.nav a:hover{color:#7BA7BC}
-.container{max-width:680px;margin:0 auto;padding:16px}
-.part{margin-bottom:28px;background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.05);overflow:hidden}
-.part-header{padding:14px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0f0f0}
-.part-header .num{background:#7BA7BC;color:#fff;border-radius:6px;padding:2px 10px;font-size:13px;font-weight:700}
-.part-header .stars{color:#E07A5F;font-size:14px}
-.part-header .title{font-size:15px;font-weight:700;color:#3D405B;flex:1}
-.part-header .time{font-size:12px;color:#999}
-.dialogue{padding:12px 16px}
-.line{margin-bottom:12px;padding:8px 12px;border-radius:8px}
-.line.a{background:#EDF5F8}
-.line.b{background:#FFF5F2}
-.speaker{font-size:12px;font-weight:700;margin-bottom:2px}
-.speaker.a{color:#7BA7BC}
-.speaker.b{color:#E07A5F}
-.en{font-size:15px;color:#3D405B}
-.zh{font-size:13px;color:#888;margin-top:2px}
-.tip-box{margin:20px 16px 16px;padding:14px;background:#FFF8F0;border-left:3px solid #E07A5F;border-radius:0 8px 8px 0;font-size:13px;color:#666;line-height:1.7}
-.footer{text-align:center;font-size:11px;color:#bbb;padding:20px 0;border-top:1px solid #f0f0f0;margin-top:20px}
+body{font-family:"Microsoft YaHei","PingFang SC",-apple-system,sans-serif;background:#f4f6f9;line-height:1.6}
+
+.page{max-width:800px;margin:0 auto;padding:24px}
+.sheet{background:#fff;border-radius:12px;padding:40px 48px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+
+.main-title{font-size:21px;color:#7BA7BC;font-weight:700;text-align:center;margin-bottom:16px}
+
+.part-title{font-size:17px;color:#7BA7BC;font-weight:700;margin:22px 0 10px;padding-bottom:4px;border-bottom:1px solid #d0e4ec}
+.star{color:#E07A5F;font-size:18px}
+
+.dialog-row{display:flex;width:100%;margin:4px 0}
+.en-col{width:50%;padding-right:10px;font-size:14px;color:#7BA7BC;word-break:break-word}
+.cn-col{width:50%;padding-left:10px;font-size:14px;color:#333;word-break:break-word}
+
+.key-word{color:#E07A5F;font-weight:500}
+
+.suggest-box{margin-top:24px;padding:12px 14px;background:#f5f9ff;border-radius:6px;font-size:14px;color:#555}
+
+.back-link{display:inline-block;margin-top:20px;font-size:13px;color:#7BA7BC;text-decoration:none}
+.back-link:hover{text-decoration:underline}
+
+.section-nav{display:none;background:#f5f9ff;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#333}
+.section-nav .nav-back{color:#7BA7BC;text-decoration:none;font-weight:500}
+.section-nav .nav-title{color:#7BA7BC;font-weight:500}
+
+.section-part{display:block}
+body.single-section .section-part{display:none}
+body.single-section .section-part.active{display:block}
+body.single-section .suggest-box{display:none}
+body.single-section .section-nav{display:block}
+
+@media(max-width:640px){
+  .page{padding:0}
+  .sheet{border-radius:0;padding:24px 16px;box-shadow:none}
+  .main-title{font-size:17px;margin-bottom:12px}
+  .part-title{font-size:15px;margin:16px 0 8px}
+  .dialog-row{flex-direction:column;margin:6px 0;padding:6px 0;border-bottom:1px solid #f0f3f7}
+  .en-col,.cn-col{width:100%;padding:2px 0;font-size:14px}
+  .en-col{color:#7BA7BC;margin-bottom:2px}
+  .cn-col{color:#555}
+  .suggest-box{font-size:13px;padding:10px 12px}
+}
+@media print{
+  .page{padding:0}
+  .sheet{box-shadow:none;border-radius:0;max-width:210mm;padding:10mm}
+}
 </style>
 </head>
 <body>
+<div class="page"><div class="sheet">
 
-<div class="header">
-  <h1>10分钟对话练习：人体功效学</h1>
-  <div class="sub">Ergonomic Risk Control · 安全五点半</div>
+<div class="main-title">10分钟对话练习：人体功效学</div>
+
+<div class="section-nav">
+  <span class="nav-title" id="navTitle"></span>
+  <a class="nav-back" href="./card.html">← 返回星级目录</a>
+  &nbsp;|&nbsp;
+  <a class="nav-back" href="./graded_vol05_ergonomic.html">显示全部</a>
 </div>
 
-<div class="nav">
-  <a href="#p1" class="active" onclick="setActive(this)">Part 1 ★</a>
-  <a href="#p2" onclick="setActive(this)">Part 2 ★★</a>
-  <a href="#p3" onclick="setActive(this)">Part 3 ★★</a>
-  <a href="#p4" onclick="setActive(this)">Part 4 ★★★</a>
-  <a href="#p5" onclick="setActive(this)">Part 5 ★★★</a>
+<!-- PART 1 -->
+<section class="section-part" id="part1">
+<div class="part-title">Part 1: <span class="star">★</span> 识别危害（2分钟）</div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: Does our factory achieve zero <span class="key-word">ergonomic risk</span> for all working positions?</div><div class="cn-col"><strong>A</strong>: 我们工厂所有岗位是否已经实现人体工效学零风险？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: We cannot achieve absolute zero ergonomic risk. Some operational positions still have typical <span class="key-word">ergonomic hazards</span>.</div><div class="cn-col"><strong>B</strong>: 我们无法实现绝对的工效零风险，部分作业岗位仍然存在典型的人体工效学危害。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: What kind of ergonomic risks exist in our workplace?</div><div class="cn-col"><strong>A</strong>: 我们现场主要存在哪些工效学风险？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: We have five main ergonomic hazard factors: <span class="key-word">repetitive motion</span>, <span class="key-word">excessive force</span>, <span class="key-word">awkward static postures</span>, <span class="key-word">contact stress</span> and <span class="key-word">hand-tool vibration</span>.</div><div class="cn-col"><strong>B</strong>: 现场主要存在五大工效风险因子：重复性动作、过度施力、不良静态体态、接触压迫应力以及手持设备振动。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: Who is most at risk?</div><div class="cn-col"><strong>A</strong>: 哪些岗位接触风险最大？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: <span class="key-word">Assembly line workers</span>, <span class="key-word">maintenance staff</span>, and <span class="key-word">warehouse handlers</span> face the highest ergonomic risk.</div><div class="cn-col"><strong>B</strong>: 流水线操作工、维修人员和仓库搬运工面临的工效风险最大。</div></div>
+</section>
+
+<!-- PART 2 -->
+<section class="section-part" id="part2">
+<div class="part-title">Part 2: <span class="star">★★</span> 健康后果（2分钟）</div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: What potential injuries will these ergonomic hazards bring to our employees?</div><div class="cn-col"><strong>A</strong>: 这些工效危害，会给员工带来哪些职业伤害？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: These long-term accumulated micro-traumas will cause Work-related <span class="key-word">MSDs</span>, also known as <span class="key-word">cumulative trauma disorders</span> in ergonomics.</div><div class="cn-col"><strong>B</strong>: 这类长期累积的微小创伤，会引发工作相关肌肉骨骼疾患，也就是工效学中的累积性创伤障碍。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: What does MSDs stand for exactly?</div><div class="cn-col"><strong>A</strong>: MSDs具体指什么？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: MSDs stands for <span class="key-word">Musculoskeletal Disorders</span>. It covers injuries to muscles, tendons, nerves, and joints caused by workplace factors.</div><div class="cn-col"><strong>B</strong>: MSDs是肌肉骨骼疾患的缩写，涵盖因工作因素导致的肌肉、肌腱、神经和关节损伤。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: Are these injuries reversible?</div><div class="cn-col"><strong>A</strong>: 这些损伤可逆吗？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: Most early-stage MSDs are reversible with proper intervention, but <span class="key-word">chronic cases</span> may become permanent disabilities.</div><div class="cn-col"><strong>B</strong>: 早期MSDs经过适当干预多数可逆，但慢性病例可能发展为永久性功能丧失。</div></div>
+</section>
+
+<!-- PART 3 -->
+<section class="section-part" id="part3">
+<div class="part-title">Part 3: <span class="star">★★</span> 风险评估方法（2分钟）</div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: Do we have a procedure for ergonomic risk management?</div><div class="cn-col"><strong>A</strong>: 针对工效学风险，我们是否建立了管控程序？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: Yes, we have a complete <span class="key-word">ergonomic risk control procedure</span> based on OSHA standards.</div><div class="cn-col"><strong>B</strong>: 有的，我们依据OSHA标准，建立了完整的工效风险管控程序。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: What methods do you use to identify ergonomic hazards and assess risks on site?</div><div class="cn-col"><strong>A</strong>: 你们通过哪些方式，对现场工效风险进行识别和评估？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: We confirm job tasks, identify risk factors, and complete professional evaluation with <span class="key-word">standardized ergonomics checklists</span> and assessment tools.</div><div class="cn-col"><strong>B</strong>: 我们先确认岗位作业内容、识别风险因子，再使用标准化工效核查清单和专业工具完成风险评估。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: How often do we conduct these assessments?</div><div class="cn-col"><strong>A</strong>: 多久做一次评估？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: We perform <span class="key-word">full assessments annually</span> and targeted reviews whenever there are process or equipment changes.</div><div class="cn-col"><strong>B</strong>: 每年做一次全面评估，工艺或设备变更时随时追加专项评估。</div></div>
+</section>
+
+<!-- PART 4 -->
+<section class="section-part" id="part4">
+<div class="part-title">Part 4: <span class="star">★★★</span> 管控措施（2分钟）</div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: After risk assessment, what systematic control measures have we implemented?</div><div class="cn-col"><strong>A</strong>: 风险评估完成后，我们落地了哪些系统化的管控措施？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: We adopt full-cycle controls including <span class="key-word">engineering modification</span>, <span class="key-word">job rotation</span> management, ergonomics training and necessary PPE protection to reduce MSDs risks continually.</div><div class="cn-col"><strong>B</strong>: 我们执行全周期管控措施，包含工程改造、岗位轮换管理、工效安全培训、按需配备个人防护用品，持续降低肌肉骨骼疾患风险。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: What does <span class="key-word">engineering modification</span> include specifically?</div><div class="cn-col"><strong>A</strong>: 工程改造具体包括什么？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: It covers <span class="key-word">adjustable workstations</span>, <span class="key-word">mechanical lifting aids</span>, <span class="key-word">anti-fatigue mats</span>, and tool redesign to reduce force and repetition.</div><div class="cn-col"><strong>B</strong>: 包括可调节工作台、机械升降辅助设备、防疲劳地垫，以及降低施力和重复度的工具改造。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: How does <span class="key-word">job rotation</span> help?</div><div class="cn-col"><strong>A</strong>: 岗位轮换有什么作用？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: By rotating workers through different tasks, we limit their <span class="key-word">exposure time</span> to specific ergonomic risk factors and allow muscle groups to recover.</div><div class="cn-col"><strong>B</strong>: 通过轮换不同岗位，限制员工对特定工效风险因子的接触时长，让肌群得到恢复。</div></div>
+</section>
+
+<!-- PART 5 -->
+<section class="section-part" id="part5">
+<div class="part-title">Part 5: <span class="star">★★★</span> 完整讨论（2分钟）</div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: What's the most challenging part of ergonomic risk management?</div><div class="cn-col"><strong>A</strong>: 工效风险管理中最有挑战性的部分是什么？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: Getting workers to maintain <span class="key-word">proper posture</span> and use ergonomic equipment correctly. Many revert to old habits when unsupervised.</div><div class="cn-col"><strong>B</strong>: 最难的是让员工保持正确体态、正确使用工效设备。很多人无人监督时又回到老习惯。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: How do we address this?</div><div class="cn-col"><strong>A</strong>: 这个问题怎么解决？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: Through <span class="key-word">regular ergonomics training</span> and buddy systems. We also post <span class="key-word">visual reminders</span> at workstations showing correct postures.</div><div class="cn-col"><strong>B</strong>: 通过常态化工效培训和伙伴互助机制，在工位张贴正确体态的视觉提示。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: How do we monitor effectiveness?</div><div class="cn-col"><strong>A</strong>: 如何监测管控效果？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: We track <span class="key-word">MSDs incidence rates</span> quarterly and conduct follow-up risk assessments after each engineering modification.</div><div class="cn-col"><strong>B</strong>: 每季度追踪MSDs发病率，每次工程改造后做后续风险评估。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: Any continuous improvement plans?</div><div class="cn-col"><strong>A</strong>: 有持续改进计划吗？</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: Yes, we plan to introduce <span class="key-word">wearable posture monitors</span>, upgrade all standing desks, and expand job rotation to more departments.</div><div class="cn-col"><strong>B</strong>: 有。计划引入可穿戴体态监测设备、全面升级站立式办公桌，并把岗位轮换推广到更多部门。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>A</strong>: Great. Ergonomic management is a long-term commitment.</div><div class="cn-col"><strong>A</strong>: 很好，工效管理不是短期任务，需要长期坚持。</div></div>
+<div class="dialog-row"><div class="en-col"><strong>B</strong>: Exactly. With proper controls and worker engagement, we can protect everyone's musculoskeletal health for a lifetime.</div><div class="cn-col"><strong>B</strong>: 没错，只要管控到位、员工自觉配合，就能保障每一位工人的肌肉骨骼健康。</div></div>
+</section>
+
+<div class="suggest-box">
+<strong>练习建议</strong>：按顺序练习 Part 1→ Part 2→ Part 3→ Part 4→ Part 5。每部分先慢速练习，再使用正常语速朗读。
 </div>
 
-<div class="container">
-
-<!-- Part 1 -->
-<div class="part" id="p1">
-  <div class="part-header">
-    <span class="num">Part 1</span>
-    <span class="stars">★</span>
-    <span class="title">识别危害</span>
-    <span class="time">2分钟</span>
-  </div>
-  <div class="dialogue">
-    <div class="line a"><div class="speaker a">A</div><div class="en">Does our factory achieve zero ergonomic risk for all working positions?</div><div class="zh">我们工厂所有岗位是否已经实现人体工效学零风险？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">We cannot achieve absolute zero ergonomic risk. Some operational positions still have typical ergonomic hazards.</div><div class="zh">我们无法实现绝对的工效零风险，部分作业岗位仍然存在典型的人体工效学危害。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">What kind of ergonomic risks exist in our workplace?</div><div class="zh">我们现场主要存在哪些工效学风险？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">We have five main ergonomic hazard factors: repetitive motion, excessive force, awkward static postures, contact stress and hand-tool vibration.</div><div class="zh">现场主要存在五大工效风险因子：重复性动作、过度施力、不良静态体态、接触压迫应力以及手持设备振动。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">Who is most at risk?</div><div class="zh">哪些岗位接触风险最大？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Assembly line workers, maintenance staff, and warehouse handlers face the highest ergonomic risk.</div><div class="zh">流水线操作工、维修人员和仓库搬运工面临的工效风险最大。</div></div>
-  </div>
-</div>
-
-<!-- Part 2 -->
-<div class="part" id="p2">
-  <div class="part-header">
-    <span class="num">Part 2</span>
-    <span class="stars">★★</span>
-    <span class="title">健康后果</span>
-    <span class="time">2分钟</span>
-  </div>
-  <div class="dialogue">
-    <div class="line a"><div class="speaker a">A</div><div class="en">What potential injuries will these ergonomic hazards bring to our employees?</div><div class="zh">这些工效危害，会给员工带来哪些职业伤害？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">These long-term accumulated micro-traumas will cause Work-related MSDs, also known as cumulative trauma disorders in ergonomics.</div><div class="zh">这类长期累积的微小创伤，会引发工作相关肌肉骨骼疾患，也就是工效学中的累积性创伤障碍。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">What does MSDs stand for exactly?</div><div class="zh">MSDs具体指什么？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">MSDs stands for Musculoskeletal Disorders. It covers injuries to muscles, tendons, nerves, and joints caused by workplace factors.</div><div class="zh">MSDs是肌肉骨骼疾患的缩写，涵盖因工作因素导致的肌肉、肌腱、神经和关节损伤。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">Are these injuries reversible?</div><div class="zh">这些损伤可逆吗？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Most early-stage MSDs are reversible with proper intervention, but chronic cases may become permanent disabilities.</div><div class="zh">早期MSDs经过适当干预多数可逆，但慢性病例可能发展为永久性功能丧失。</div></div>
-  </div>
-</div>
-
-<!-- Part 3 -->
-<div class="part" id="p3">
-  <div class="part-header">
-    <span class="num">Part 3</span>
-    <span class="stars">★★</span>
-    <span class="title">风险评估方法</span>
-    <span class="time">2分钟</span>
-  </div>
-  <div class="dialogue">
-    <div class="line a"><div class="speaker a">A</div><div class="en">Do we have a procedure for ergonomic risk management?</div><div class="zh">针对工效学风险，我们是否建立了管控程序？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Yes, we have a complete ergonomic risk control procedure based on OSHA standards.</div><div class="zh">有的，我们依据OSHA标准，建立了完整的工效风险管控程序。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">What methods do you use to identify ergonomic hazards and assess risks on site?</div><div class="zh">你们通过哪些方式，对现场工效风险进行识别和评估？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">We confirm job tasks, identify risk factors, and complete professional evaluation with standardized ergonomics checklists and assessment tools.</div><div class="zh">我们先确认岗位作业内容、识别风险因子，再使用标准化工效核查清单和专业工具完成风险评估。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">How often do we conduct these assessments?</div><div class="zh">多久做一次评估？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">We perform full assessments annually and targeted reviews whenever there are process or equipment changes.</div><div class="zh">每年做一次全面评估，工艺或设备变更时随时追加专项评估。</div></div>
-  </div>
-</div>
-
-<!-- Part 4 -->
-<div class="part" id="p4">
-  <div class="part-header">
-    <span class="num">Part 4</span>
-    <span class="stars">★★★</span>
-    <span class="title">管控措施</span>
-    <span class="time">2分钟</span>
-  </div>
-  <div class="dialogue">
-    <div class="line a"><div class="speaker a">A</div><div class="en">After risk assessment, what systematic control measures have we implemented?</div><div class="zh">风险评估完成后，我们落地了哪些系统化的管控措施？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">We adopt full-cycle controls including engineering modification, job rotation management, ergonomics training and necessary PPE protection to reduce MSDs risks continually.</div><div class="zh">我们执行全周期管控措施，包含工程改造、岗位轮换管理、工效安全培训、按需配备个人防护用品，持续降低肌肉骨骼疾患风险。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">What does engineering modification include specifically?</div><div class="zh">工程改造具体包括什么？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">It covers adjustable workstations, mechanical lifting aids, anti-fatigue mats, and tool redesign to reduce force and repetition.</div><div class="zh">包括可调节工作台、机械升降辅助设备、防疲劳地垫，以及降低施力和重复度的工具改造。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">How does job rotation help?</div><div class="zh">岗位轮换有什么作用？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">By rotating workers through different tasks, we limit their exposure time to specific ergonomic risk factors and allow muscle groups to recover.</div><div class="zh">通过轮换不同岗位，限制员工对特定工效风险因子的接触时长，让肌群得到恢复。</div></div>
-  </div>
-</div>
-
-<!-- Part 5 -->
-<div class="part" id="p5">
-  <div class="part-header">
-    <span class="num">Part 5</span>
-    <span class="stars">★★★</span>
-    <span class="title">完整讨论</span>
-    <span class="time">2分钟</span>
-  </div>
-  <div class="dialogue">
-    <div class="line a"><div class="speaker a">A</div><div class="en">What's the most challenging part of ergonomic risk management?</div><div class="zh">工效风险管理中最有挑战性的部分是什么？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Getting workers to maintain proper posture and use ergonomic equipment correctly. Many revert to old habits when unsupervised.</div><div class="zh">最难的是让员工保持正确体态、正确使用工效设备。很多人无人监督时又回到老习惯。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">How do we address this?</div><div class="zh">这个问题怎么解决？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Through regular ergonomics training and buddy systems. We also post visual reminders at workstations showing correct postures.</div><div class="zh">通过常态化工效培训和伙伴互助机制，在工位张贴正确体态的视觉提示。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">How do we monitor effectiveness?</div><div class="zh">如何监测管控效果？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">We track MSDs incidence rates quarterly and conduct follow-up risk assessments after each engineering modification.</div><div class="zh">每季度追踪MSDs发病率，每次工程改造后做后续风险评估。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">Any continuous improvement plans?</div><div class="zh">有持续改进计划吗？</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Yes, we plan to introduce wearable posture monitors, upgrade all standing desks, and expand job rotation to more departments.</div><div class="zh">有。计划引入可穿戴体态监测设备、全面升级站立式办公桌，并把岗位轮换推广到更多部门。</div></div>
-    <div class="line a"><div class="speaker a">A</div><div class="en">Great. Ergonomic management is a long-term commitment.</div><div class="zh">很好，工效管理不是短期任务，需要长期坚持。</div></div>
-    <div class="line b"><div class="speaker b">B</div><div class="en">Exactly. With proper controls and worker engagement, we can protect everyone's musculoskeletal health for a lifetime.</div><div class="zh">没错，只要管控到位、员工自觉配合，就能保障每一位工人的肌肉骨骼健康。</div></div>
-  </div>
-</div>
-
-<div class="tip-box">练习建议：按顺序练习 Part 1 → Part 2 → Part 3 → Part 4 → Part 5。每部分先慢速练习，再使用正常语速朗读。</div>
-
-</div>
-
-<div class="footer">安全五点半 · EHS英语口袋书</div>
+</div></div>
 
 <script>
-function setActive(el){
-  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
-  el.classList.add('active');
-}
-// Highlight active part on scroll
-const parts=document.querySelectorAll('.part');
-const navLinks=document.querySelectorAll('.nav a');
-window.addEventListener('scroll',()=>{
-  let current='';
-  parts.forEach(p=>{
-    const rect=p.getBoundingClientRect();
-    if(rect.top<200) current=p.id;
-  });
-  navLinks.forEach(a=>{
-    a.classList.toggle('active',a.getAttribute('href')==='#'+current);
-  });
-});
+(function(){
+    var hash = location.hash.replace('#','');
+    var titles = {
+        part1: 'Part 1 · ★ 识别危害',
+        part2: 'Part 2 · ★★ 健康后果',
+        part3: 'Part 3 · ★★ 风险评估方法',
+        part4: 'Part 4 · ★★★ 管控措施',
+        part5: 'Part 5 · ★★★ 完整讨论'
+    };
+    if (hash && document.getElementById(hash)) {
+        document.body.className = 'single-section';
+        document.getElementById(hash).className = 'section-part active';
+        document.getElementById('navTitle').textContent = titles[hash] || '';
+    }
+})();
 </script>
 </body>
 </html>
