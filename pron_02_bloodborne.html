@@ -43,10 +43,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 </div>
 <div class="brand">安全五点半 · EHS职场英语词卡</div>
 <script>
-function play(){var a=new Audio('https://dict.youdao.com/dictvoice?audio=bloodborne&type=1');a.play()}
+function play(){var a=document.getElementById('tts-audio');if(a&&a.src&&a.readyState!==0){a.currentTime=0;a.play().catch(function(){tryYoudao()})}else{tryYoudao()}}function tryYoudao(){var a=new Audio('https://dict.youdao.com/dictvoice?audio=bloodborne&type=1');a.play()}
 // QR code will be added after URL is known
 var url=window.location.href;
 if(url&&url.startsWith('http')){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';s.onload=function(){new QRCode(document.getElementById('qr'),{text:url,width:160,height:160,colorDark:'#1a1a1a',colorLight:'#ffffff'})};document.head.appendChild(s)}
 </script>
+<audio id="tts-audio" preload="auto" src="audio/pron_02_bloodborne.mp3"></audio>
 </body>
 </html>
