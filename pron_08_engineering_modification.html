@@ -20,6 +20,7 @@
   .play-btn:hover { background:#6B97AC; transform:scale(1.05); }
   .play-btn:active { transform:scale(0.98); }
   .play-btn .icon { font-size:22px; }
+  .status { font-size:12px; color:#999; margin-top:8px; min-height:18px; }
   .example { margin-top:24px; text-align:left; padding:16px; background:#f8f9fa; border-radius:10px; border-left:3px solid #7BA7BC; }
   .example-label { font-size:12px; color:#7BA7BC; font-weight:bold; margin-bottom:6px; }
   .example-en { font-size:14px; color:#3D405B; line-height:1.6; margin-bottom:4px; }
@@ -40,6 +41,7 @@
     <button class="play-btn" onclick="speak()">
       <span class="icon">🔊</span> 听发音
     </button>
+    <div class="status" id="status"></div>
     <div class="example">
       <div class="example-label">Example</div>
       <div class="example-en">Engineering modification is a key control measure in ergonomic risk management.</div>
@@ -48,13 +50,41 @@
     <div class="footer">安全五点半 · EHS英语口袋书</div>
   </div>
 </div>
+<audio id="tts-audio" preload="auto" src="pron_08_engineering_modification.mp3"></audio>
 <script>
+var audio = document.getElementById('tts-audio');
+var statusEl = document.getElementById('status');
+
 function speak() {
-  const u = new SpeechSynthesisUtterance("engineering modification");
-  u.lang = "en-US";
-  u.rate = 0.8;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+  statusEl.textContent = '播放中...';
+  // Try pre-generated audio first (works in WeChat)
+  if (audio.src && audio.readyState !== 0) {
+    audio.currentTime = 0;
+    audio.play().then(function() {
+      statusEl.textContent = '';
+    }).catch(function() {
+      // Fallback to Web Speech API
+      tryWebSpeech();
+    });
+    audio.onended = function() { statusEl.textContent = ''; };
+  } else {
+    // Fallback to Web Speech API
+    tryWebSpeech();
+  }
+}
+
+function tryWebSpeech() {
+  if ('speechSynthesis' in window) {
+    var u = new SpeechSynthesisUtterance("engineering modification");
+    u.lang = "en-US";
+    u.rate = 0.8;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+    u.onend = function() { statusEl.textContent = ''; };
+    statusEl.textContent = '播放中...';
+  } else {
+    statusEl.textContent = '当前浏览器不支持语音播放';
+  }
 }
 </script>
 </body>
