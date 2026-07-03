@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.04 | 生物危害管理</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.04</div>
+  <h1>生物危害管理</h1>
+  <div class="subtitle">Biological Hazard Management</div>
+  <div class="brand">安全五点半 · Frank聊EHS</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</div>
+
+<div class="sections" id="sections">
+
+  <div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">识别危害<small>Biological Hazard Identification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">I'd like to understand the biological hazards present in our factory. What exactly is a biological hazard?</div>
+        <div class="zh">我想了解一下我们工厂存在的生物危害，到底什么是生物危害？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">A biological hazard refers to harmful substances that come from living organisms, such as bacteria, viruses, fungi and other pathogens that can threaten human health.</div>
+        <div class="zh">生物危害是指来自生物体的有害物质，比如细菌、病毒、真菌以及其他能威胁人体健康的病原体。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Which areas in our factory are most likely to have biological hazards?</div>
+        <div class="zh">我们工厂哪些区域最容易出现生物危害？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">There are three typical areas: the medical room, the canteen, and the wastewater treatment station. Each of these locations involves direct contact with biological agents on a daily basis.</div>
+        <div class="zh">有三个典型区域：医务室、食堂和污水处理站。这些地方每天都会直接接触生物因子。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Who are the employees most at risk in these areas?</div>
+        <div class="zh">这些区域里哪些员工面临的风险最大？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Medical room staff handle injured workers and contaminated materials daily. Canteen workers deal with food ingredients and serve meals to hundreds of people. Wastewater treatment operators are constantly exposed to raw sewage containing various bacteria and pathogens.</div>
+        <div class="zh">医务室人员每天处理受伤员工和污染材料。餐饮人员接触食材并为数百人供餐。污水处理操作工则持续接触含有各种细菌和病原体的生活污水。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">biological hazard<small>生物危害</small></span>
+        <span class="kw">living organism<small>生物体</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">医务室风险<small>Medical Room Risks</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Let's talk about the medical room first. What are the main biological risks there?</div>
+        <div class="zh">我们先说说医务室，那边主要的生物风险是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">The medical room handles daily employee injuries, including abrasions, cuts and bleeding wounds. Medical staff are frequently exposed to blood-contaminated gauze, cotton swabs and wound secretions.</div>
+        <div class="zh">医务室每天处理员工受伤情况，包括擦伤、割伤和出血伤口。医务人员频繁暴露于血液污染的纱布、棉签和伤口分泌物。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">That sounds like a significant exposure risk. What are the potential consequences?</div>
+        <div class="zh">听起来暴露风险很大，可能带来什么后果？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Bloodborne substances can carry serious pathogens. If medical staff don't use proper protective equipment, these materials may lead to cross infection between patients and healthcare workers.</div>
+        <div class="zh">血液源性物质可能携带严重病原体。如果医务人员不使用适当的防护装备，这些材料可能导致患者与医护人员之间的交叉感染。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we currently manage medical waste in the medical room?</div>
+        <div class="zh">目前医务室的医疗废物是怎么管理的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">All blood-contaminated materials are placed in dedicated medical waste containers, which are then collected by qualified disposal contractors. But we still need to strengthen daily protocols to minimize exposure.</div>
+        <div class="zh">所有血液污染材料都放入专用医疗废物容器，然后由合格的处置承包商回收。但我们仍需加强日常操作规程，以最大限度地减少暴露。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">bloodborne<small>血液传播的</small></span>
+        <span class="kw">cross infection<small>交叉感染</small></span>
+        <span class="kw">medical waste<small>医疗废物</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">餐厅和污水处理<small>Canteen &amp; Wastewater Treatment</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Now let's move to the canteen. Food safety affects everyone in the factory. What biological hazards exist there?</div>
+        <div class="zh">接下来我们说说食堂。食品安全关系到全厂每一个人，那边存在哪些生物危害？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">The main concern is food spoilage and microbial contamination. Sources include wastewater backflow, unclean tableware and expired ingredients. Harmful bacteria in these conditions can cause mass gastroenteritis among employees who eat in the canteen.</div>
+        <div class="zh">主要问题是食物变质和微生物污染。来源包括废水倒灌、不洁餐具和过期食材。这些条件下产生的有害细菌可能导致在食堂就餐的员工发生集体肠胃炎。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Mass gastroenteritis would be a serious incident. What preventive measures are in place for the canteen?</div>
+        <div class="zh">集体肠胃炎会是非常严重的事件。食堂目前有哪些预防措施？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We enforce strict ingredient inspection, proper food storage temperature control, regular kitchen disinfection, and mandatory health checks for all canteen workers.</div>
+        <div class="zh">我们执行严格的食材检验、适当的食物储存温度控制、定期厨房消毒，以及所有餐饮人员的强制健康检查。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">And what about the wastewater treatment station?</div>
+        <div class="zh">那污水处理站呢？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Wastewater treatment operators work in direct contact with domestic sewage that contains a wide variety of bacteria, parasites and other pathogenic microorganisms. Prolonged exposure without proper protection can lead to skin infections, respiratory issues and gastrointestinal diseases.</div>
+        <div class="zh">污水处理操作工直接接触生活污水，其中含有多种细菌、寄生虫和其他致病微生物。长时间暴露在没有适当防护的情况下，可能导致皮肤感染、呼吸系统疾病和肠胃疾病。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">food spoilage<small>食物变质</small></span>
+        <span class="kw">gastroenteritis<small>肠胃炎</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">管理措施<small>Control Measures</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What is our complete biological hazard control plan across all three key areas?</div>
+        <div class="zh">我们在三个重点区域的整体生物危害防控方案是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Our comprehensive plan covers hazard identification, risk assessment, engineering controls, administrative controls, PPE requirements, routine disinfection and proper waste disposal. We also conduct monthly inspections of all three key areas: the medical room, the canteen and the wastewater treatment station.</div>
+        <div class="zh">我们的综合防控方案涵盖危害识别、风险评估、工程控制、管理控制、个人防护装备要求、日常消毒以及规范的废弃物处置。我们还会对医务室、食堂和污水处理站三个重点区域进行月度检查。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What specific PPE do workers in each area need to wear?</div>
+        <div class="zh">各区域的员工具体需要佩戴什么个人防护装备？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Medical room staff must wear disposable medical gloves and masks when treating patients. Canteen workers are required to wear work uniforms, masks and gloves during food preparation and service. Wastewater treatment operators need heavy-duty gloves, face shields, waterproof aprons and rubber boots.</div>
+        <div class="zh">医务室人员在诊治患者时必须佩戴一次性医用手套和口罩。餐饮人员在食品加工和供餐期间须穿工作服、佩戴口罩和手套。污水处理操作工需要重型手套、防护面罩、防水围裙和胶靴。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we handle the disinfection and waste disposal requirements?</div>
+        <div class="zh">消毒和废弃物处置方面我们是怎么做的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">All equipment and work areas are cleaned and disinfected on a regular schedule. The medical room is disinfected after every patient visit. All blood-contaminated medical waste is placed in designated biohazard containers and collected by qualified service providers for proper disposal.</div>
+        <div class="zh">所有设备和工作区域按规定计划定期清洁消毒。医务室每次接诊后都会对操作台进行消毒。所有血液污染的医疗废物放入专用生物危害容器，由合格服务商回收处置。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">disinfection<small>消毒</small></span>
+        <span class="kw">PPE<small>个人防护装备</small></span>
+        <span class="kw">hazard identification<small>危害识别</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">完整讨论<small>Full Discussion</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">In your opinion, what's the most important element in biological hazard management?</div>
+        <div class="zh">在你看来，生物危害管理中最重要的环节是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Training and supervision are the most critical. We conduct quarterly biosafety training for all at-risk employees. Every worker should understand the biological risks in their area, know how to properly wear PPE, and be prepared for emergency response.</div>
+        <div class="zh">培训和监管是最关键的。我们对所有高风险岗位员工开展季度生物安全培训。每位员工都应了解所在区域的生物风险、知道如何正确佩戴个人防护装备，并掌握紧急情况下的应对方法。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we ensure cleaning and disinfection are consistently carried out?</div>
+        <div class="zh">我们如何确保清洁消毒工作始终得到落实？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">All equipment and work areas follow a scheduled cleaning and disinfection protocol. The medical room is disinfected after every single patient use, with special attention to the operating counter and treatment surfaces. Canteen kitchens undergo deep cleaning daily, and the wastewater station is disinfected weekly.</div>
+        <div class="zh">所有设备和工作区域都执行定期清洁消毒规程。医务室每次使用后都会消毒，特别关注操作台和诊疗台面。食堂厨房每天进行深度清洁，污水处理站每周消毒。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How about waste disposal? I want to make sure we handle medical waste properly.</div>
+        <div class="zh">废弃物处置呢？我要确保医疗废物处理得当。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">All blood-contaminated medical waste is sealed in dedicated biohazard containers, clearly labeled and stored in a temporary holding area. A qualified waste disposal contractor collects and transports it for safe treatment. We keep detailed disposal records for regulatory compliance.</div>
+        <div class="zh">所有血液污染的医疗废物都密封在专用生物危害容器中，清晰标识并存放在临时存放区。由合格的废弃物处置承包商收集转运进行安全处理。我们保留详细的处置记录以满足法规要求。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What improvements are you planning for our biological hazard management?</div>
+        <div class="zh">你计划对生物危害管理做哪些改进？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We plan to increase the frequency of unannounced inspections, introduce UV disinfection systems in the medical room, upgrade ventilation in the wastewater station, and add more frequent food safety sampling tests in the canteen.</div>
+        <div class="zh">我们计划增加不定期检查的频次，在医务室引入紫外线消毒系统，升级污水处理站的通风设施，并在食堂增加更频繁的食品安全抽样检测。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Excellent. Biological hazard management protects not only individual workers but the entire workforce. Keep up the good work.</div>
+        <div class="zh">很好。生物危害管理不仅保护个人，更是保护全体员工。继续努力。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Thank you. With continuous hazard identification, strong training and supervision, and rigorous control measures, we can effectively prevent biological risks and keep everyone safe.</div>
+        <div class="zh">谢谢。通过持续的危害识别、强有力的培训监管以及严格的管控措施，我们可以有效预防生物风险，保障每个人的安全。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">hazard identification<small>危害识别</small></span>
+        <span class="kw">training and supervision<small>培训与监管</small></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.04 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="audio/vol04_biological_hazard_management.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = [
+  '1. 识别危害',
+  '2. 医务室风险',
+  '3. 餐厅和污水处理',
+  '4. 管理措施',
+  '5. 完整讨论'
+];
+var sectionTimes = [0, 111, 259, 443, 591];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.currentTime = sectionTimes[idx];
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  var t = audio.currentTime;
+  for (var i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i]) { setActive(i); break; }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+</script>
+</body>
+</html>
