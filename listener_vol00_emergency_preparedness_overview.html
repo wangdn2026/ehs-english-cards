@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.00 | 应急准备总框架</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw {
+    background: var(--kw-bg); border: 1px solid var(--orange); border-radius: 20px;
+    padding: 4px 12px; font-size: 13px; color: var(--charcoal);
+  }
+  .kw small { display: block; font-size: 11px; color: #999; text-align: center; }
+  .hint { text-align: center; font-size: 12px; color: #999; padding: 16px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px 0; }
+  .progress-dots .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #CBD5E0;
+    transition: all 0.3s;
+  }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS English Pocket Book</div>
+  <div class="vol">Vol.00</div>
+  <h1>应急准备总框架</h1>
+  <div class="subtitle">Emergency Preparedness Overview</div>
+  <div class="brand">安全五点半 · EHS职场英语</div>
+</div>
+
+<div class="progress-dots">
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+</div>
+
+<div class="sections">
+
+  <div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">紧急情况识别<small>Emergency Identification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">We are going to update our company's Emergency Preparedness and Response Plan. Can you explain the main framework of this EPRP plan?</div>
+        <div class="zh">我们要更新公司的应急准备与响应计划。你说明一下这份EPRP计划的主要框架是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Certainly. The whole plan starts with identification of all potential on-site emergencies. We select ten most common and high-frequency workplace emergencies for our site.</div>
+        <div class="zh">没问题。整个计划首先是识别现场所有潜在紧急情况。我们筛选了厂区最常见、高发的10类突发事件。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Could you list the ten typical emergencies?</div>
+        <div class="zh">能列举一下这十种典型突发事件吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Fire accident, on-site medical emergency, pandemic or contagious disease, foodborne illness, hazardous material spill or leak on site, confined space rescue, natural disasters such as earthquake, typhoon, heavy rain and lightning storm, unexpected power outage and electrical failure, personnel trapped accident, and equipment abnormal shutdown and machine failure.</div>
+        <div class="zh">火灾事故、现场医疗急救、大规模流行病或传染性疾病、食源性疾病、现场危险物质泄漏、有限空间救援、自然灾害如地震台风暴雨雷击、突发停电和电气故障、人员被困事故，以及设备异常停机和机械故障。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">emergency preparedness and response plan<small>应急准备与响应计划</small></span>
+        <span class="kw">potential emergency<small>潜在紧急情况</small></span>
+        <span class="kw">typical workplace emergency<small>典型突发事件</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">准备与响应<small>Preparation & Response</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Understood. Besides emergency identification, what core components must be included in our EPRP?</div>
+        <div class="zh">了解。除了风险识别，我们的应急计划还必须包含哪些核心模块？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">The plan contains two major parts: emergency preparation and emergency response.</div>
+        <div class="zh">该方案包含两大板块：应急准备与应急处置。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What exactly do we need to do for emergency preparation?</div>
+        <div class="zh">我们具体需要做哪些应急准备工作？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">For preparation, we need regular hazard identification like safety inspection, incident reporting and investigation, emergency equipment maintenance, safety training for all employees, documented evacuation routes and fixed assembly points.</div>
+        <div class="zh">筹备工作需开展常态化危险源辨识工作，包括安全检查、事故上报与调查、应急设备维保、全员安全培训，同时留存书面疏散路线文件并设置固定集合点。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Very good. Then what about the emergency response procedures during an actual incident?</div>
+        <div class="zh">很好。那发生真实事故时的应急处置流程是怎样的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Once an emergency happens, we follow standard response steps: incident reporting, onsite isolation, risk control, personnel evacuation, first aid treatment, and site lockdown if needed.</div>
+        <div class="zh">一旦发生突发事件，我们将遵循标准处置流程：事件上报、现场隔离、风险管控、人员疏散、紧急救治，必要时封锁事发区域。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">hazard identification<small>危险源辨识</small></span>
+        <span class="kw">evacuation route<small>疏散路线</small></span>
+        <span class="kw">assembly point<small>集合点</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">职责与演练<small>Responsibilities & Drills</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Does the plan clarify roles and responsibilities for each department?</div>
+        <div class="zh">该方案是否明确了各部门的岗位职责？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Yes. We define clear EHS responsibilities for production, admin, maintenance, HR, and management teams. Each department has its own emergency response responsibilities.</div>
+        <div class="zh">是的。我们为生产、行政、维修、人力资源及管理团队明确划分环境、健康与安全职责，各部门均承担对应的应急处置职责。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What about drills and follow-up actions?</div>
+        <div class="zh">演练与后续跟进措施该如何安排？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We schedule regular emergency drills, record all drill results, identify gaps, implement corrective actions, and update the EPRP plan annually.</div>
+        <div class="zh">我们定期组织应急演练，记录所有演练结果，排查存在的不足，落实整改措施，并每年更新应急准备响应计划。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">emergency response responsibilities<small>EHS应急处置职责</small></span>
+        <span class="kw">corrective action<small>整改措施</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">完整讨论<small>Full Discussion</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Do we have any other key considerations for this plan?</div>
+        <div class="zh">针对这份方案，我们还有其他需要重点考量的事项吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Yes. We also cover emergency communication channels, emergency contact lists, rescue resources allocation, and post-incident review and recovery procedures.</div>
+        <div class="zh">是的。我们还涵盖应急通信渠道、紧急联系人清单、救援资源调配以及事后复盘与恢复流程。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Perfect. This complete framework meets our corporate EHS audit requirements. Please finalize the formal EPRP document accordingly.</div>
+        <div class="zh">这套完整框架符合公司环境、健康与安全审核要求，请据此完成正式的应急预防与响应方案文件定稿。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Sure, I will complete and submit the updated Emergency Preparedness and Response Plan soon.</div>
+        <div class="zh">好的，我会尽快完成并提交更新后的应急准备与响应方案。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">emergency communication<small>应急通信</small></span>
+        <span class="kw">rescue resources<small>救援资源</small></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.00 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="Vol00_听读卡_双语对话.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = [
+  '1. 紧急情况识别',
+  '2. 准备与响应',
+  '3. 职责与演练',
+  '4. 完整讨论'
+];
+var sectionTimes = [0, 99, 207, 273];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.currentTime = sectionTimes[idx];
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  var t = audio.currentTime;
+  for (var i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i]) { setActive(i); break; }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+</script>
+</body>
+</html>

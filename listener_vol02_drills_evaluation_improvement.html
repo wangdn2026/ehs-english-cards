@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.02 | 演练评估与改进</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw {
+    background: var(--kw-bg); border: 1px solid var(--orange); border-radius: 20px;
+    padding: 4px 12px; font-size: 13px; color: var(--charcoal);
+  }
+  .hint { text-align: center; font-size: 12px; color: #999; padding: 16px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px 0; }
+  .progress-dots .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #CBD5E0;
+    transition: all 0.3s;
+  }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS English Pocket Book</div>
+  <div class="vol">Vol.02</div>
+  <h1>演练评估与改进</h1>
+  <div class="subtitle">Drills, Evaluation & Improvement</div>
+  <div class="brand">安全五点半 · EHS职场英语</div>
+</div>
+
+<div class="progress-dots">
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+</div>
+
+<div class="sections">
+
+  <div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">演练频次与筹备<small>Drill Frequency & Preparation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How many fire evacuation drills are required for our factory every year?</div>
+        <div class="zh">我们工厂每年需要开展几次消防逃生演习？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">As a key fire prevention unit, we conduct two fire drills every year, one in the first half year and one in the second.</div>
+        <div class="zh">我厂属消防重点单位，全年两次全员演练，上下半年各一次。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What preparation work will be made before drill evacuation?</div>
+        <div class="zh">演练正式开始前需要做哪些筹备工作？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">I submit drill plan to management for approval and arrange pre-drill meeting with facility, security and the representatives from different departments.</div>
+        <div class="zh">我向管理层报批方案，组织厂务、保安、各部门代表召开演练筹备会。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Any other pre-drill preparation items?</div>
+        <div class="zh">还有其他前期准备事项吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We will conduct refresher-training to all employees about evacuation procedure, but generally sending the message by email.</div>
+        <div class="zh">对全员开展逃生演习的重新培训，但一般通过发邮件。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">fire evacuation drill</span>
+        <span class="kw">drill plan</span>
+        <span class="kw">training</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">ERT分工与执行<small>ERT Roles & Execution</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do you arrange ERT responsibilities during on-site drill?</div>
+        <div class="zh">演练实施阶段ERT人员分工如何设置？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We have three teams: evacuation guide, floor sweeping, and first aid team.</div>
+        <div class="zh">设立三支应急小组：疏散引导组、逐层扫楼、现场急救组。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Is there a time line requirement for the whole building evacuation?</div>
+        <div class="zh">整栋楼宇人员撤离有没有时限要求？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">All team members shall evacuate to the assembly point, also called muster point, within 3 minutes.</div>
+        <div class="zh">全体人员必须在3分钟内全部撤离至室外指定集合点。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Who takes attendance, or takes the roll call, at the assembly point?</div>
+        <div class="zh">人员抵达集合点后由谁负责点名？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Each department representatives take the roll call and reports to EHS department.</div>
+        <div class="zh">各部门代表现场点名，汇总人数上报EHS。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">, muster point</span>
+        <span class="kw">roll call</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">演练评估<small>Drill Evaluation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What is the next step once the drill finishes?</div>
+        <div class="zh">整场演练结束后首要工作是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We organize immediate post-drill debriefing meeting for overall performance review.</div>
+        <div class="zh">第一时间召开复盘会议，对演练整体表现开展评审。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Does our company apply standardized scoring for drill assessment?</div>
+        <div class="zh">公司是否使用标准化打分表评估演练？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Yes, we have official evaluation scoring form with four assessment segments.</div>
+        <div class="zh">有的，公司配有正式评分表，总共分为四大考评板块。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Could you specify the score weight of each segment?</div>
+        <div class="zh">请说明各板块分值占比。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Preparation stage takes 25 points, on-site evacuation process 40 points. Emergency on-site response accounts for 25 points, post-drill improvement closure is 10 points.</div>
+        <div class="zh">筹备阶段25分，现场疏散流程40分。现场应急处置25分，事后整改闭环10分。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">drill debriefing</span>
+        <span class="kw">evaluation scoring form</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">整改与持续改进<small>Corrective Actions & Continuous Improvement</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How to deal with non-conformities identified from drill?</div>
+        <div class="zh">演练排查出的不足之处如何处置？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We list all findings and come up with corrective action plans.</div>
+        <div class="zh">梳理所有问题点，制定针对性整改改善方案。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Who tracks the implementation of corrective actions?</div>
+        <div class="zh">整改工作由谁跟进落地？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">EHS tracks progress regularly and verifies final completion status. EHS持续跟进整改进度并验证关闭情况。</div>
+        <div class="zh"></div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Will we optimize emergency plan based on improvement results?</div>
+        <div class="zh">是否依据整改结果优化应急预案？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Exactly, we update evacuation plan to elevate overall emergency management level. ## 关键词索引 Keyword Index | Chapter | 关键词 | |---------|--------| | Ch1 演练频次与筹备 | fire evacuation drill, drill plan, refresher-training | | Ch2 ERT分工与执行 | ERT, muster point, roll call | | Ch3 演练评估 | post-drill debriefing, evaluation scoring form | | Ch4 整改与持续改进 | corrective action, non-conformities, continuous improvement | > ⚠️ 注意：原PDF标注有"两组对话"，但PDF文本提取仅获得消防疏散演练一组对话。第二组对话内容如有补充，可追加到本脚本中。 > 本内容由 Coze AI 生成，请遵循相关法律法规及《人工智能生成合成内容标识办法》使用与传播。</div>
+        <div class="zh">是的，同步更新预案，持续提升工厂应急管理水平。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">corrective action</span>
+        <span class="kw">conformities</span>
+        <span class="kw">continuous improvement</span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.02 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="Vol02b_听读卡_双语对话.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = ['1. 演练频次与筹备', '2. ERT分工与执行', '3. 演练评估', '4. 整改与持续改进'];
+var sectionTimes = [0, 78, 144, 214];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.currentTime = sectionTimes[idx];
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  var t = audio.currentTime;
+  for (var i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i]) { setActive(i); break; }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+</script>
+</body>
+</html>

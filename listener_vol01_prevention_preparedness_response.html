@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.01 | 预防、准备与响应</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw {
+    background: var(--kw-bg); border: 1px solid var(--orange); border-radius: 20px;
+    padding: 4px 12px; font-size: 13px; color: var(--charcoal);
+  }
+  .hint { text-align: center; font-size: 12px; color: #999; padding: 16px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px 0; }
+  .progress-dots .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #CBD5E0;
+    transition: all 0.3s;
+  }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS English Pocket Book</div>
+  <div class="vol">Vol.01</div>
+  <h1>预防、准备与响应</h1>
+  <div class="subtitle">Prevention, Preparedness & Response</div>
+  <div class="brand">安全五点半 · EHS职场英语</div>
+</div>
+
+<div class="progress-dots">
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+</div>
+
+<div class="sections">
+
+  <div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">预防体系概览<small>Prevention System Overview</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">We may mainly focus on managing three emergency scenarios: fire, typhoon and on-site medical emergency. Do we have complete prevention systems for all of them?</div>
+        <div class="zh">我们工厂可能主要专注管控三类应急场景：火灾、台风、现场医疗应急，请问这三项我们是否都建立了完整的预防体系？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Yes. We have specific prevention plans for fire, typhoon and medical emergency. Daily hazard identification and monitoring is implemented to avoid incident sources in advance.</div>
+        <div class="zh">有的。我们针对火灾、台风、医疗应急分别制定了具体的预防方案，通过日常隐患排查和监控，事先从源头预防事故发生。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">prevention plan</span>
+        <span class="kw">hazard identification</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">火灾应急准备<small>Fire Emergency Preparation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What daily preparation work do we do for fire emergency?</div>
+        <div class="zh">针对火灾应急，我们日常常态化准备工作包含哪些？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We inspect fire alarms, fire extinguishers, fire suppression system and evacuation signs regularly. Exit routes and assembly points are always kept clear and accessible.</div>
+        <div class="zh">我们定期点检消防报警、灭火器材、灭火系统和疏散标识，确保逃生通道、集合点全程畅通、可用。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">fire extinguisher</span>
+        <span class="kw">assembly point</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">台风与医疗应急准备<small>Typhoon & Medical Emergency Preparation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we prepare and prevent typhoon risks every year?</div>
+        <div class="zh">针对台风自然灾害，我们每年的预防和前置准备工作如何开展？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We track real-time weather alerts, fix outdoor materials that may fall down and arrange on duty team members and personnel evacuation in advance.</div>
+        <div class="zh">我们实时跟进气象预警，提前加固户外可能掉下来的东西，安排人员值班，做好人员事先避险安排。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What preparation measures do we have for on-site medical emergencies?</div>
+        <div class="zh">针对员工突发伤病的医疗应急，我们有哪些常态化准备措施？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Full-site first aid kits are well stocked. We have emergency hospital contacts and arrange on-site first aiders on duty every day, and we also have nurses on duty in the clinic.</div>
+        <div class="zh">全厂急救药品器材齐全充足，急救医院联络方式，每日配置现场急救人员和医务室护士的值班。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">weather alert</span>
+        <span class="kw">first aid kit</span>
+        <span class="kw">first aider</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">应急培训<small>Emergency Training</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Do we provide systematic emergency training for all employees?</div>
+        <div class="zh">我们是否对全体员工开展系统化的应急培训？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Yes. All staff receive training for fire evacuation, typhoon and basic first aid. New employees must complete these kinds of trainings included in new hire orientation prior to work.</div>
+        <div class="zh">是的。全员开展火灾逃生、防台风避险、基础急救培训，新员工在入职时必须接受这些培训后方可上岗。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Do we have special training for emergency response team members?</div>
+        <div class="zh">针对应急小组人员，我们是否有专项培训？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">Our EHS team and emergency responders receive advanced training including initial fire fighting, medical emergencies handling like first aid AED. EHS团队和应急队员会接受进阶培训，包含初期灭火，医疗应急如急救，使用AED专项技能。</div>
+        <div class="zh"></div>
+      </div>
+      <div class="keywords">
+        <span class="kw">fire evacuation</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">应急响应<small>Emergency Response</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Once an emergency happens, what is our standard response procedure?</div>
+        <div class="zh">一旦突发险情，我们的标准现场响应流程是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We follow the process: report immediately, evacuate personnel, control on-site risks, etc.</div>
+        <div class="zh">我们执行流程：立即报告，人员疏散、控制现场风险等。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we respond specifically to a fire accident on site?</div>
+        <div class="zh">现场突发火情时，我们的专项响应动作是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">On-duty staff put out initial fire quickly, trigger alarms, organize full evacuation and assemble all staff for taking a roll call.</div>
+        <div class="zh">值班人员快速扑救初期火灾、启动报警、组织全员疏散、集合点名确认人员。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What is our response principle when typhoon is approaching?</div>
+        <div class="zh">台风来临前后，我们的现场响应原则是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We monitor the typhoon status, may stop outdoor operations, secure all facilities, evacuate high-risk areas and suspend work according to weather severity level.</div>
+        <div class="zh">我们跟踪台风情况，停止户外作业、加固所有设施、撤离高危区域、根据气象严重等级停工避险。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we immediately handle employee injury or sickness?</div>
+        <div class="zh">我们如何第一时间处理员工伤病？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We provide on-site first aid immediately, and send the employee to hospital in time.</div>
+        <div class="zh">第一时间现场急救、及时送医救治。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">emergency response procedure</span>
+        <span class="kw">roll call</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="5">
+    <div class="section-header" onclick="playSection(5)">
+      <div class="num">6</div>
+      <div class="title">演练评估与持续改进<small>Drills, Evaluation & Continuous Improvement</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How often do we conduct emergency drills? What types of drills do we perform?</div>
+        <div class="zh">我们应急演练频次如何？固定开展哪些演练项目？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We conduct regular fire evacuation drills, typhoon emergency drills and medical rescue drills every year.</div>
+        <div class="zh">我们每年常态化开展火灾疏散演练、台风应急演练、现场医疗救护演练。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Do we conduct evaluation after every drill or real incident?</div>
+        <div class="zh">每次演练或真实事故结束后，我们是否都会做专项评估？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We work out corrective actions with clear responsible persons and completion deadlines and verify completion until a complete closure.</div>
+        <div class="zh">针对问题制定纠正措施，明确责任人与完成期限，验收合格后方可闭环。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">In summary, how do we sustain our emergency management system in a long term?</div>
+        <div class="zh">总结来说，我们如何长期稳定落地这套应急管理体系？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">E. H. S. Manager 安全主管</div>
+        <div class="en">We stick to full-cycle management: prevention first, sufficient preparation, standard and timely response, regular drills and continuous improvement. ## 关键词索引 Keyword Index | Chapter | 关键词 | |---------|--------| | Ch1 预防体系概览 | prevention plan, hazard identification | | Ch2 火灾应急准备 | fire extinguisher, assembly point | | Ch3 台风与医疗应急准备 | weather alert, first aid kit, first aider | | Ch4 应急培训 | fire evacuation, first aid AED | | Ch5 应急响应 | emergency response procedure, roll call | | Ch6 演练评估与持续改进 | continuous improvement, corrective action | > 本内容由 Coze AI 生成，请遵循相关法律法规及《人工智能生成合成内容标识办法》使用与传播。</div>
+        <div class="zh">我们坚持全周期管理：预防为先、充分准备、及时并规范响应、常态演练、持续改进。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">continuous improvement</span>
+        <span class="kw">corrective action</span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.01 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="Vol01_听读卡_双语对话.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = ['1. 预防体系概览', '2. 火灾应急准备', '3. 台风与医疗应急准备', '4. 应急培训', '5. 应急响应', '6. 演练评估与持续改进'];
+var sectionTimes = [0, 48, 82, 149, 214, 316];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.currentTime = sectionTimes[idx];
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  var t = audio.currentTime;
+  for (var i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i]) { setActive(i); break; }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+</script>
+</body>
+</html>
