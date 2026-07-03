@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.06 | 行走区域防滑防跌倒</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.06</div>
+  <h1>行走区域防滑防跌倒</h1>
+  <div class="subtitle">Prevention of Slip, Trip and Fall Hazards</div>
+  <div class="brand">安全五点半 · Frank聊EHS</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</div>
+
+<div class="sections" id="sections">
+
+  <div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">风险识别<small>Risk Identification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">I just heard that one employee slipped and nearly fell on the stair landing yesterday. I'm quite concerned about slip and fall risks in our factory. What's our overall control framework for this kind of hazard?</div>
+        <div class="zh">我刚听说昨天有员工在楼梯平台滑倒险些出事，我很担心厂区内滑倒跌倒的隐患，咱们针对这类风险整体管控方案是怎样的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Sir, our whole control system covers three core parts: facility design standards, regular site inspections, standardized daily housekeeping management, and also behavioral safety promotion.</div>
+        <div class="zh">我们整套管控体系分为四大核心板块：设施硬件标准、常态化现场巡检、标准化日常保洁管理，还有员工行为安全宣传管控。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Which areas are at the highest risk?</div>
+        <div class="zh">哪些区域风险最高？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Stair landings, ramps, wet areas like pantries, and outdoor zones during rainy weather are the highest risk areas.</div>
+        <div class="zh">楼梯平台、坡道、茶水间等潮湿区域，以及雨雪天气的室外区域是风险最高的区域。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">slip and fall risks<small>滑倒跌倒风险</small></span>
+        <span class="kw">control framework<small>管控方案</small></span>
+        <span class="kw">housekeeping<small>保洁管理</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">防滑硬件设施<small>Anti-slip Hardware</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">For stairways, ramps and wet areas like pantries, what hardware improvements have we put in place to prevent slips?</div>
+        <div class="zh">针对楼梯、坡道还有茶水间这类潮湿区域，我们已经落地了哪些硬件改造来防滑？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">All stairs and ramps are fitted with complete handrails and anti-slip surface materials, we added extra lighting for stairwells, and laid anti-slip flooring in all wet work areas.</div>
+        <div class="zh">所有楼梯和坡道都配齐了扶手与防滑面层，楼梯间增补了照明，全部潮湿作业区都铺设了防滑地面。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How about outdoor parking lots and building entrances?</div>
+        <div class="zh">室外停车场和厂区大门呢？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Those areas receive extra patrols on rainy or snowy days to ensure safe walking conditions.</div>
+        <div class="zh">这些区域在雨雪天气会增加巡逻频次，确保行走安全。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">handrails<small>扶手</small></span>
+        <span class="kw">anti-slip flooring<small>防滑地面</small></span>
+        <span class="kw">lighting<small>照明</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">巡检与保洁<small>Inspection & Housekeeping</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we carry out regular inspections across indoor workshops, outdoor parking lots and building entrances?</div>
+        <div class="zh">室内车间、室外停车场、厂区大门这些区域，我们是怎么开展定期巡检的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We arrange daily routine walkthroughs for indoor zones, weekly special checks for walking surfaces, and extra patrols for outdoor areas on rainy or snowy days.</div>
+        <div class="zh">室内区域我们安排每日常规巡查，每周专门针对行走地面做专项排查，雨雪天气会给室外区域增加巡逻频次。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">What daily cleaning rules do we have to avoid spills, scattered debris and blocked walkways?</div>
+        <div class="zh">我们有哪些日常保洁规定，用来杜绝地面积水、杂物散落、通道堵塞这些问题？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Any liquid spill must be fully cleaned up right away, all walkways must stay free of obstacles, loose cables and uneven floor tiles will be fixed timely.</div>
+        <div class="zh">任何液体泼洒都必须立刻彻底清理，所有通道保持无障碍物，散乱线缆、起翘破损地砖都会及时修复。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">routine walkthroughs<small>常规巡检</small></span>
+        <span class="kw">walking surfaces<small>行走地面</small></span>
+        <span class="kw">liquid spill<small>液体泼洒</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">洞口管控与行为安全<small>Opening Control & Behavioral Safety</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">How do we handle floor holes, uneven ground and stair openings that may lead to falling accidents?</div>
+        <div class="zh">对于容易引发坠落事故的地面洞口、凹凸地面、楼梯缺口，我们是怎么处理的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">All floor openings are covered or surrounded by barricades with warning signs, uneven ground will be marked clearly until full repair.</div>
+        <div class="zh">所有地面洞口都会加盖或者用带警示标识的围栏围住，凹凸地面会贴好明显警示，直到完全修复平整。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">I remember we had falls caused by staff scrolling phones while walking. How do we manage this risk?</div>
+        <div class="zh">另外我记得之前也发生过员工走路看手机摔倒的事故，这块风险我们是怎么管控的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">All departments hold regular communication meetings and post safety posters to warn everyone not to use phones when moving around the plant.</div>
+        <div class="zh">各部门定期开会宣导，厂区张贴安全海报，反复提醒员工行走途中不要使用手机。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">floor openings<small>地面洞口</small></span>
+        <span class="kw">barricades<small>围栏</small></span>
+        <span class="kw">behavioral safety<small>行为安全</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">整改流程<small>Rectification Process</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">Once inspectors find any slip or trip hazard on site, what's our complete rectification process?</div>
+        <div class="zh">一旦巡检人员在现场发现滑倒、绊倒隐患，完整的整改流程是怎样的？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">We will record the hazard, assign responsible staff with a time limit for correction, and recheck the spot afterwards to confirm risks are removed.</div>
+        <div class="zh">我们会登记隐患信息，指定责任人并设定整改期限，整改完成后复查现场，确认隐患彻底消除。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">GM 总经理</div>
+        <div class="en">So it's a closed-loop process: identify, record, correct, and verify.</div>
+        <div class="zh">所以是一个闭环流程：识别、登记、整改、验证。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager 安全主管</div>
+        <div class="en">Exactly. This systematic approach ensures no hazard is left unaddressed.</div>
+        <div class="zh">没错，这种系统化方法确保每一个隐患都不会被遗漏。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">rectification process<small>整改流程</small></span>
+        <span class="kw">record the hazard<small>登记隐患</small></span>
+        <span class="kw">recheck<small>复查</small></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.06 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="audio/vol06_slip_trip_fall.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = [
+  '1. 风险识别',
+  '2. 防滑硬件设施',
+  '3. 巡检与保洁',
+  '4. 洞口管控与行为安全',
+  '5. 整改流程'
+];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+</script>
+</body>
+</html>
