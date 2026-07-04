@@ -1,2 +1,324 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>EHS英语领读卡</title><style>*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{width:100%;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f5f5}.hd{background:#1499B0;padding:30px 20px;text-align:center}.hd h1{color:#fff;font-size:26px;font-weight:700;letter-spacing:2px;margin-bottom:6px}.hd p{color:rgba(255,255,255,.8);font-size:13px;margin-top:4px}.ls{padding:16px}.bk{display:block;background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;text-decoration:none;color:inherit;box-shadow:0 1px 3px rgba(0,0,0,.08)}.be{font-size:18px;color:#333;font-weight:600}.bc{font-size:13px;color:#999;margin-top:2px}.ft{text-align:center;padding:20px;color:#ccc;font-size:11px}</style></head><body><div class="hd"><h1>EHS Vocabulary</h1><p>点击进入词卡册 · 翻页学单词 · 喇叭听发音</p></div><div class="ls"><a class="bk" href="flipbook_1_职业健康.html"><div class="be">Occupational Health</div><div class="bc">职业健康 · 4词</div></a><a class="bk" href="flipbook_2_EHS管理流程.html"><div class="be">EHS Management</div><div class="bc">EHS管理流程 · 19词</div></a><a class="bk" href="flipbook_3_安全专项.html"><div class="be">Safety Topics</div><div class="bc">安全专项 · 15词</div></a><a class="bk" href="flipbook_4_化学与环境.html"><div class="be">Chemical &amp; Environment</div><div class="bc">化学与环境 · 5词</div></a></div><div class="ft">安全五点半 · EHS英语领读卡</div></body></html>
-<!-- trigger rebuild 1783071235 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EHS英语口袋书 — 安全五点半</title>
+<meta name="description" content="EHS英语口袋书，安全五点半直播配套学习材料。听读页、分级卡、词卡册一站式导航。">
+<style>
+:root{
+  --cyan:#7BA7BC;--cyan-light:#e8f2f6;--cyan-dark:#5a8a9f;
+  --terra:#E07A5F;--terra-light:#fdf0ec;
+  --charcoal:#3D405B;--bg:#f0f7f9;
+  --radius:14px;--shadow:0 2px 12px rgba(61,64,91,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Noto Sans SC",sans-serif;background:var(--bg);color:var(--charcoal);line-height:1.6}
+
+/* ---- Scroll Reveal ---- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.18s}.reveal-d3{transition-delay:.26s}
+
+/* ---- Hero ---- */
+.hero{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 40px;text-align:center;background:linear-gradient(170deg,var(--cyan-light) 0%,var(--bg) 60%);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(224,122,95,.10) 0%,transparent 70%);bottom:-60px;right:-80px;pointer-events:none}
+.hero-badge{display:inline-block;background:var(--terra);color:#fff;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;letter-spacing:1px;margin-bottom:18px}
+.hero h1{font-size:clamp(28px,6vw,46px);font-weight:800;color:var(--charcoal);letter-spacing:1px;line-height:1.25}
+.hero h1 span{color:var(--cyan-dark)}
+.hero .subtitle{margin-top:12px;font-size:clamp(14px,2.5vw,17px);color:var(--cyan-dark);font-weight:500;max-width:420px}
+.hero .stats{display:flex;gap:28px;margin-top:32px}
+.hero .stat{text-align:center}
+.hero .stat b{display:block;font-size:26px;color:var(--terra);font-weight:800}
+.hero .stat small{font-size:12px;color:var(--charcoal);opacity:.6}
+.scroll-hint{margin-top:36px;font-size:13px;color:var(--cyan);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---- Section ---- */
+.section{max-width:880px;margin:0 auto;padding:48px 20px}
+.section-title{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--charcoal)}
+.section-desc{font-size:14px;color:var(--charcoal);opacity:.55;margin-bottom:24px}
+
+/* ---- Tabs ---- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.tab-btn{padding:7px 16px;border-radius:20px;border:1.5px solid var(--cyan);background:transparent;color:var(--cyan-dark);font-size:13px;font-weight:600;cursor:pointer;transition:all .25s}
+.tab-btn:hover{background:var(--cyan-light)}
+.tab-btn.active{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ---- Volume Card ---- */
+.vol-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.vol-card-head{background:linear-gradient(135deg,var(--cyan) 0%,var(--cyan-dark) 100%);padding:16px 20px;color:#fff}
+.vol-card-head .vol-num{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.75}
+.vol-card-head .vol-title{font-size:17px;font-weight:700;margin-top:2px}
+.vol-card-body{padding:16px 20px;display:flex;flex-wrap:wrap;gap:10px}
+.vol-link{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;border:1.5px solid transparent}
+.vol-link svg{width:18px;height:18px;flex-shrink:0}
+.vol-link.listener{background:var(--cyan-light);color:var(--cyan-dark);border-color:rgba(123,167,188,.25)}
+.vol-link.listener:hover{background:var(--cyan);color:#fff}
+.vol-link.card{background:var(--terra-light);color:#b85640;border-color:rgba(224,122,95,.2)}
+.vol-link.card:hover{background:var(--terra);color:#fff}
+.vol-link.graded{background:#eef0f7;color:var(--charcoal);border-color:rgba(61,64,91,.1)}
+.vol-link.graded:hover{background:var(--charcoal);color:#fff}
+.vol-link.disabled{opacity:.3;pointer-events:none;background:#f5f5f5;color:#aaa}
+
+/* ---- Quick Nav Cards ---- */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.quick-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 20px;text-align:center;transition:transform .25s,box-shadow .25s}
+.quick-card:hover{transform:translateY(-4px);box-shadow:0 6px 24px rgba(61,64,91,.12)}
+.quick-card .qc-icon{width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px}
+.quick-card .qc-icon svg{width:24px;height:24px}
+.quick-card .qc-icon.c1{background:var(--cyan-light)}
+.quick-card .qc-icon.c1 svg{color:var(--cyan-dark)}
+.quick-card .qc-icon.c2{background:var(--terra-light)}
+.quick-card .qc-icon.c2 svg{color:var(--terra)}
+.quick-card .qc-icon.c3{background:#eef0f7}
+.quick-card .qc-icon.c3 svg{color:var(--charcoal)}
+.quick-card h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.quick-card p{font-size:13px;color:var(--charcoal);opacity:.55;margin-bottom:14px}
+.quick-card .qc-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.qc-tag{font-size:11px;padding:3px 10px;border-radius:12px;background:var(--bg);color:var(--charcoal);text-decoration:none;font-weight:500;transition:background .2s}
+.qc-tag:hover{background:var(--cyan-light);color:var(--cyan-dark)}
+
+/* ---- Flipbook Section ---- */
+.flipbook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flipbook-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;text-decoration:none;color:inherit;transition:transform .2s;display:block}
+.flipbook-card:hover{transform:translateY(-3px)}
+.flipbook-card .fb-num{font-size:11px;font-weight:700;color:var(--terra);letter-spacing:1px}
+.flipbook-card .fb-title{font-size:15px;font-weight:700;margin:4px 0 2px}
+.flipbook-card .fb-meta{font-size:12px;opacity:.5}
+
+/* ---- Footer ---- */
+.footer{text-align:center;padding:40px 20px 32px;font-size:12px;color:var(--charcoal);opacity:.35}
+
+/* ---- Responsive ---- */
+@media(max-width:480px){
+  .hero{min-height:65vh;padding:48px 16px 32px}
+  .hero .stats{gap:18px}
+  .section{padding:32px 14px}
+  .vol-card-body{padding:12px 14px}
+  .quick-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div class="reveal">
+    <div class="hero-badge">EHS ENGLISH</div>
+    <h1>EHS英语<span>口袋书</span></h1>
+    <p class="subtitle">安全五点半 · EHS直播配套学习材料</p>
+    <div class="stats">
+      <div class="stat"><b>7</b><small>听读卷</small></div>
+      <div class="stat"><b>7</b><small>分级卡</small></div>
+      <div class="stat"><b>4</b><small>词卡册</small></div>
+      <div class="stat"><b>43</b><small>词汇总</small></div>
+    </div>
+  </div>
+  <div class="scroll-hint reveal reveal-d2">↓ 向下探索</div>
+</header>
+
+<!-- ========== VOLUME TABS ========== -->
+<section class="section">
+  <h2 class="section-title reveal">📖 分卷浏览</h2>
+  <p class="section-desc reveal reveal-d1">按卷切换，快速进入听读页、分级卡和词卡入口。</p>
+
+  <div class="tabs reveal reveal-d2" id="volTabs">
+    <button class="tab-btn active" data-tab="v00">Vol 00</button>
+    <button class="tab-btn" data-tab="v01">Vol 01</button>
+    <button class="tab-btn" data-tab="v02">Vol 02</button>
+    <button class="tab-btn" data-tab="v03">Vol 03</button>
+    <button class="tab-btn" data-tab="v04">Vol 04</button>
+    <button class="tab-btn" data-tab="v05">Vol 05</button>
+    <button class="tab-btn" data-tab="v06">Vol 06</button>
+  </div>
+
+  <!-- Vol00 -->
+  <div class="tab-panel active" id="v00">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 00</div><div class="vol-title">Emergency Preparedness Overview</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol00_emergency_preparedness_overview.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <a class="vol-link card" href="card_vol00_emergency_preparedness.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
+        <a class="vol-link graded" href="graded_vol00_emergency_preparedness.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vol01 -->
+  <div class="tab-panel" id="v01">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 01</div><div class="vol-title">Prevention, Preparedness & Response</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol01_prevention_preparedness_response.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <a class="vol-link card" href="card_vol01_prevention_response.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
+        <a class="vol-link graded" href="graded_vol01_prevention_response.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vol02 -->
+  <div class="tab-panel" id="v02">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 02</div><div class="vol-title">Drills, Evaluation & Improvement</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol02_drills_evaluation_improvement.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <a class="vol-link card" href="card_vol02_drill_evaluation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
+        <a class="vol-link graded" href="graded_vol02_drill_evaluation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vol03 -->
+  <div class="tab-panel" id="v03">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 03</div><div class="vol-title">Noise Control</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol03_noise_control.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <span class="vol-link disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡（无）</span>
+        <a class="vol-link graded" href="graded_vol03_noise_control.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vol04 -->
+  <div class="tab-panel" id="v04">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 04</div><div class="vol-title">Biological Hazard Management</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol04_biological_hazard_management.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <span class="vol-link disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡（无）</span>
+        <a class="vol-link graded" href="graded_vol04_biological_hazard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vol05 -->
+  <div class="tab-panel" id="v05">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 05</div><div class="vol-title">Ergonomic Management</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol05_ergonomic_management.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <a class="vol-link card" href="card_vol05_ergonomic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
+        <a class="vol-link graded" href="graded_vol05_ergonomic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vol06 -->
+  <div class="tab-panel" id="v06">
+    <div class="vol-card">
+      <div class="vol-card-head"><div class="vol-num">Vol 06</div><div class="vol-title">Slip, Trip & Fall</div></div>
+      <div class="vol-card-body">
+        <a class="vol-link listener" href="listener_vol06_slip_trip_fall.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
+        <a class="vol-link card" href="card_vol06_slip_trip_fall.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
+        <a class="vol-link graded" href="graded_vol06_slip_trip_fall.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
+        <a class="vol-link card" href="#flipbooks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>词卡册 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== QUICK NAV ========== -->
+<section class="section">
+  <h2 class="section-title reveal">⚡ 快速导航</h2>
+  <p class="section-desc reveal reveal-d1">三种学习形式，按需选择。</p>
+  <div class="quick-grid">
+    <!-- 听读页 -->
+    <div class="quick-card reveal reveal-d1">
+      <div class="qc-icon c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg></div>
+      <h3>听读页</h3>
+      <p>7卷全覆盖 · 边听边学</p>
+      <div class="qc-links">
+        <a class="qc-tag" href="listener_vol00_emergency_preparedness_overview.html">V00</a>
+        <a class="qc-tag" href="listener_vol01_prevention_preparedness_response.html">V01</a>
+        <a class="qc-tag" href="listener_vol02_drills_evaluation_improvement.html">V02</a>
+        <a class="qc-tag" href="listener_vol03_noise_control.html">V03</a>
+        <a class="qc-tag" href="listener_vol04_biological_hazard_management.html">V04</a>
+        <a class="qc-tag" href="listener_vol05_ergonomic_management.html">V05</a>
+        <a class="qc-tag" href="listener_vol06_slip_trip_fall.html">V06</a>
+      </div>
+    </div>
+    <!-- 分级卡 -->
+    <div class="quick-card reveal reveal-d2">
+      <div class="qc-icon c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg></div>
+      <h3>分级卡</h3>
+      <p>7卷全覆盖 · 10分钟跟读</p>
+      <div class="qc-links">
+        <a class="qc-tag" href="graded_vol00_emergency_preparedness.html">V00</a>
+        <a class="qc-tag" href="graded_vol01_prevention_response.html">V01</a>
+        <a class="qc-tag" href="graded_vol02_drill_evaluation.html">V02</a>
+        <a class="qc-tag" href="graded_vol03_noise_control.html">V03</a>
+        <a class="qc-tag" href="graded_vol04_biological_hazard.html">V04</a>
+        <a class="qc-tag" href="graded_vol05_ergonomic.html">V05</a>
+        <a class="qc-tag" href="graded_vol06_slip_trip_fall.html">V06</a>
+      </div>
+    </div>
+    <!-- 词卡册 -->
+    <div class="quick-card reveal reveal-d3">
+      <div class="qc-icon c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+      <h3>词卡册</h3>
+      <p>4册 · 翻页学单词</p>
+      <div class="qc-links">
+        <a class="qc-tag" href="flipbook_1_职业健康.html">职业健康</a>
+        <a class="qc-tag" href="flipbook_2_EHS管理流程.html">EHS管理</a>
+        <a class="qc-tag" href="flipbook_3_安全专项.html">安全专项</a>
+        <a class="qc-tag" href="flipbook_4_化学与环境.html">化学环境</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FLIPBOOK DETAIL ========== -->
+<section class="section" id="flipbooks">
+  <h2 class="section-title reveal">📚 词卡册详情</h2>
+  <p class="section-desc reveal reveal-d1">翻页式设计，扫码听发音。</p>
+  <div class="flipbook-grid">
+    <a class="flipbook-card reveal" href="flipbook_1_职业健康.html">
+      <div class="fb-num">FLIPBOOK 01</div>
+      <div class="fb-title">Occupational Health</div>
+      <div class="fb-meta">职业健康 · 4词</div>
+    </a>
+    <a class="flipbook-card reveal reveal-d1" href="flipbook_2_EHS管理流程.html">
+      <div class="fb-num">FLIPBOOK 02</div>
+      <div class="fb-title">EHS Management</div>
+      <div class="fb-meta">EHS管理流程 · 19词</div>
+    </a>
+    <a class="flipbook-card reveal reveal-d2" href="flipbook_3_安全专项.html">
+      <div class="fb-num">FLIPBOOK 03</div>
+      <div class="fb-title">Safety Topics</div>
+      <div class="fb-meta">安全专项 · 15词</div>
+    </a>
+    <a class="flipbook-card reveal reveal-d3" href="flipbook_4_化学与环境.html">
+      <div class="fb-num">FLIPBOOK 04</div>
+      <div class="fb-title">Chemical & Environment</div>
+      <div class="fb-meta">化学与环境 · 5词</div>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">EHS英语口袋书 · 安全五点半 · 冬妮出品</footer>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Scroll Reveal
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
