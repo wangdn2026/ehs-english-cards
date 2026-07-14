@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "volume": "Vol07",
+    "dialogue_id": "Dialogue 1",
+    "title_zh": "主管与安全员就新工作展开的对话",
+    "title_en": "Dialogue 1 on a new job between a supervisor and a safety officer",
+    "phrase_granularity": "最小词组（multi-word phrase）",
+    "total_phrases": 11,
+    "updated_at": "2026-07-14"
+  },
+  "phrases": [
+    {
+      "id": "v37_01",
+      "phrase": "new task",
+      "translation_zh": "新任务",
+      "part": 1,
+      "pos": "noun phrase",
+      "example_en": "We have a new task coming up.",
+      "example_zh": "我们有一项新任务要开展。",
+      "scenario": "新工作启动前的第一步",
+      "image_hint": "工单/任务单/日程表"
+    },
+    {
+      "id": "v37_02",
+      "phrase": "JHA",
+      "translation_zh": "工作危害分析（Job Hazard Analysis）",
+      "part": 1,
+      "pos": "abbreviation",
+      "full_form": "Job Hazard Analysis",
+      "example_en": "Before the start, you should complete a Job Hazard Analysis (JHA).",
+      "example_zh": "在开工前，必须先做工作危害分析（JHA）。",
+      "scenario": "E. H. S. 工作的核心方法论",
+      "image_hint": "JHA 分析表/团队讨论"
+    },
+    {
+      "id": "v37_03",
+      "phrase": "before the start",
+      "translation_zh": "开工前",
+      "part": 1,
+      "pos": "prepositional phrase",
+      "example_en": "Before the start, you should complete a JHA.",
+      "example_zh": "在开工前，必须先做 JHA。",
+      "scenario": "强调预防先行的关键时点",
+      "image_hint": "时钟/开工前安全检查"
+    },
+    {
+      "id": "v37_04",
+      "phrase": "scope of work",
+      "translation_zh": "作业范围",
+      "part": 1,
+      "pos": "noun phrase",
+      "example_en": "First, select the job and define the scope of work.",
+      "example_zh": "首先，选定这项工作，明确作业范围。",
+      "scenario": "JHA 第一步，界定边界",
+      "image_hint": "图纸/范围圈定"
+    },
+    {
+      "id": "v37_05",
+      "phrase": "JHA team",
+      "translation_zh": "JHA 小组",
+      "part": 2,
+      "pos": "noun phrase",
+      "example_en": "Select the JHA team including a jobmaster, operators, and me.",
+      "example_zh": "组建 JHA 小组，包括作业师傅、操作人员和我。",
+      "scenario": "团队组建的核心概念",
+      "image_hint": "多人会议/合影"
+    },
+    {
+      "id": "v37_06",
+      "phrase": "jobmaster",
+      "translation_zh": "作业师傅",
+      "part": 2,
+      "pos": "compound noun",
+      "example_en": "The JHA team should include a jobmaster, operators, and me.",
+      "example_zh": "JHA 小组应包括作业师傅、操作人员和我。",
+      "scenario": "一线经验丰富的老师傅",
+      "image_hint": "经验工人/头戴安全帽"
+    },
+    {
+      "id": "v37_07",
+      "phrase": "operators",
+      "translation_zh": "操作人员",
+      "part": 2,
+      "pos": "noun (plural)",
+      "example_en": "Operators should also be part of the JHA team.",
+      "example_zh": "操作人员也应当成为 JHA 小组的一员。",
+      "scenario": "现场直接作业的人员",
+      "image_hint": "操作工/控制室"
+    },
+    {
+      "id": "v37_08",
+      "phrase": "break down",
+      "translation_zh": "分解（工作）",
+      "part": 2,
+      "pos": "phrasal verb",
+      "example_en": "Break down the job into steps.",
+      "example_zh": "把工作分解成具体步骤。",
+      "scenario": "JHA 关键步骤，把工作切碎",
+      "image_hint": "任务拆解图/流程图"
+    },
+    {
+      "id": "v37_09",
+      "phrase": "analyze hazards",
+      "translation_zh": "危害分析",
+      "part": 2,
+      "pos": "verb phrase",
+      "example_en": "Analyze hazards for each step.",
+      "example_zh": "对每一步进行危害分析。",
+      "scenario": "JHA 核心动作",
+      "image_hint": "放大镜/危险标识"
+    },
+    {
+      "id": "v37_10",
+      "phrase": "control measures",
+      "translation_zh": "控制措施",
+      "part": 3,
+      "pos": "noun phrase",
+      "example_en": "Develop control measures.",
+      "example_zh": "制定控制措施。",
+      "scenario": "从识别到管控的桥梁",
+      "image_hint": "盾牌/防护措施图标"
+    },
+    {
+      "id": "v37_11",
+      "phrase": "follow-up actions",
+      "translation_zh": "后续跟进行动",
+      "part": 3,
+      "pos": "noun phrase",
+      "example_en": "Determine the follow-up actions to implement them.",
+      "example_zh": "确定后续跟进行动去落实。",
+      "scenario": "措施落地的闭环",
+      "image_hint": "清单/进度跟踪表"
+    }
+  ],
+  "part_summary": [
+    {
+      "part": 1,
+      "title_zh": "启动 JHA",
+      "phrase_ids": ["v37_01", "v37_02", "v37_03", "v37_04"]
+    },
+    {
+      "part": 2,
+      "title_zh": "组建团队 分解任务",
+      "phrase_ids": ["v37_05", "v37_06", "v37_07", "v37_08", "v37_09"]
+    },
+    {
+      "part": 3,
+      "title_zh": "识别危害 控制措施",
+      "phrase_ids": ["v37_10", "v37_11"]
+    }
+  ]
+}

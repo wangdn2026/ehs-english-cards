@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "volume": "Vol07",
+    "topic": "危害辨识和风险评估",
+    "dialogue_id": "Dialogue 1",
+    "title_zh": "主管与安全员就新工作展开的对话",
+    "title_en": "Dialogue 1 on a new job between a supervisor and a safety officer",
+    "speakers": {
+      "A": "Supervisor 主管",
+      "B": "Safety Officer 安全员"
+    },
+    "duration_minutes": 6,
+    "parts": 3,
+    "total_lines": 11,
+    "key_phrases_count": 11,
+    "key_phrases": [
+      "new task",
+      "JHA",
+      "before the start",
+      "scope of work",
+      "JHA team",
+      "jobmaster",
+      "operators",
+      "break down",
+      "analyze hazards",
+      "control measures",
+      "follow-up actions"
+    ],
+    "updated_at": "2026-07-14",
+    "source_pdf": "课包C危害辨识和风险评估（一）Dialogue 1 on a new job between a supervisor and a safety officer_1784000673306_2_kpnk.pdf",
+    "ehs_pronunciation_rule": "EHS 必须读作 E. H. S.，字母间加句号停顿，禁止连读吞音"
+  },
+  "parts": [
+    {
+      "part": 1,
+      "title_zh": "启动 JHA",
+      "title_en": "Start the JHA Process",
+      "level": "★",
+      "duration_minutes": 2,
+      "key_phrases": ["new task", "JHA", "before the start", "scope of work"],
+      "lines": [
+        {
+          "speaker": "A",
+          "en": "We have a new task coming up. What should we do first to make sure it's safe?",
+          "zh": "我们有一项新任务要开展，首先要怎么做才能确保安全？"
+        },
+        {
+          "speaker": "B",
+          "en": "Before the start, you should complete a Job Hazard Analysis (JHA).",
+          "zh": "在开工前，必须先做工作危害分析（JHA）。"
+        },
+        {
+          "speaker": "A",
+          "en": "Alright. How do we start the JHA process?",
+          "zh": "好的，那JHA流程要怎么开始？"
+        },
+        {
+          "speaker": "B",
+          "en": "First, select the job and define the scope of work.",
+          "zh": "首先，选定这项工作，明确作业范围。"
+        }
+      ]
+    },
+    {
+      "part": 2,
+      "title_zh": "组建团队 分解任务",
+      "title_en": "Build JHA Team and Break Down the Job",
+      "level": "★★",
+      "duration_minutes": 2,
+      "key_phrases": ["JHA team", "jobmaster", "operators", "break down"],
+      "lines": [
+        {
+          "speaker": "A",
+          "en": "Then what? Do I need to involve others?",
+          "zh": "然后呢？需要其他人参与吗？"
+        },
+        {
+          "speaker": "B",
+          "en": "Yes. Select the JHA team including a jobmaster, operators, and me.",
+          "zh": "是的，组建JHA小组，包括作业师傅、操作人员和我。"
+        },
+        {
+          "speaker": "A",
+          "en": "Next step?",
+          "zh": "下一步呢？"
+        },
+        {
+          "speaker": "B",
+          "en": "Break down the job into steps and analyze hazards for each step.",
+          "zh": "把工作分解成具体步骤，对每一步进行危害分析。"
+        }
+      ]
+    },
+    {
+      "part": 3,
+      "title_zh": "识别危害 控制措施",
+      "title_en": "Analyze Hazards and Develop Control Measures",
+      "level": "★★★",
+      "duration_minutes": 2,
+      "key_phrases": ["analyze hazards", "control measures", "follow-up actions"],
+      "lines": [
+        {
+          "speaker": "A",
+          "en": "After we finish the analysis?",
+          "zh": "分析完成之后呢？"
+        },
+        {
+          "speaker": "B",
+          "en": "Develop control measures and determine the follow-up actions to implement them.",
+          "zh": "制定控制措施，并确定后续跟进行动去落实。"
+        },
+        {
+          "speaker": "A",
+          "en": "Got it. We'll do JHA properly before the new job starts.",
+          "zh": "明白了，新任务开工前我们会认真做好JHA。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.05 | 人体功效管理</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px;
+    z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan);
+    font-size: 12px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .player-bar audio {
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+  }
+  
+  .sections { padding: 16px; }
+  
+  .section-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active {
+    border-color: var(--active-border);
+    box-shadow: 0 2px 16px rgba(224,122,95,0.2);
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    background: var(--charcoal);
+    color: white;
+    gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  
+  .section-body { padding: 16px; }
+  
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.07</div>
+  <h1>新任务 JHA</h1>
+  <div class="subtitle">Job Hazard Analysis on a New Job</div>
+  <div class="brand">GET YOU · AI试驾 出品 | 安全五点半</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+</div>
+
+<div class="sections" id="sections">
+
+  <div class="section-card" data-section="0" data-start="0" data-end="37.82">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">启动 JHA<small>Start the JHA Process</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker sup">Supervisor 主管</div>
+        <div class="en">We have a new task coming up. What should we do first to make sure it's safe?</div>
+        <div class="zh">我们有一项新任务要开展，首先要怎么做才能确保安全？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker so">Safety Officer 安全员</div>
+        <div class="en">Before the start, you should complete a Job Hazard Analysis (JHA).</div>
+        <div class="zh">在开工前，必须先做工作危害分析（JHA）。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker sup">Supervisor 主管</div>
+        <div class="en">Alright. How do we start the JHA process?</div>
+        <div class="zh">好的，那JHA流程要怎么开始？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker so">Safety Officer 安全员</div>
+        <div class="en">First, select the job and define the scope of work.</div>
+        <div class="zh">首先，选定这项工作，明确作业范围。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">new task<small>新任务</small></span>
+        <span class="kw">JHA<small>工作危害分析</small></span>
+        <span class="kw">before the start<small>开工前</small></span>
+        <span class="kw">scope of work<small>作业范围</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1" data-start="37.82" data-end="72.33">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">组建团队 分解任务<small>Build JHA Team & Break Down the Job</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker sup">Supervisor 主管</div>
+        <div class="en">Then what? Do I need to involve others?</div>
+        <div class="zh">然后呢？需要其他人参与吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker so">Safety Officer 安全员</div>
+        <div class="en">Yes. Select the JHA team including a jobmaster, operators, and me.</div>
+        <div class="zh">是的，组建JHA小组，包括作业师傅、操作人员和我。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker sup">Supervisor 主管</div>
+        <div class="en">Next step?</div>
+        <div class="zh">下一步呢？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker so">Safety Officer 安全员</div>
+        <div class="en">Break down the job into steps and analyze hazards for each step.</div>
+        <div class="zh">把工作分解成具体步骤，对每一步进行危害分析。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">JHA team<small>JHA 小组</small></span>
+        <span class="kw">jobmaster<small>作业师傅</small></span>
+        <span class="kw">operators<small>操作人员</small></span>
+        <span class="kw">break down<small>分解工作</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2" data-start="72.33" data-end="98.04">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">识别危害 控制措施<small>Analyze Hazards & Develop Controls</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker sup">Supervisor 主管</div>
+        <div class="en">After we finish the analysis?</div>
+        <div class="zh">分析完成之后呢？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker so">Safety Officer 安全员</div>
+        <div class="en">Develop control measures and determine the follow-up actions to implement them.</div>
+        <div class="zh">制定控制措施，并确定后续跟进行动去落实。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker sup">Supervisor 主管</div>
+        <div class="en">Got it. We'll do JHA properly before the new job starts.</div>
+        <div class="zh">明白了，新任务开工前我们会认真做好JHA。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">analyze hazards<small>危害分析</small></span>
+        <span class="kw">control measures<small>控制措施</small></span>
+        <span class="kw">follow-up actions<small>后续跟进行动</small></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.07 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="vol07_jha_full.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+const audio = document.getElementById('audioPlayer');
+const cards = document.querySelectorAll('.section-card');
+const dots = document.querySelectorAll('.progress-dots .dot');
+const nowPlaying = document.getElementById('nowPlaying');
+const sectionTitles = [
+  '1. 启动 JHA',
+  '2. 组建团队 分解任务',
+  '3. 识别危害 控制措施'
+];
+
+function getSectionTimes() {
+  const times = [];
+  cards.forEach(card => {
+    times.push({
+      start: parseFloat(card.dataset.start),
+      end: parseFloat(card.dataset.end),
+      index: parseInt(card.dataset.section)
+    });
+  });
+  return times;
+}
+
+const sectionTimes = getSectionTimes();
+let currentSection = -1;
+
+function playSection(idx) {
+  const t = sectionTimes[idx];
+  audio.currentTime = t.start;
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  cards.forEach((card, i) => { card.classList.toggle('active', i === idx); });
+  dots.forEach((dot, i) => {
+    dot.classList.remove('active', 'done');
+    if (i === idx) dot.classList.add('active');
+    else if (i < idx) dot.classList.add('done');
+  });
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('timeupdate', function() {
+  const t = audio.currentTime;
+  for (let i = sectionTimes.length - 1; i >= 0; i--) {
+    if (t >= sectionTimes[i].start) {
+      if (currentSection !== i) {
+        setActive(i);
+        const card = cards[i];
+        const rect = card.getBoundingClientRect();
+        if (rect.top < 0 || rect.bottom > window.innerHeight - 100) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      break;
+    }
+  }
+});
+
+audio.addEventListener('ended', function() {
+  cards.forEach(card => card.classList.remove('active'));
+  dots.forEach(dot => { dot.classList.remove('active'); dot.classList.add('done'); });
+  nowPlaying.textContent = '播放完毕 ✓';
+  currentSection = -1;
+});
+
+// Double-click to calibrate section start time
+cards.forEach(card => {
+  card.querySelector('.section-header').addEventListener('dblclick', function(e) {
+    e.preventDefault();
+    const idx = parseInt(card.dataset.section);
+    const newStart = audio.currentTime.toFixed(1);
+    card.dataset.start = newStart;
+    sectionTimes[idx].start = parseFloat(newStart);
+    nowPlaying.textContent = '已校准 ' + sectionTitles[idx] + ' 起始: ' + newStart + 's';
+  });
+});
+</script>
+</body>
+</html>
