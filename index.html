@@ -1,340 +1,220 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EHS英语口袋书 — 安全五点半</title>
-<meta name="description" content="EHS英语口袋书，安全五点半直播配套学习材料。听读页、分级卡、词卡册一站式导航。">
-<style>
-:root{
-  --cyan:#7BA7BC;--cyan-light:#e8f2f6;--cyan-dark:#5a8a9f;
-  --terra:#E07A5F;--terra-light:#fdf0ec;
-  --charcoal:#3D405B;--bg:#f0f7f9;
-  --radius:14px;--shadow:0 2px 12px rgba(61,64,91,.08);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Noto Sans SC",sans-serif;background:var(--bg);color:var(--charcoal);line-height:1.6}
-
-/* ---- Scroll Reveal ---- */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
-.reveal.visible{opacity:1;transform:none}
-.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.18s}.reveal-d3{transition-delay:.26s}
-
-/* ---- Hero ---- */
-.hero{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 40px;text-align:center;background:linear-gradient(170deg,var(--cyan-light) 0%,var(--bg) 60%);position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(224,122,95,.10) 0%,transparent 70%);bottom:-60px;right:-80px;pointer-events:none}
-.hero-badge{display:inline-block;background:var(--terra);color:#fff;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;letter-spacing:1px;margin-bottom:18px}
-.hero h1{font-size:clamp(28px,6vw,46px);font-weight:800;color:var(--charcoal);letter-spacing:1px;line-height:1.25}
-.hero h1 span{color:var(--cyan-dark)}
-.hero .subtitle{margin-top:12px;font-size:clamp(14px,2.5vw,17px);color:var(--cyan-dark);font-weight:500;max-width:420px}
-.hero .stats{display:flex;gap:28px;margin-top:32px}
-.hero .stat{text-align:center}
-.hero .stat b{display:block;font-size:26px;color:var(--terra);font-weight:800}
-.hero .stat small{font-size:12px;color:var(--charcoal);opacity:.6}
-.scroll-hint{margin-top:36px;font-size:13px;color:var(--cyan);animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-
-/* ---- Section ---- */
-.section{max-width:880px;margin:0 auto;padding:48px 20px}
-.section-title{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--charcoal)}
-.section-desc{font-size:14px;color:var(--charcoal);opacity:.55;margin-bottom:24px}
-
-/* ---- Tabs ---- */
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.tab-btn{padding:7px 16px;border-radius:20px;border:1.5px solid var(--cyan);background:transparent;color:var(--cyan-dark);font-size:13px;font-weight:600;cursor:pointer;transition:all .25s}
-.tab-btn:hover{background:var(--cyan-light)}
-.tab-btn.active{background:var(--cyan);color:#fff;border-color:var(--cyan)}
-.tab-panel{display:none}
-.tab-panel.active{display:block;animation:fadeUp .35s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-/* ---- Volume Card ---- */
-.vol-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
-.vol-card-head{background:linear-gradient(135deg,var(--cyan) 0%,var(--cyan-dark) 100%);padding:16px 20px;color:#fff}
-.vol-card-head .vol-num{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.75}
-.vol-card-head .vol-title{font-size:17px;font-weight:700;margin-top:2px}
-.vol-card-body{padding:16px 20px;display:flex;flex-wrap:wrap;gap:10px}
-.vol-link{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;border:1.5px solid transparent}
-.vol-link svg{width:18px;height:18px;flex-shrink:0}
-.vol-link.listener{background:var(--cyan-light);color:var(--cyan-dark);border-color:rgba(123,167,188,.25)}
-.vol-link.listener:hover{background:var(--cyan);color:#fff}
-.vol-link.card{background:var(--terra-light);color:#b85640;border-color:rgba(224,122,95,.2)}
-.vol-link.card:hover{background:var(--terra);color:#fff}
-.vol-link.graded{background:#eef0f7;color:var(--charcoal);border-color:rgba(61,64,91,.1)}
-.vol-link.graded:hover{background:var(--charcoal);color:#fff}
-.vol-link.disabled{opacity:.3;pointer-events:none;background:#f5f5f5;color:#aaa}
-
-/* ---- Quick Nav Cards ---- */
-.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.quick-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 20px;text-align:center;transition:transform .25s,box-shadow .25s}
-.quick-card:hover{transform:translateY(-4px);box-shadow:0 6px 24px rgba(61,64,91,.12)}
-.quick-card .qc-icon{width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px}
-.quick-card .qc-icon svg{width:24px;height:24px}
-.quick-card .qc-icon.c1{background:var(--cyan-light)}
-.quick-card .qc-icon.c1 svg{color:var(--cyan-dark)}
-.quick-card .qc-icon.c2{background:var(--terra-light)}
-.quick-card .qc-icon.c2 svg{color:var(--terra)}
-.quick-card .qc-icon.c3{background:#eef0f7}
-.quick-card .qc-icon.c3 svg{color:var(--charcoal)}
-.quick-card h3{font-size:16px;font-weight:700;margin-bottom:4px}
-.quick-card p{font-size:13px;color:var(--charcoal);opacity:.55;margin-bottom:14px}
-.quick-card .qc-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
-.qc-tag{font-size:11px;padding:3px 10px;border-radius:12px;background:var(--bg);color:var(--charcoal);text-decoration:none;font-weight:500;transition:background .2s}
-.qc-tag:hover{background:var(--cyan-light);color:var(--cyan-dark)}
-
-/* ---- Flipbook Section ---- */
-.flipbook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.flipbook-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;text-decoration:none;color:inherit;transition:transform .2s;display:block}
-.flipbook-card:hover{transform:translateY(-3px)}
-.flipbook-card .fb-num{font-size:11px;font-weight:700;color:var(--terra);letter-spacing:1px}
-.flipbook-card .fb-title{font-size:15px;font-weight:700;margin:4px 0 2px}
-.flipbook-card .fb-meta{font-size:12px;opacity:.5}
-
-/* ---- Footer ---- */
-.footer{text-align:center;padding:40px 20px 32px;font-size:12px;color:var(--charcoal);opacity:.35}
-
-/* ---- Responsive ---- */
-@media(max-width:480px){
-  .hero{min-height:65vh;padding:48px 16px 32px}
-  .hero .stats{gap:18px}
-  .section{padding:32px 14px}
-  .vol-card-body{padding:12px 14px}
-  .quick-grid{grid-template-columns:1fr}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EHS英语口袋书 · 安全五点半</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root { --sky: #7BA7BC; --terracotta: #E07A5F; --charcoal: #3D405B; --cream: #f8f6f1; --white: #ffffff; --text-dark: #2c2c2c; --text-light: #666666; }
+        *::selection { background: var(--terracotta); color: var(--white); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', sans-serif; background: var(--cream); color: var(--text-dark); line-height: 1.7; overflow-x: hidden; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; padding: 0 8%; gap: 60px; position: relative; background: linear-gradient(135deg, var(--cream) 0%, #f0ebe3 100%); }
+        .hero::before { content: 'EHS'; position: absolute; top: 10%; right: 5%; font-family: 'Fira Code', monospace; font-size: clamp(120px, 15vw, 200px); font-weight: 400; color: var(--sky); opacity: 0.08; pointer-events: none; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-tag { display: inline-block; padding: 8px 20px; background: var(--sky); color: var(--white); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; margin-bottom: 30px; border-radius: 2px; }
+        .hero h1 { font-family: 'Noto Serif SC', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; line-height: 1.2; color: var(--charcoal); margin-bottom: 24px; }
+        .hero h1 span { color: var(--terracotta); font-style: italic; }
+        .hero-desc { font-size: 1.15rem; color: var(--text-light); max-width: 480px; margin-bottom: 40px; font-weight: 300; }
+        .hero-cta { display: inline-flex; align-items: center; gap: 12px; padding: 16px 36px; background: var(--terracotta); color: var(--white); text-decoration: none; font-weight: 500; font-size: 1rem; transition: all 0.3s ease; border-radius: 2px; }
+        .hero-cta:hover { background: var(--charcoal); transform: translateX(4px); }
+        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+        .hero-card { width: 100%; max-width: 500px; aspect-ratio: 3/4; background: var(--white); border-radius: 8px; box-shadow: 0 30px 80px rgba(61, 64, 91, 0.15); display: flex; flex-direction: column; overflow: hidden; }
+        .hero-card-header { padding: 30px; background: var(--sky); color: var(--white); }
+        .hero-card-header h3 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; margin-bottom: 8px; }
+        .hero-card-header p { opacity: 0.9; font-size: 0.9rem; }
+        .hero-card-body { flex: 1; padding: 30px; display: flex; flex-direction: column; gap: 16px; }
+        .word-item { display: flex; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .word-item:last-child { border-bottom: none; }
+        .word-en { font-family: 'Fira Code', monospace; font-size: 1.1rem; color: var(--charcoal); font-weight: 500; }
+        .word-cn { font-size: 0.9rem; color: var(--text-light); }
+        .stats-strip { background: var(--charcoal); padding: 60px 8%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; }
+        .stat-item h4 { font-family: 'Fira Code', monospace; font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--terracotta); font-weight: 400; margin-bottom: 8px; }
+        .stat-item p { color: rgba(255,255,255,0.7); font-size: 0.95rem; font-weight: 300; }
+        .entries-section { padding: 100px 8%; background: var(--white); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); margin-bottom: 16px; }
+        .section-header p { color: var(--text-light); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .entries-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .entry-card { background: var(--cream); padding: 40px 30px; border-radius: 4px; text-align: center; transition: all 0.3s ease; border: 1px solid transparent; }
+        .entry-card:hover { transform: translateY(-8px); border-color: var(--sky); box-shadow: 0 20px 50px rgba(123, 167, 188, 0.15); }
+        .entry-icon { width: 60px; height: 60px; background: var(--sky); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 1.5rem; color: var(--white); }
+        .entry-card:nth-child(2) .entry-icon { background: var(--terracotta); }
+        .entry-card:nth-child(3) .entry-icon { background: var(--charcoal); }
+        .entry-card h3 { font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--charcoal); margin-bottom: 12px; }
+        .entry-card p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+        .entry-link { display: inline-block; color: var(--terracotta); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.2s; }
+        .entry-link:hover { color: var(--charcoal); }
+        .volume-section { padding: 100px 8%; background: var(--cream); display: grid; grid-template-columns: 280px 1fr; gap: 60px; }
+        .volume-nav { position: sticky; top: 100px; height: fit-content; }
+        .volume-nav h3 { font-family: 'Noto Serif SC', serif; font-size: 1.4rem; color: var(--charcoal); margin-bottom: 30px; }
+        .volume-tabs { display: flex; flex-direction: column; gap: 8px; }
+        .tab-btn { padding: 16px 20px; background: transparent; border: 1px solid #ddd; color: var(--text-light); font-size: 0.95rem; cursor: pointer; transition: all 0.2s; text-align: left; font-family: inherit; border-radius: 4px; }
+        .tab-btn:hover { border-color: var(--sky); color: var(--sky); }
+        .tab-btn.active { background: var(--sky); border-color: var(--sky); color: var(--white); }
+        .volume-content { min-height: 500px; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .volume-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .volume-item { background: var(--white); padding: 24px; border-radius: 4px; border-left: 4px solid var(--sky); transition: all 0.2s; }
+        .volume-item:hover { transform: translateX(4px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .volume-item h4 { font-family: 'Noto Serif SC', serif; font-size: 1.1rem; color: var(--charcoal); margin-bottom: 8px; }
+        .volume-item p { font-size: 0.85rem; color: var(--text-light); }
+        .volume-item a { display: inline-block; margin-top: 12px; color: var(--terracotta); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+        .safe530-section { background: var(--charcoal); padding: 120px 8%; position: relative; overflow: hidden; }
+        .safe530-section::before { content: '530'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Fira Code', monospace; font-size: clamp(200px, 25vw, 400px); font-weight: 400; color: var(--white); opacity: 0.03; pointer-events: none; }
+        .safe530-content { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
+        .safe530-content h2 { font-family: 'Noto Serif SC', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 20px; }
+        .safe530-content h2 span { color: var(--terracotta); }
+        .safe530-content p { color: rgba(255,255,255,0.7); font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px; }
+        .safe530-cta { display: inline-block; padding: 16px 40px; background: var(--terracotta); color: var(--white); text-decoration: none; font-weight: 500; border-radius: 2px; transition: all 0.3s; }
+        .safe530-cta:hover { background: var(--sky); transform: scale(1.02); }
+        .flipbook-section { padding: 100px 0; background: var(--white); overflow: hidden; }
+        .flipbook-section .section-header { padding: 0 8%; }
+        .flipbook-scroll { display: flex; gap: 30px; padding: 40px 8%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .flipbook-scroll::-webkit-scrollbar { display: none; }
+        .flipbook-card { flex: 0 0 300px; aspect-ratio: 3/4; background: var(--cream); border-radius: 8px; padding: 30px; display: flex; flex-direction: column; scroll-snap-align: start; transition: all 0.3s; border: 1px solid #eee; }
+        .flipbook-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .flipbook-card h4 { font-family: 'Noto Serif SC', serif; font-size: 1.2rem; color: var(--charcoal); margin-bottom: 12px; }
+        .flipbook-card .word-count { display: inline-block; padding: 4px 12px; background: var(--sky); color: var(--white); font-size: 0.8rem; border-radius: 20px; margin-bottom: 20px; width: fit-content; }
+        .flipbook-card p { color: var(--text-light); font-size: 0.9rem; line-height: 1.6; flex: 1; }
+        .flipbook-card a { margin-top: 20px; color: var(--terracotta); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        .footer-cta { background: linear-gradient(135deg, var(--sky) 0%, #5a8fa3 100%); padding: 100px 8%; text-align: center; }
+        .footer-cta h2 { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--white); margin-bottom: 20px; }
+        .footer-cta p { color: rgba(255,255,255,0.9); font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px; }
+        .footer-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .footer-links a { color: var(--white); text-decoration: none; padding: 12px 30px; border: 2px solid rgba(255,255,255,0.3); border-radius: 2px; transition: all 0.3s; }
+        .footer-links a:hover { background: var(--white); color: var(--sky); }
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; padding: 80px 6%; text-align: center; }
+            .hero-desc { margin: 0 auto 40px; }
+            .hero::before { display: none; }
+            .stats-strip { grid-template-columns: repeat(2, 1fr); padding: 40px 6%; }
+            .entries-grid { grid-template-columns: 1fr; }
+            .volume-section { grid-template-columns: 1fr; }
+            .volume-nav { position: relative; top: 0; }
+            .volume-tabs { flex-direction: row; overflow-x: auto; flex-wrap: nowrap; }
+            .tab-btn { white-space: nowrap; }
+        }
+        @media (max-width: 600px) { .stats-strip { grid-template-columns: 1fr; gap: 30px; } .flipbook-card { flex: 0 0 260px; } }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+    </style>
 </head>
 <body>
+    <section class="hero reveal">
+        <div class="hero-content">
+            <span class="hero-tag">安全五点半 · 英语训练营</span>
+            <h1>EHS 英语<br><span>口袋书</span></h1>
+            <p class="hero-desc">专为 EHS 从业者设计的职场英语场景化学习材料。每周三 21:15 直播，配套音频、词卡、跟读训练。</p>
+            <a href="#volumes" class="hero-cta">开始探索 →</a>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <div class="hero-card-header">
+                    <h3>本周热词</h3>
+                    <p>Vol.08 Dialogue 2</p>
+                </div>
+                <div class="hero-card-body">
+                    <div class="word-item"><span class="word-en">report</span><span class="word-cn">报告；汇报</span></div>
+                    <div class="word-item"><span class="word-en">unsafe condition</span><span class="word-cn">不安全状态</span></div>
+                    <div class="word-item"><span class="word-en">maintenance</span><span class="word-cn">维护；保养</span></div>
+                    <div class="word-item"><span class="word-en">spill</span><span class="word-cn">泄漏；溢出</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ========== HERO ========== -->
-<header class="hero">
-  <div class="reveal">
-    <div class="hero-badge">EHS ENGLISH</div>
-    <h1>EHS英语<span>口袋书</span></h1>
-    <p class="subtitle">安全五点半 · EHS直播配套学习材料</p>
-    <div class="stats">
-      <div class="stat"><b>7</b><small>听读卷</small></div>
-      <div class="stat"><b>7</b><small>分级卡</small></div>
-      <div class="stat"><b>4</b><small>词卡册</small></div>
-      <div class="stat"><b>43</b><small>词汇总</small></div>
-    </div>
-  </div>
-  <div class="scroll-hint reveal reveal-d2">↓ 向下探索</div>
-</header>
+    <section class="stats-strip reveal">
+        <div class="stat-item"><h4>07</h4><p>已上线卷数</p></div>
+        <div class="stat-item"><h4>43</h4><p>核心词汇</p></div>
+        <div class="stat-item"><h4>04</h4><p>翻翻页词卡</p></div>
+        <div class="stat-item"><h4>∞</h4><p>持续更新</p></div>
+    </section>
 
-<!-- ========== VOLUME TABS ========== -->
-<section class="section">
-  <h2 class="section-title reveal">📖 分卷浏览</h2>
-  <p class="section-desc reveal reveal-d1">按卷切换，快速进入听读页、分级卡和词卡入口。</p>
+    <section class="entries-section">
+        <div class="section-header reveal">
+            <h2>三种学习方式</h2>
+            <p>根据你的时间和场景，选择最适合的入口</p>
+        </div>
+        <div class="entries-grid reveal">
+            <div class="entry-card"><div class="entry-icon">🎧</div><h3>听读页</h3><p>完整对话 + 音频 + 中文对照<br>适合系统学习，每周预习用</p><a href="#volumes">查看全部 →</a></div>
+            <div class="entry-card"><div class="entry-icon">🗣️</div><h3>分级跟读卡</h3><p>L1/L2/L3 三级难度<br>适合碎片化时间跟读练习</p><a href="#graded">开始跟读 →</a></div>
+            <div class="entry-card"><div class="entry-icon">📝</div><h3>翻翻页词卡</h3><p>可打印 A4 折页<br>适合随身复习、扫码听发音</p><a href="#flipbooks">下载词卡 →</a></div>
+        </div>
+    </section>
 
-  <div class="tabs reveal reveal-d2" id="volTabs">
-    <button class="tab-btn active" data-tab="v00">Vol 00</button>
-    <button class="tab-btn" data-tab="v01">Vol 01</button>
-    <button class="tab-btn" data-tab="v02">Vol 02</button>
-    <button class="tab-btn" data-tab="v03">Vol 03</button>
-    <button class="tab-btn" data-tab="v04">Vol 04</button>
-    <button class="tab-btn" data-tab="v05">Vol 05</button>
-    <button class="tab-btn" data-tab="v06">Vol 06</button>
-    <button class="tab-btn" data-tab="v07">Vol 07</button>
-  </div>
+    <section class="volume-section" id="volumes">
+        <div class="volume-nav reveal">
+            <h3>分卷浏览</h3>
+            <div class="volume-tabs">
+                <button class="tab-btn active" onclick="switchTab('vol00-02')">Vol.00-02</button>
+                <button class="tab-btn" onclick="switchTab('vol03-05')">Vol.03-05</button>
+                <button class="tab-btn" onclick="switchTab('vol06-07')">Vol.06-07</button>
+                <button class="tab-btn" onclick="switchTab('vol08-09')">Vol.08-09</button>
+            </div>
+        </div>
+        <div class="volume-content reveal">
+            <div class="tab-panel active" id="vol00-02">
+                <div class="volume-list">
+                    <div class="volume-item"><h4>Vol.00 开播词</h4><p>Program Opening</p><a href="listener_vol00_program_opening.html">开始学习</a></div>
+                    <div class="volume-item"><h4>Vol.01 上岗前</h4><p>Before Starting Work</p><a href="listener_vol01_before_starting_work.html">开始学习</a></div>
+                    <div class="volume-item"><h4>Vol.02 现场巡检</h4><p>Site Inspection</p><a href="listener_vol02_site_inspection.html">开始学习</a></div>
+                </div>
+            </div>
+            <div class="tab-panel" id="vol03-05">
+                <div class="volume-list">
+                    <div class="volume-item"><h4>Vol.03 穿戴 PPE</h4><p>Wearing PPE</p><a href="listener_vol03_wearing_ppe.html">开始学习</a></div>
+                    <div class="volume-item"><h4>Vol.04 化学品安全</h4><p>Chemical Safety</p><a href="listener_vol04_chemical_safety.html">开始学习</a></div>
+                    <div class="volume-item"><h4>Vol.05 事故报告</h4><p>Incident Reporting</p><a href="listener_vol05_incident_reporting.html">开始学习</a></div>
+                </div>
+            </div>
+            <div class="tab-panel" id="vol06-07">
+                <div class="volume-list">
+                    <div class="volume-item"><h4>Vol.06 应急演练</h4><p>Emergency Drill</p><a href="listener_vol06_emergency_drill.html">开始学习</a></div>
+                    <div class="volume-item"><h4>Vol.07 JHA 工作危害分析</h4><p>Job Hazard Analysis</p><a href="listener_vol07_jha_work_hazard_analysis.html">开始学习</a></div>
+                </div>
+            </div>
+            <div class="tab-panel" id="vol08-09">
+                <div class="volume-list">
+                    <div class="volume-item"><h4>Vol.08 员工报告不安全状态</h4><p>Reporting Unsafe Conditions</p><a href="listener_vol08_employee_reports_unsafe_conditions_dialogue1.html">Dialogue 1</a><a href="listener_vol08_employee_reports_unsafe_conditions_dialogue2.html">Dialogue 2</a></div>
+                    <div class="volume-item"><h4>Vol.09 工厂危害识别</h4><p>Workplace Hazards</p><a href="#">即将上线</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Vol00 -->
-  <div class="tab-panel active" id="v00">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 00</div><div class="vol-title">Emergency Preparedness Overview</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol00_emergency_preparedness_overview.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <a class="vol-link card" href="card_vol00_emergency_preparedness.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
-        <a class="vol-link graded" href="graded_vol00_emergency_preparedness.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-      </div>
-    </div>
-  </div>
+    <section class="safe530-section reveal">
+        <div class="safe530-content">
+            <h2>安全五点半<br><span>英语训练营</span></h2>
+            <p>每周三 21:15，「安全五点半」直播间不见不散。<br>专为 EHS 从业者打造的职场英语场景化学习，<br>让你在工作中说一口流利的安全英语。</p>
+            <a href="#" class="safe530-cta">预约直播</a>
+        </div>
+    </section>
 
-  <!-- Vol01 -->
-  <div class="tab-panel" id="v01">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 01</div><div class="vol-title">Prevention, Preparedness & Response</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol01_prevention_preparedness_response.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <a class="vol-link card" href="card_vol01_prevention_response.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
-        <a class="vol-link graded" href="graded_vol01_prevention_response.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-      </div>
-    </div>
-  </div>
+    <section class="flipbook-section" id="flipbooks">
+        <div class="section-header reveal"><h2>翻翻页词卡</h2><p>A4 打印即用，扫码听发音，随身复习</p></div>
+        <div class="flipbook-scroll reveal">
+            <div class="flipbook-card"><h4>册一：通用管理</h4><span class="word-count">12 词</span><p>涵盖 program opening、before starting work、site inspection 等管理场景高频词</p><a href="flipbook_1_general_management.html">查看词卡</a></div>
+            <div class="flipbook-card"><h4>册二：PPE 与化学品</h4><span class="word-count">12 词</span><p>wearing PPE、chemical safety 等个人防护与化学品安全核心词汇</p><a href="flipbook_2_ppe_chemical.html">查看词卡</a></div>
+            <div class="flipbook-card"><h4>册三：事故与应急</h4><span class="word-count">12 词</span><p>incident reporting、emergency drill、fire extinguisher 等应急场景用语</p><a href="flipbook_3_incident_emergency.html">查看词卡</a></div>
+            <div class="flipbook-card"><h4>册四：作业安全</h4><span class="word-count">12 词</span><p>JHA、work hazard、unsafe condition 等作业危害识别与报告词汇</p><a href="flipbook_4_job_safety.html">查看词卡</a></div>
+        </div>
+    </section>
 
-  <!-- Vol02 -->
-  <div class="tab-panel" id="v02">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 02</div><div class="vol-title">Drills, Evaluation & Improvement</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol02_drills_evaluation_improvement.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <a class="vol-link card" href="card_vol02_drill_evaluation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
-        <a class="vol-link graded" href="graded_vol02_drill_evaluation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-      </div>
-    </div>
-  </div>
+    <footer class="footer-cta reveal">
+        <h2>准备好开始了吗？</h2>
+        <p>选择任意一卷开始你的 EHS 英语学习之旅。每周三直播，持续更新。</p>
+        <div class="footer-links"><a href="mailto:wangdn@coze.email">联系作者</a><a href="#volumes">开始学习</a></div>
+    </footer>
 
-  <!-- Vol03 -->
-  <div class="tab-panel" id="v03">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 03</div><div class="vol-title">Noise Control</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol03_noise_control.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <span class="vol-link disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡（无）</span>
-        <a class="vol-link graded" href="graded_vol03_noise_control.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vol04 -->
-  <div class="tab-panel" id="v04">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 04</div><div class="vol-title">Biological Hazard Management</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol04_biological_hazard_management.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <span class="vol-link disabled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡（无）</span>
-        <a class="vol-link graded" href="graded_vol04_biological_hazard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vol05 -->
-  <div class="tab-panel" id="v05">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 05</div><div class="vol-title">Ergonomic Management</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol05_ergonomic_management.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <a class="vol-link card" href="card_vol05_ergonomic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
-        <a class="vol-link graded" href="graded_vol05_ergonomic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vol06 -->
-  <div class="tab-panel" id="v06">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 06</div><div class="vol-title">Slip, Trip & Fall</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol06_slip_trip_fall.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <a class="vol-link card" href="card_vol06_slip_trip_fall.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
-        <a class="vol-link graded" href="graded_vol06_slip_trip_fall.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-        <a class="vol-link card" href="#flipbooks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>词卡册 →</a>
-      </div>
-    </div>
-  </div>
-
-<!-- Vol07 -->
-  <div class="tab-panel" id="v07">
-    <div class="vol-card">
-      <div class="vol-card-head"><div class="vol-num">Vol 07</div><div class="vol-title">Job Hazard Analysis on a New Job</div></div>
-      <div class="vol-card-body">
-        <a class="vol-link listener" href="listener_vol07_jha_newjob.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg>听读页</a>
-        <a class="vol-link card" href="card_vol07_jha_newjob.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>入口卡</a>
-        <a class="vol-link graded" href="graded_vol07_jha_newjob.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg>分级卡</a>
-        <a class="vol-link card" href="#flipbooks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>词卡册 →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== QUICK NAV ========== -->
-<section class="section">
-  <h2 class="section-title reveal">⚡ 快速导航</h2>
-  <p class="section-desc reveal reveal-d1">三种学习形式，按需选择。</p>
-  <div class="quick-grid">
-    <!-- 听读页 -->
-    <div class="quick-card reveal reveal-d1">
-      <div class="qc-icon c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg></div>
-      <h3>听读页</h3>
-      <p>7卷全覆盖 · 边听边学</p>
-      <div class="qc-links">
-        <a class="qc-tag" href="listener_vol00_emergency_preparedness_overview.html">V00</a>
-        <a class="qc-tag" href="listener_vol01_prevention_preparedness_response.html">V01</a>
-        <a class="qc-tag" href="listener_vol02_drills_evaluation_improvement.html">V02</a>
-        <a class="qc-tag" href="listener_vol03_noise_control.html">V03</a>
-        <a class="qc-tag" href="listener_vol04_biological_hazard_management.html">V04</a>
-        <a class="qc-tag" href="listener_vol05_ergonomic_management.html">V05</a>
-        <a class="qc-tag" href="listener_vol06_slip_trip_fall.html">V06</a>
-        <a class="qc-tag" href="listener_vol07_jha_newjob.html">V07</a>
-      </div>
-    </div>
-    <!-- 分级卡 -->
-    <div class="quick-card reveal reveal-d2">
-      <div class="qc-icon c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z"/></svg></div>
-      <h3>分级卡</h3>
-      <p>7卷全覆盖 · 10分钟跟读</p>
-      <div class="qc-links">
-        <a class="qc-tag" href="graded_vol00_emergency_preparedness.html">V00</a>
-        <a class="qc-tag" href="graded_vol01_prevention_response.html">V01</a>
-        <a class="qc-tag" href="graded_vol02_drill_evaluation.html">V02</a>
-        <a class="qc-tag" href="graded_vol03_noise_control.html">V03</a>
-        <a class="qc-tag" href="graded_vol04_biological_hazard.html">V04</a>
-        <a class="qc-tag" href="graded_vol05_ergonomic.html">V05</a>
-        <a class="qc-tag" href="graded_vol06_slip_trip_fall.html">V06</a>
-        <a class="qc-tag" href="graded_vol07_jha_newjob.html">V07</a>
-      </div>
-    </div>
-    <!-- 词卡册 -->
-    <div class="quick-card reveal reveal-d3">
-      <div class="qc-icon c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
-      <h3>词卡册</h3>
-      <p>4册 · 翻页学单词</p>
-      <div class="qc-links">
-        <a class="qc-tag" href="flipbook_1_职业健康.html">职业健康</a>
-        <a class="qc-tag" href="flipbook_2_EHS管理流程.html">EHS管理</a>
-        <a class="qc-tag" href="flipbook_3_安全专项.html">安全专项</a>
-        <a class="qc-tag" href="flipbook_4_化学与环境.html">化学环境</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== FLIPBOOK DETAIL ========== -->
-<section class="section" id="flipbooks">
-  <h2 class="section-title reveal">📚 词卡册详情</h2>
-  <p class="section-desc reveal reveal-d1">翻页式设计，扫码听发音。</p>
-  <div class="flipbook-grid">
-    <a class="flipbook-card reveal" href="flipbook_1_职业健康.html">
-      <div class="fb-num">FLIPBOOK 01</div>
-      <div class="fb-title">Occupational Health</div>
-      <div class="fb-meta">职业健康 · 4词</div>
-    </a>
-    <a class="flipbook-card reveal reveal-d1" href="flipbook_2_EHS管理流程.html">
-      <div class="fb-num">FLIPBOOK 02</div>
-      <div class="fb-title">EHS Management</div>
-      <div class="fb-meta">EHS管理流程 · 19词</div>
-    </a>
-    <a class="flipbook-card reveal reveal-d2" href="flipbook_3_安全专项.html">
-      <div class="fb-num">FLIPBOOK 03</div>
-      <div class="fb-title">Safety Topics</div>
-      <div class="fb-meta">安全专项 · 15词</div>
-    </a>
-    <a class="flipbook-card reveal reveal-d3" href="flipbook_4_化学与环境.html">
-      <div class="fb-num">FLIPBOOK 04</div>
-      <div class="fb-title">Chemical & Environment</div>
-      <div class="fb-meta">化学与环境 · 5词</div>
-    </a>
-  </div>
-</section>
-
-<footer class="footer">EHS英语口袋书 · 安全五点半 · 冬妮出品</footer>
-
-<script>
-// Tab switching
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
-  });
-});
-
-// Scroll Reveal
-const io=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
-},{threshold:0.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+    <script>
+        function switchTab(tabId) { document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active')); document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active')); event.target.classList.add('active'); document.getElementById(tabId).classList.add('active'); }
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
