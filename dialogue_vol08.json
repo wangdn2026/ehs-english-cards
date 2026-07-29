@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "vol": "08",
+    "topic": "医院门诊与承包商安全管理（一）",
+    "topic_en": "Clinics & Contractor Safety Management (I)",
+    "difficulty": "★★☆",
+    "scheduled_live_date": "2026-07-29"
+  },
+  "parts": [
+    {
+      "id": 1,
+      "title": "Part 1: 前台咨询与挂号",
+      "dialogue": [
+        { "role": "Patient", "en": "Excuse me, where is the internal medicine department for fever and cold symptoms? Which floor and building is it on?", "zh": "打扰一下，请问看感冒发烧的内科门诊在哪一栋楼、几楼？" },
+        { "role": "Receptionist", "en": "Internal medicine is on the 2nd floor of Building A. You can register your appointment right here first.", "zh": "内科在A栋二楼，你可以先在我这里挂号。" },
+        { "role": "Patient", "en": "Alright, here is my medical insurance card.", "zh": "好的，这是我的医保卡。" },
+        { "role": "Receptionist", "en": "Wait for your number on the screen. The doctor will call you when it's your turn.", "zh": "在屏幕上等候叫号就可以，轮到你时医生会喊你的名字。" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Part 2: 问诊医生：症状与诊断",
+      "dialogue": [
+        { "role": "Patient", "en": "I've had a bad cold for three days, with a high fever, sore throat and constant coughing.", "zh": "我重感冒三天了，发高烧、喉咙疼，还一直咳嗽。" },
+        { "role": "Doctor", "en": "Let me check your temperature, pulse and breathing first. Have you had any chronic illness before?", "zh": "我先帮你量体温、检查脉搏和呼吸。你以前有慢性病吗？" },
+        { "role": "Patient", "en": "No, I've always been pretty healthy.", "zh": "没有，我身体一直都挺好的。" },
+        { "role": "Doctor", "en": "It's just a viral cold, no serious infection. I'll prescribe some fever-reducer and cough syrup for you.", "zh": "只是病毒性感冒，没有严重感染。我给你开退烧药和止咳糖浆。" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Part 3: 承包商分类与总体要求",
+      "dialogue": [
+        { "role": "PM", "en": "We will start a facility renovation project soon. What safety work should we arrange for contractors in advance?", "zh": "我们马上要启动厂务设施改造项目，针对承包商，我们前期要做好哪些安全工作？" },
+        { "role": "EHS Manager", "en": "Contractor safety management should be included in the whole project. We classify contractors into three categories: office-based team members, facilities support services, and renovation or construction contractors.", "zh": "承包商安全管理要融入项目全程。我们将承包商分为三类：驻办公室团队服务、厂务后勤服务，以及装修、设备维保与施工工程。" },
+        { "role": "PM", "en": "Are there different safety requirements for these three types?", "zh": "这三类承包商的安全要求各不相同吗？" },
+        { "role": "EHS Manager", "en": "Yes. They have different requirements for pre-qualifications, trainings, signing of a contract, safety meeting, PTP, worksite inspection, annual audit and quarterly performance review.", "zh": "是的，他们在资格预审、培训、合同签署、安全会议、作业前方案/作业许可、现场检查、年度审核及季度绩效评审方面有着不同要求。" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Part 4: 资格预审与筛选",
+      "dialogue": [
+        { "role": "PM", "en": "What is the core task of the first stage, Pre-Qualification and Selection?", "zh": "第一阶段资格预审与筛选，核心工作是什么？" },
+        { "role": "EHS Manager", "en": "We must collect a completed Contractor Prequalification Form from every bidding contractor at first.", "zh": "我们首先必须收取所有投标承包商填写完整的《承包商资格预审表》。" },
+        { "role": "PM", "en": "What key contents do we need to check on this pre-qualification form?", "zh": "这份资格预审表，我们重点要核查哪些内容？" },
+        { "role": "EHS Manager", "en": "We check their licences, certifications, qualifications, three-year reportable injuries, safety citations from Gov. agencies and some items of their E. H. S. management systems.", "zh": "我们核查其执照、资质证书、从业资格、近三年可记录工伤事故、政府监管机构出具的安全违规处罚通知以及一些E. H. S.管理系统方面的问题。" },
+        { "role": "PM", "en": "Once we select a qualified contractor after pre-qualification, what is the next key step?", "zh": "我们通过预审选定合格承包商之后，下一步关键流程是什么？" },
+        { "role": "EHS Manager", "en": "All contractor staff must finish our designated online orientation training and their specific trainings.", "zh": "所有承包商人员必须完成我们指定的线上入职安全培训，还有他们自己的专项培训。" }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Part 5: 入场安全准备",
+      "dialogue": [
+        { "role": "PM", "en": "Great, training is very important. Anything else?", "zh": "很好，培训十分重要，还有其他事项吗？" },
+        { "role": "EHS Manager", "en": "Sure, they need to conduct hazard identification and risk assessment in advance for the contractor activities and submit their work safety plan.", "zh": "当然，他们事先需针对承包商作业开展危险源辨识与风险评估，并提交作业安全方案。" },
+        { "role": "PM", "en": "Does the second stage require them to sign a safety agreement?", "zh": "第二阶段作业前安全准备，要求签订安全协议？" },
+        { "role": "EHS Manager", "en": "Absolutely, we shall sign a formal Safety Agreement with them prior to the start of work in order to comply with Work Safety Law.", "zh": "一定的，为了符合安全生产法的要求，在开工前和对方签订正式安全生产管理协议。" },
+        { "role": "PM", "en": "Got it. Safety is the foundation of every project.", "zh": "明白了。安全是每一个项目的基础。" }
+      ]
+    }
+  ]
+}
