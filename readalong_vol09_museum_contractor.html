@@ -13,19 +13,18 @@
     --c-bg: #F4F1DE;
     --c-card: #FFFFFF;
     --c-line: #E5E1D0;
-    --c-miss: #C8C5B6;
     --c-soft: #8C99AB;
-    --c-good-bg: #DCEAD5;
-    --c-good-fg: #4A6B3A;
-    --c-ok-bg: #FBE3D4;
-    --c-ok-fg: #9B4F2C;
-    --c-low-bg: #E8E6DC;
-    --c-low-fg: #8C8878;
+    /* 4 档分数色：90+ 深绿 / 70-89 中绿 / 50-69 浅绿 / <50 红 */
+    --c-best: #4A8B3A;       /* 深绿 */
+    --c-good: #7CB069;       /* 中绿 */
+    --c-ok: #B5D4A0;         /* 浅绿 */
+    --c-bad: #E07A5F;        /* 红/橙 */
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; padding: 0; background: var(--c-bg); color: var(--c-charcoal);
     font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
   .top { background: linear-gradient(135deg, var(--c-tian) 0%, #5B8FA8 100%);
     color: #fff; padding: 20px 18px 18px; }
   .top h1 { margin: 0 0 4px; font-size: 19px; font-weight: 600; letter-spacing: 0.3px; }
@@ -37,7 +36,7 @@
   .progress { background: var(--c-card); margin: 12px 14px 0; padding: 12px 14px;
     border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; align-items: center; gap: 10px; }
   .progress-bar { flex: 1; height: 6px; background: var(--c-line); border-radius: 3px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--c-orange); width: 0%; transition: width 0.4s ease; }
+  .progress-fill { height: 100%; background: var(--c-best); width: 0%; transition: width 0.4s ease; }
   .progress-text { font-size: 12px; color: var(--c-soft); white-space: nowrap; font-weight: 500; }
   .tips { margin: 12px 14px; padding: 11px 13px; background: #EAF2F6; border-left: 3px solid var(--c-tian);
     border-radius: 4px; font-size: 12px; color: #2C4A5C; line-height: 1.6; }
@@ -52,7 +51,7 @@
   .line { background: var(--c-card); border-radius: 12px; padding: 14px 14px 12px;
     margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: relative; overflow: hidden;
     border: 2px solid transparent; transition: border-color 0.3s; }
-  .line.done { border-color: var(--c-orange); }
+  .line.done { border-color: var(--c-good); }
   .line.recording { border-color: var(--c-orange-deep); background: #FFF8F4; }
   .line-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
   .role-tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 8px;
@@ -68,35 +67,52 @@
     50% { opacity: 0.4; transform: scale(0.8); }
   }
   .done-mark { position: absolute; top: 10px; right: 12px; width: 22px; height: 22px; border-radius: 50%;
-    background: var(--c-orange); color: #fff; display: none; align-items: center; justify-content: center;
+    background: var(--c-good); color: #fff; display: none; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 700; }
   .line.done .done-mark { display: flex; }
   .line-en { font-size: 16px; font-weight: 500; color: var(--c-charcoal); margin: 4px 0 4px;
     line-height: 1.45; }
   .line-zh { font-size: 12.5px; color: var(--c-soft); margin-bottom: 10px; }
   .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .btn { border: none; border-radius: 18px; padding: 7px 14px; font-size: 12.5px; cursor: pointer;
+  .btn { border: none; border-radius: 18px; padding: 8px 16px; font-size: 13px; cursor: pointer;
     font-weight: 500; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s;
-    font-family: inherit; }
+    font-family: inherit; -webkit-tap-highlight-color: transparent; }
   .btn-play { background: var(--c-tian); color: #fff; }
   .btn-play:active { background: #5B8FA8; }
   .btn-play.playing { background: var(--c-orange); }
-  .btn-rec { background: var(--c-orange); color: #fff; padding: 7px 16px; }
-  .btn-rec:disabled { background: #C8C5B6; cursor: not-allowed; opacity: 0.7; }
-  .btn-stop { background: var(--c-orange-deep); color: #fff; padding: 7px 16px; animation: rec-pulse 1.4s infinite; }
-  @keyframes rec-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(224,122,95,0.5); }
-    50% { box-shadow: 0 0 0 6px rgba(224,122,95,0); }
+  /* 长按录音按钮：核心交互 */
+  .btn-hold { background: var(--c-orange); color: #fff; padding: 9px 18px;
+    font-weight: 600; -webkit-user-select: none; user-select: none;
+    touch-action: none; position: relative; }
+  .btn-hold:active, .btn-hold.pressing {
+    background: var(--c-orange-deep);
+    transform: scale(0.96);
+    box-shadow: 0 0 0 6px rgba(224,122,95,0.25);
   }
+  .btn-hold .hold-hint { font-size: 11px; opacity: 0.85; margin-left: 2px; }
   .btn-replay { background: var(--c-line); color: var(--c-charcoal); }
   .btn-retry { background: transparent; color: var(--c-soft); border: 1px solid var(--c-line); }
   .waveform { flex: 1; min-width: 100px; height: 28px; display: flex; align-items: center; gap: 2px;
-    padding: 0 2px; }
+    padding: 0 2px; overflow: hidden; }
   .wave-bar { width: 3px; background: var(--c-line); border-radius: 1.5px; transition: height 0.12s;
-    min-height: 4px; }
+    min-height: 4px; flex-shrink: 0; }
   .wave-bar.live { background: var(--c-tian); }
-  .wave-bar.user { background: var(--c-orange); }
+  .wave-bar.user { background: var(--c-good); }
   .wave-bar.rec { background: var(--c-orange-deep); }
+  /* 录音中全屏遮罩 */
+  .rec-mask { display: none; position: fixed; inset: 0; background: rgba(61,64,91,0.55);
+    z-index: 90; align-items: center; justify-content: center; flex-direction: column; gap: 18px; }
+  .rec-mask.show { display: flex; }
+  .rec-mask-text { color: #fff; font-size: 15px; font-weight: 500; }
+  .rec-mask-mic { width: 80px; height: 80px; border-radius: 50%; background: var(--c-orange);
+    display: flex; align-items: center; justify-content: center;
+    animation: rec-pulse 1.4s infinite; font-size: 36px; color: #fff; }
+  @keyframes rec-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(224,122,95,0.6); transform: scale(1); }
+    50% { box-shadow: 0 0 0 18px rgba(224,122,95,0); transform: scale(1.05); }
+  }
+  .rec-mask-timer { color: #fff; font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .rec-mask-hint { color: rgba(255,255,255,0.7); font-size: 12px; }
   .score-panel { margin-top: 10px; padding: 12px; background: var(--c-bg); border-radius: 8px;
     display: none; align-items: center; gap: 14px; }
   .score-panel.show { display: flex; }
@@ -106,7 +122,8 @@
   .score-ring .fg-circle { fill: none; stroke-width: 6; stroke-linecap: round;
     transition: stroke-dashoffset 0.8s ease, stroke 0.4s; }
   .score-num { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 22px; font-weight: 700; color: var(--c-charcoal); }
+    font-size: 22px; font-weight: 700; color: var(--c-charcoal);
+    font-variant-numeric: tabular-nums; }
   .score-num small { font-size: 11px; font-weight: 400; color: var(--c-soft); display: block; text-align: center; }
   .score-info { flex: 1; min-width: 0; }
   .score-grade { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
@@ -129,7 +146,7 @@
 <body>
 <div class="top">
   <h1>跟读训练 · Vol09 博物馆 &amp; 承包商安全</h1>
-  <div class="sub">听原音 → 跟读一遍 → 系统按节奏相似度打分（70+ 优秀 / 50-69 良好 / &lt;50 再练）</div>
+  <div class="sub">听原音 → 长按「● 按住跟读」说话 → 松手自动打分</div>
   <span class="meta-tag">5 段对话 · 24 行 · E. H. S. 训练营 · Demo（Part 1）</span>
   <span class="mode-badge" id="modeBadge">检测中…</span>
 </div>
@@ -139,10 +156,7 @@
   <div class="progress-text" id="progText">0 / 4 已打卡</div>
 </div>
 
-<div class="tips" id="tipsBox">
-  <b>使用方法</b>　点「▶ 听原音」听标准发音 → 点「● 跟读」开始录音（页面内录制，不跳出去）→ 再点一次结束 → 系统回放 + 出分数。<br>
-  <b>音频授权</b>　首次录音浏览器会弹权限框，请点「允许」。如果误点了「拒绝」，可在浏览器设置里重新授权。
-</div>
+<div class="tips" id="tipsBox">加载中…</div>
 
 
 <div class="part">
@@ -158,15 +172,13 @@
     <span class="role-tag" style="background:#7BA7BC">V</span>
     <span style="font-size:12px;color:var(--c-soft)">访客 Visitor</span>
     <span class="line-no">L1 · 2.59s</span>
-    <span class="rec-timer"><span class="rec-dot"></span><span class="timer-text">0.0s</span></span>
   </div>
   <div class="line-en">When was this museum built?</div>
   <div class="line-zh">这座博物馆是什么时候建成的？</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_0">▶ 听原音</button>
     <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-rec">● 跟读</button>
-    <button class="btn btn-stop" style="display:none">⏹ 停止</button>
+    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
@@ -181,15 +193,13 @@
     <span class="role-tag" style="background:#E07A5F">S</span>
     <span style="font-size:12px;color:var(--c-soft)">工作人员 Staff</span>
     <span class="line-no">L2 · 3.72s</span>
-    <span class="rec-timer"><span class="rec-dot"></span><span class="timer-text">0.0s</span></span>
   </div>
   <div class="line-en">This museum was built more than 100 years ago.</div>
   <div class="line-zh">这座博物馆始建于一百多年前。</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_1">▶ 听原音</button>
     <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-rec">● 跟读</button>
-    <button class="btn btn-stop" style="display:none">⏹ 停止</button>
+    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
@@ -204,15 +214,13 @@
     <span class="role-tag" style="background:#7BA7BC">V</span>
     <span style="font-size:12px;color:var(--c-soft)">访客 Visitor</span>
     <span class="line-no">L3 · 3.53s</span>
-    <span class="rec-timer"><span class="rec-dot"></span><span class="timer-text">0.0s</span></span>
   </div>
   <div class="line-en">Is admission to this museum free for the public?</div>
   <div class="line-zh">这家博物馆对公众免费开放吗？</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_2">▶ 听原音</button>
     <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-rec">● 跟读</button>
-    <button class="btn btn-stop" style="display:none">⏹ 停止</button>
+    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
@@ -227,15 +235,13 @@
     <span class="role-tag" style="background:#E07A5F">S</span>
     <span style="font-size:12px;color:var(--c-soft)">工作人员 Staff</span>
     <span class="line-no">L4 · 4.44s</span>
-    <span class="rec-timer"><span class="rec-dot"></span><span class="timer-text">0.0s</span></span>
   </div>
   <div class="line-en">This museum is not open to the public free of charge all year round.</div>
   <div class="line-zh">该博物馆不是全年免费向公众开放。</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_3">▶ 听原音</button>
     <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-rec">● 跟读</button>
-    <button class="btn btn-stop" style="display:none">⏹ 停止</button>
+    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
@@ -267,26 +273,27 @@ const TOTAL_LINES = 4;
 // ====== 录音模式检测 ======
 const UA = navigator.userAgent;
 const IS_WECHAT = /micromessenger/i.test(UA);
-const IS_IOS = /iphone|ipad|ipod/i.test(UA);
+const IS_ANDROID = /android/i.test(UA);
+// Android 微信 X5 上 capture="microphone" 不生效，弹文件管理器不是录音
+const NEED_FILE_FALLBACK = IS_WECHAT && IS_ANDROID;
 const HAS_GET_USER_MEDIA = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-  && !IS_WECHAT; // 微信里 getUserMedia 经常被拦
-let RECORD_MODE = HAS_GET_USER_MEDIA ? 'inpage' : 'system';
+  && !NEED_FILE_FALLBACK;
+let RECORD_MODE = HAS_GET_USER_MEDIA ? 'hold' : 'file';
 
-// 显示当前模式
 const modeBadge = document.getElementById('modeBadge');
 const tipsBox = document.getElementById('tipsBox');
-if (RECORD_MODE === 'inpage') {
-  modeBadge.textContent = '✓ 页面内录音';
+if (RECORD_MODE === 'hold') {
+  modeBadge.textContent = '✓ 长按录音';
   modeBadge.style.background = 'rgba(124,176,105,0.4)';
-  tipsBox.innerHTML = '<b>使用方法</b>　点「▶ 听原音」听标准发音 → 点「● 跟读」开始录音（<b>页面内录制，不会跳走</b>，可看到实时波形）→ 再点一次结束 → 系统回放 + 出分数。<br><b>音频授权</b>　首次录音浏览器会弹权限框，请点「允许」。';
-} else if (IS_WECHAT) {
-  modeBadge.textContent = '微信 · 系统录音器';
+  tipsBox.innerHTML = '<b>使用方法</b>　点「▶ 听原音」听标准发音 → <b>按住</b>「● 按住跟读」按钮说话（可看到自己的声音波形）→ <b>松手</b>自动打分。<br><b>音频授权</b>　首次录音浏览器会弹权限框，请点「允许」。';
+} else if (NEED_FILE_FALLBACK) {
+  modeBadge.textContent = '微信·系统录音';
   tipsBox.className = 'tips warn';
-  tipsBox.innerHTML = '<b>当前在微信里</b>　微信内置浏览器不支持网页内录音，已自动切换为<b>手机自带录音机</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回本页面看分数。<br><b>想获得页面内录音体验？</b>　点击右上角 ··· → 选择「在浏览器中打开」（推荐 Chrome / Safari）。';
+  tipsBox.innerHTML = '<b>当前在微信里（Android）</b>　Android 微信内置浏览器不支持网页内录音，已切换为<b>手机自带录音器</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回看分数。<br><b>想获得按住跟读体验？</b>　点右上角 ··· → 选择「在浏览器中打开」（推荐 Chrome / Safari）。';
 } else {
   modeBadge.textContent = '系统录音器';
   tipsBox.className = 'tips warn';
-  tipsBox.innerHTML = '<b>当前浏览器不支持网页内录音</b>　已自动切换为<b>手机自带录音机</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回本页面看分数。';
+  tipsBox.innerHTML = '<b>当前浏览器不支持网页内录音</b>　已自动切换为<b>手机自带录音器</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回看分数。';
 }
 
 class Scorer {
@@ -316,10 +323,7 @@ class Scorer {
       const env = this.extractEnvelope(seg, sr, 0.08);
       this.refEnvelopes[key] = env;
       return env;
-    } catch (err) {
-      console.warn('预加载包络失败', partId, lineIdx, err);
-      return null;
-    }
+    } catch (err) { return null; }
   }
   extractEnvelope(samples, sr, frameSec) {
     const frameSize = Math.max(1, Math.floor(sr * frameSec));
@@ -342,7 +346,6 @@ class Scorer {
     const env = this.extractEnvelope(data, sr, 0.08);
     return { envelope: env, duration: audioBuf.duration, sampleRate: sr };
   }
-  async analyzeFile(file) { return this.analyzeBlob(file); }
   computeScore(userSamples, refEnv, refDuration, userDuration) {
     const ratio = userDuration / Math.max(0.1, refDuration);
     let durScore;
@@ -368,13 +371,9 @@ class Scorer {
 
     const total = Math.round(durScore * 0.4 + volScore * 0.2 + rhythmScore * 0.4);
     return {
-      total,
-      durScore: Math.round(durScore),
-      volScore: Math.round(volScore),
-      rhythmScore: Math.round(rhythmScore),
-      ratio: ratio.toFixed(2),
-      userDuration: userDuration.toFixed(1),
-      refDuration: refDuration.toFixed(1)
+      total, durScore: Math.round(durScore), volScore: Math.round(volScore),
+      rhythmScore: Math.round(rhythmScore), ratio: ratio.toFixed(2),
+      userDuration: userDuration.toFixed(1), refDuration: refDuration.toFixed(1)
     };
   }
   pearson(xs, ys) {
@@ -415,29 +414,29 @@ function playSegment(btn, start, end) {
   requestAnimationFrame(check);
 }
 
-function renderScore(panel, score) {
-  const total = score.total;
-  let grade, ringColor;
-  if (total >= 70) { grade = '优秀 Excellent'; ringColor = '#7CB069'; }
-  else if (total >= 50) { grade = '良好 Good'; ringColor = '#E07A5F'; }
-  else { grade = '再练 Try Again'; ringColor = '#8C99AB'; }
+function getScoreStyle(total) {
+  // 4 档颜色：90+ 深绿 / 70-89 中绿 / 50-69 浅绿 / <50 红
+  if (total >= 90) return { grade: '优秀 Excellent', color: '#4A8B3A' };
+  if (total >= 70) return { grade: '良好 Good', color: '#7CB069' };
+  if (total >= 50) return { grade: '还行 OK', color: '#B5D4A0' };
+  return { grade: '没读到 Try Again', color: '#E07A5F' };
+}
 
+function renderScore(panel, score) {
+  const { grade, color } = getScoreStyle(score.total);
   const C = 2 * Math.PI * 30;
-  const offset = C * (1 - total / 100);
+  const offset = C * (1 - score.total / 100);
   panel.innerHTML = `
     <div class="score-ring">
       <svg width="72" height="72" viewBox="0 0 72 72">
         <circle class="bg-circle" cx="36" cy="36" r="30"></circle>
         <circle class="fg-circle" cx="36" cy="36" r="30"
-          stroke="${ringColor}"
-          stroke-dasharray="${C}"
-          stroke-dashoffset="${C}">
-        </circle>
+          stroke="${color}" stroke-dasharray="${C}" stroke-dashoffset="${C}"></circle>
       </svg>
-      <div class="score-num">${total}<small>/100</small></div>
+      <div class="score-num">${score.total}<small>/100</small></div>
     </div>
     <div class="score-info">
-      <div class="score-grade" style="color:${ringColor}">${grade}</div>
+      <div class="score-grade" style="color:${color}">${grade}</div>
       <div class="score-detail">
         <span>节奏 <b>${score.rhythmScore}</b></span>
         <span>时长 <b>${score.durScore}</b></span>
@@ -454,7 +453,7 @@ function renderScore(panel, score) {
   }, 50);
 }
 
-function renderStaticWaveform(waveformEl, envelope, isUser) {
+function renderStaticWaveform(waveformEl, envelope) {
   const bars = waveformEl.querySelectorAll('.wave-bar');
   bars.forEach(b => b.classList.remove('live', 'user', 'rec'));
   if (!envelope || envelope.length === 0) {
@@ -468,7 +467,7 @@ function renderStaticWaveform(waveformEl, envelope, isUser) {
     const max = Math.max(...seg.map(s => s.v));
     const h = Math.max(4, Math.min(28, max * 100));
     bar.style.height = h + 'px';
-    bar.classList.add(isUser ? 'user' : 'live');
+    bar.classList.add('user');
   });
 }
 
@@ -505,46 +504,70 @@ function saveProgress(key) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
 }
 
-// ====== 页面内录音（getUserMedia + MediaRecorder）======
-async function startInPageRecord(lineEl, lineKey, partId, lineIdx, start, end, refDuration) {
-  const recBtn = lineEl.querySelector('.btn-rec');
-  const stopBtn = lineEl.querySelector('.btn-stop');
-  const fileInput = lineEl.querySelector('.file-input');
-  const replayBtn = lineEl.querySelector('.btn-replay');
-  const retryBtn = lineEl.querySelector('.btn-retake');
-  const scorePanel = lineEl.querySelector('.score-panel');
-  const waveformEl = lineEl.querySelector('.waveform');
-  const timer = lineEl.querySelector('.rec-timer');
+// ====== 长按录音（HOLD 模式）======
+// 单例：全局只允许一个录音进行
+let activeHoldSession = null;
 
-  // 显式检查
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    throw new Error('当前浏览器不支持网页内录音');
+function showHoldMask(lineEl, show) {
+  let mask = document.getElementById('holdMask');
+  if (!mask) {
+    mask = document.createElement('div');
+    mask.id = 'holdMask';
+    mask.className = 'rec-mask';
+    mask.innerHTML = `
+      <div class="rec-mask-mic">🎙</div>
+      <div class="rec-mask-text">正在录音…</div>
+      <div class="rec-mask-timer" id="holdMaskTimer">0.0s</div>
+      <div class="rec-mask-hint">松手自动打分</div>
+    `;
+    document.body.appendChild(mask);
   }
-  if (!window.MediaRecorder) {
-    throw new Error('当前浏览器不支持 MediaRecorder');
+  if (show) {
+    mask.classList.add('show');
+    document.getElementById('holdMaskTimer').textContent = '0.0s';
+  } else {
+    mask.classList.remove('show');
+  }
+}
+
+async function startHoldRecord(lineEl, ctx) {
+  if (activeHoldSession) return; // 已有录音中
+  const { key, partId, lineIdx, start, end, refDuration } = ctx;
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    throw Object.assign(new Error('浏览器不支持'), { name: 'NotSupportedError' });
   }
 
   let stream;
   try {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  } catch (err) {
-    throw err;
-  }
+  } catch (err) { throw err; }
 
-  // 录音状态
   const chunks = [];
-  const recorder = new MediaRecorder(stream);
+  // 尝试用 audio/webm；iOS Safari 可能不支持，会回退到默认
+  let mimeType = '';
+  const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg'];
+  for (const t of candidates) {
+    if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) { mimeType = t; break; }
+  }
+  const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const source = audioCtx.createMediaStreamSource(stream);
   const analyser = audioCtx.createAnalyser();
   analyser.fftSize = 512;
   source.connect(analyser);
   const dataArray = new Uint8Array(analyser.fftSize);
+
+  const waveformEl = lineEl.querySelector('.waveform');
+  const bars = waveformEl.querySelectorAll('.wave-bar');
   let recStartTime = 0;
   let recTimer = null;
   let drawTimer = null;
+  let cancelled = false;
 
   function drawLive() {
+    if (cancelled) return;
     analyser.getByteTimeDomainData(dataArray);
     let sum = 0;
     for (let i = 0; i < dataArray.length; i++) {
@@ -552,139 +575,159 @@ async function startInPageRecord(lineEl, lineKey, partId, lineIdx, start, end, r
       sum += v * v;
     }
     const rms = Math.sqrt(sum / dataArray.length);
-    const bars = waveformEl.querySelectorAll('.wave-bar');
-    // 滑动波形：每次左移 + 最右加新
     for (let i = 0; i < bars.length - 1; i++) {
       bars[i].style.height = bars[i + 1].style.height;
+      bars[i].className = bars[i + 1].className;
     }
     const h = Math.max(4, Math.min(28, rms * 80));
     bars[bars.length - 1].style.height = h + 'px';
     bars[bars.length - 1].classList.add('rec');
+    drawTimer = requestAnimationFrame(drawLive);
   }
 
-  function startTimer() {
-    recStartTime = Date.now();
-    timer.classList.add('show');
-    const tick = () => {
-      const elapsed = (Date.now() - recStartTime) / 1000;
-      timer.querySelector('.timer-text').textContent = elapsed.toFixed(1) + 's';
-      if (elapsed > 30) {
-        stopInPageRecord();
-        return;
-      }
-      recTimer = requestAnimationFrame(tick);
-    };
-    tick();
-  }
-  function stopTimer() {
-    if (recTimer) cancelAnimationFrame(recTimer);
-    if (drawTimer) cancelAnimationFrame(drawTimer);
-    timer.classList.remove('show');
+  function tickTimer() {
+    if (cancelled) return;
+    const elapsed = (Date.now() - recStartTime) / 1000;
+    const txt = document.getElementById('holdMaskTimer');
+    if (txt) txt.textContent = elapsed.toFixed(1) + 's';
+    if (elapsed >= 30) {
+      // 自动停止
+      stopHoldRecord();
+      return;
+    }
+    recTimer = requestAnimationFrame(tickTimer);
   }
 
-  // 启动录音
-  recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+  const session = {
+    lineEl, ctx, stream, recorder, audioCtx, analyser, chunks,
+    cancelled: false, finished: false,
+  };
 
-  const recordPromise = new Promise(resolve => {
+  const finishPromise = new Promise((resolve, reject) => {
     recorder.onstop = async () => {
-      stopTimer();
+      if (session.finished) return;
+      session.finished = true;
+      if (drawTimer) cancelAnimationFrame(drawTimer);
+      if (recTimer) cancelAnimationFrame(recTimer);
       stream.getTracks().forEach(t => t.stop());
       audioCtx.close().catch(() => {});
 
-      const blob = new Blob(chunks, { type: chunks[0]?.type || 'audio/webm' });
+      if (cancelled || chunks.length === 0) {
+        clearWaveform(waveformEl);
+        resolve(null);
+        return;
+      }
+
+      const blob = new Blob(chunks, { type: mimeType || 'audio/webm' });
       const url = URL.createObjectURL(blob);
 
-      // 切回正常 UI
-      recBtn.style.display = 'inline-flex';
-      stopBtn.style.display = 'none';
-      lineEl.classList.remove('recording');
-
       try {
-        // 预加载原音包络
         const refEnv = await scorer.preloadRefEnvelope(partId, lineIdx, start, end);
-        // 解码
         const { envelope, duration } = await scorer.analyzeBlob(blob);
-        if (duration < 0.3) throw new Error('录音太短（不到 0.3 秒），请重录');
-        if (duration > 30) throw new Error('录音超过 30 秒，请只录这一句');
+        if (duration < 0.3) {
+          URL.revokeObjectURL(url);
+          clearWaveform(waveformEl);
+          window.__showRecModal('录音太短', '请按住久一点再松手（至少 0.3 秒）');
+          resolve(null);
+          return;
+        }
+        if (duration > 30) {
+          URL.revokeObjectURL(url);
+          clearWaveform(waveformEl);
+          window.__showRecModal('录音太长', '一句话最多 30 秒');
+          resolve(null);
+          return;
+        }
 
         const score = scorer.computeScore(envelope, refEnv, refDuration, duration);
+        renderStaticWaveform(waveformEl, envelope);
+        renderScore(lineEl.querySelector('.score-panel'), score);
 
-        // 画用户波形
-        renderStaticWaveform(waveformEl, envelope, true);
-
-        // 显示分数
-        renderScore(scorePanel, score);
-
-        // 切按钮
+        // 切回完成态 UI
+        const recBtn = lineEl.querySelector('.btn-hold');
+        const replayBtn = lineEl.querySelector('.btn-replay');
+        const retryBtn = lineEl.querySelector('.btn-retake');
         recBtn.style.display = 'none';
         replayBtn.dataset.url = url;
         replayBtn.style.display = 'inline-flex';
         retryBtn.style.display = 'inline-flex';
+        lineEl.classList.remove('recording');
 
-        // 标记完成
         if (score.total >= 50) {
           lineEl.classList.add('done');
-          lineState[lineKey] = { done: true, score: score };
-          saveProgress(lineKey);
+          lineState[key] = { done: true, score };
+          saveProgress(key);
           updateProgress();
         }
+        resolve(score);
       } catch (err) {
         URL.revokeObjectURL(url);
-        recBtn.disabled = false;
-        recBtn.textContent = '● 跟读';
-        throw err;
+        reject(err);
       }
-      resolve();
     };
+
+    recorder.onerror = (e) => reject(e.error || new Error('录音出错'));
   });
 
+  recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+
   recorder.start();
-  startTimer();
-  // 实时波形
-  function liveDraw() {
-    drawLive();
-    drawTimer = requestAnimationFrame(liveDraw);
+  recStartTime = Date.now();
+  showHoldMask(lineEl, true);
+  lineEl.classList.add('recording');
+  drawLive();
+  tickTimer();
+
+  activeHoldSession = session;
+  session.finishPromise = finishPromise;
+  return session;
+}
+
+function stopHoldRecord() {
+  const s = activeHoldSession;
+  if (!s) return;
+  activeHoldSession = null;
+  showHoldMask(s.lineEl, false);
+  if (s.recorder && s.recorder.state !== 'inactive') {
+    s.recorder.stop();
   }
-  liveDraw();
-
-  lineEl._recorder = recorder;
-  lineEl._recordPromise = recordPromise;
-  lineEl._stream = stream;
-  lineEl._stopRecord = stopInPageRecord;
 }
 
-function stopInPageRecord() {
-  const el = arguments[0] || document.querySelector('.line.recording');
-  if (!el || !el._recorder) return;
-  if (el._recorder.state !== 'inactive') el._recorder.stop();
+function cancelHoldRecord() {
+  const s = activeHoldSession;
+  if (!s) return;
+  s.cancelled = true;
+  activeHoldSession = null;
+  showHoldMask(s.lineEl, false);
+  if (s.recorder && s.recorder.state !== 'inactive') {
+    s.recorder.stop();
+  }
+  clearWaveform(s.lineEl.querySelector('.waveform'));
+  s.lineEl.classList.remove('recording');
 }
 
-// ====== 系统录音器降级 ======
-function triggerFileInput(lineEl) {
-  const fileInput = lineEl.querySelector('.file-input');
-  fileInput.click();
-}
-
-async function handleFileRecord(lineEl, lineKey, partId, lineIdx, start, end, refDuration, file) {
-  const recBtn = lineEl.querySelector('.btn-rec');
+// ====== 系统录音器降级（file input）======
+async function handleFileRecord(lineEl, ctx, file) {
+  const { key, partId, lineIdx, start, end, refDuration } = ctx;
+  const recBtn = lineEl.querySelector('.btn-hold');
   const replayBtn = lineEl.querySelector('.btn-replay');
   const retryBtn = lineEl.querySelector('.btn-retake');
   const scorePanel = lineEl.querySelector('.score-panel');
   const waveformEl = lineEl.querySelector('.waveform');
 
   recBtn.disabled = true;
-  const origText = recBtn.textContent;
-  recBtn.textContent = '处理中...';
+  const origText = recBtn.innerHTML;
+  recBtn.textContent = '处理中…';
   try {
     const refEnv = await scorer.preloadRefEnvelope(partId, lineIdx, start, end);
-    const { envelope, duration } = await scorer.analyzeFile(file);
+    const { envelope, duration } = await scorer.analyzeBlob(file);
     if (duration < 0.3) throw new Error('录音太短（不到 0.3 秒），请重录');
     if (duration > 30) throw new Error('录音超过 30 秒，请只录这一句');
 
     const score = scorer.computeScore(envelope, refEnv, refDuration, duration);
 
     const url = URL.createObjectURL(file);
-    renderStaticWaveform(waveformEl, envelope, true);
+    renderStaticWaveform(waveformEl, envelope);
     renderScore(scorePanel, score);
 
     recBtn.style.display = 'none';
@@ -694,8 +737,8 @@ async function handleFileRecord(lineEl, lineKey, partId, lineIdx, start, end, re
 
     if (score.total >= 50) {
       lineEl.classList.add('done');
-      lineState[lineKey] = { done: true, score: score };
-      saveProgress(lineKey);
+      lineState[key] = { done: true, score };
+      saveProgress(key);
       updateProgress();
     }
   } catch (err) {
@@ -703,9 +746,8 @@ async function handleFileRecord(lineEl, lineKey, partId, lineIdx, start, end, re
     if (err && err.message) msg += '：' + err.message;
     window.__showRecModal('跟读失败', msg);
   }
-  recBtn.textContent = origText;
+  recBtn.innerHTML = origText;
   recBtn.disabled = false;
-  // 允许重选同一文件
   const fi = lineEl.querySelector('.file-input');
   if (fi) fi.value = '';
 }
@@ -717,19 +759,19 @@ function bindLine(el) {
   const start = parseFloat(el.dataset.start);
   const end = parseFloat(el.dataset.end);
   const refDuration = end - start;
+  const ctx = { key, partId, lineIdx, start, end, refDuration };
 
   const playBtn = el.querySelector('.btn-play');
-  const recBtn = el.querySelector('.btn-rec');
-  const stopBtn = el.querySelector('.btn-stop');
+  const holdBtn = el.querySelector('.btn-hold');
   const fileInput = el.querySelector('.file-input');
   const replayBtn = el.querySelector('.btn-replay');
   const retryBtn = el.querySelector('.btn-retake');
-  const scorePanel = el.querySelector('.score-panel');
-  const waveformEl = el.querySelector('.waveform');
 
-  // 微信模式：隐藏 stop 按钮，只用 file input
-  if (RECORD_MODE !== 'inpage') {
-    if (stopBtn) stopBtn.style.display = 'none';
+  // 按钮文字按模式
+  if (RECORD_MODE === 'file') {
+    holdBtn.innerHTML = '● 跟读';
+  } else {
+    holdBtn.innerHTML = '● 按住跟读 <span class="hold-hint">长按</span>';
   }
 
   playBtn.addEventListener('click', () => {
@@ -741,53 +783,78 @@ function bindLine(el) {
     }
   });
 
-  recBtn.addEventListener('click', async () => {
-    if (RECORD_MODE === 'inpage') {
-      // 页面内录音
+  // ====== 录音交互（HOLD 模式 或 FILE 模式）======
+  if (RECORD_MODE === 'hold') {
+    // 长按：pointerdown 开始，pointerup/cancel 结束
+    let holdStarted = false;
+
+    const onDown = async (e) => {
+      e.preventDefault();
+      if (holdStarted) return;
+      holdStarted = true;
+      holdBtn.classList.add('pressing');
       try {
-        recBtn.disabled = true;
-        recBtn.style.display = 'none';
-        stopBtn.style.display = 'inline-flex';
-        el.classList.add('recording');
-        await startInPageRecord(el, key, partId, lineIdx, start, end, refDuration);
+        await startHoldRecord(el, ctx);
       } catch (err) {
-        recBtn.style.display = 'inline-flex';
-        stopBtn.style.display = 'none';
-        el.classList.remove('recording');
-        recBtn.disabled = false;
-        recBtn.textContent = '● 跟读';
-        clearWaveform(waveformEl);
-
-        // 降级到系统录音器
-        if (err.name === 'NotAllowedError') {
-          window.__showRecModal('麦克风被拒绝', '已切换到系统录音器。点「● 跟读」用手机录音。');
-          RECORD_MODE = 'system';
-        } else if (err.name === 'NotFoundError') {
-          window.__showRecModal('没找到麦克风', '已切换到系统录音器。点「● 跟读」用手机录音。');
-          RECORD_MODE = 'system';
-        } else if (err.name === 'NotSupportedError' || err.name === 'NotReadableError' || err.name === 'TypeError' || err.name === 'SecurityError') {
-          window.__showRecModal('浏览器不支持', '已切换到系统录音器。点「● 跟读」用手机录音。');
-          RECORD_MODE = 'system';
-        } else {
-          window.__showRecModal('录音失败', err.message || '未知错误');
+        holdStarted = false;
+        holdBtn.classList.remove('pressing');
+        // 降级到 file input
+        let msg = '麦克风打开失败';
+        if (err && err.name === 'NotAllowedError') {
+          msg = '麦克风被拒绝授权。已切换为「系统录音器」模式。';
+        } else if (err && err.name === 'NotFoundError') {
+          msg = '没找到麦克风设备。已切换为「系统录音器」模式。';
+        } else if (err && err.name) {
+          msg = '录音功能不可用（' + err.name + '）。已切换为「系统录音器」模式。';
         }
+        RECORD_MODE = 'file';
+        // 重新设置按钮
+        holdBtn.innerHTML = '● 跟读';
+        // 提示
+        window.__showRecModal('切换录音方式', msg);
       }
-    } else {
-      // 系统录音器
-      triggerFileInput(el);
-    }
-  });
+    };
 
-  stopBtn.addEventListener('click', () => {
-    if (el._recorder && el._recorder.state !== 'inactive') {
-      el._recorder.stop();
-    }
-  });
+    const onUp = (e) => {
+      if (!holdStarted) return;
+      holdStarted = false;
+      holdBtn.classList.remove('pressing');
+      if (activeHoldSession) stopHoldRecord();
+    };
+
+    // pointer events 统一处理鼠标 + 触屏
+    holdBtn.addEventListener('pointerdown', onDown);
+    holdBtn.addEventListener('pointerup', onUp);
+    holdBtn.addEventListener('pointerleave', onUp);
+    holdBtn.addEventListener('pointercancel', onUp);
+    // 兜底兼容老浏览器
+    holdBtn.addEventListener('mousedown', onDown);
+    holdBtn.addEventListener('mouseup', onUp);
+    holdBtn.addEventListener('mouseleave', onUp);
+    holdBtn.addEventListener('touchstart', onDown, { passive: false });
+    holdBtn.addEventListener('touchend', onUp);
+    holdBtn.addEventListener('touchcancel', onUp);
+
+    // 全局兜底：pointerup 没在按钮上时也停止
+    document.addEventListener('pointerup', () => {
+      if (holdStarted && activeHoldSession) {
+        holdStarted = false;
+        holdBtn.classList.remove('pressing');
+        stopHoldRecord();
+      }
+    });
+
+  } else {
+    // FILE 模式：点击 → 弹 file input
+    holdBtn.addEventListener('click', () => {
+      fileInput.click();
+    });
+  }
 
   fileInput.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    await handleFileRecord(el, key, partId, lineIdx, start, end, refDuration, file);
+    await handleFileRecord(el, ctx, file);
   });
 
   replayBtn.addEventListener('click', () => {
@@ -802,16 +869,15 @@ function bindLine(el) {
       URL.revokeObjectURL(replayBtn.dataset.url);
       replayBtn.dataset.url = '';
     }
-    scorePanel.classList.remove('show');
-    scorePanel.innerHTML = '';
+    el.querySelector('.score-panel').classList.remove('show');
+    el.querySelector('.score-panel').innerHTML = '';
     replayBtn.style.display = 'none';
     retryBtn.style.display = 'none';
-    recBtn.style.display = 'inline-flex';
-    recBtn.textContent = '● 跟读';
-    recBtn.disabled = false;
-    if (stopBtn) stopBtn.style.display = 'none';
+    holdBtn.style.display = 'inline-flex';
+    holdBtn.innerHTML = RECORD_MODE === 'file' ? '● 跟读' : '● 按住跟读 <span class="hold-hint">长按</span>';
+    holdBtn.disabled = false;
     el.classList.remove('recording');
-    clearWaveform(waveformEl);
+    clearWaveform(el.querySelector('.waveform'));
   });
 }
 
@@ -820,7 +886,6 @@ function bindLine(el) {
   document.querySelectorAll('.line').forEach(bindLine);
   loadProgress();
 
-  // modal
   const modal = document.getElementById('recModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalContent = document.getElementById('modalContent');
