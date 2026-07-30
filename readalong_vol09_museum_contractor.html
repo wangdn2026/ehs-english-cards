@@ -90,6 +90,26 @@
     box-shadow: 0 0 0 6px rgba(224,122,95,0.25);
   }
   .btn-hold .hold-hint { font-size: 11px; opacity: 0.85; margin-left: 2px; }
+  .btn-hold.guide { background: var(--c-tian); }
+  .btn-hold.guide:active { background: #5B8FA8; }
+  /* 微信 X5 引导横幅（常驻，X5 屏蔽不了） */
+  .wechat-guide-banner { background: linear-gradient(135deg, #FBE3D4 0%, #F4C7A6 100%);
+    color: #6B3A1E; margin: 12px 14px 0; padding: 13px 15px; border-radius: 10px;
+    border-left: 4px solid var(--c-orange-deep); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.65; font-size: 13px; }
+  .wechat-guide-banner .wgb-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #4A2814; }
+  .wechat-guide-banner .wgb-title b { color: var(--c-orange-deep); }
+  .wechat-guide-banner .wgb-step { display: flex; align-items: flex-start; gap: 8px; margin: 7px 0; }
+  .wechat-guide-banner .wgb-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--c-orange-deep); color: #fff; font-size: 12px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .wechat-guide-banner .wgb-foot { margin-top: 10px; padding-top: 9px; border-top: 1px dashed #C9623F;
+    font-size: 12px; color: #4A2814; }
+  .toast { position: fixed; top: 30%; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.85); color: #fff; padding: 12px 22px; border-radius: 24px;
+    font-size: 14px; z-index: 10000; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    animation: toastIn 0.3s ease; }
+  @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
   .btn-replay { background: var(--c-line); color: var(--c-charcoal); }
   .btn-retry { background: transparent; color: var(--c-soft); border: 1px solid var(--c-line); }
   .waveform { flex: 1; min-width: 100px; height: 28px; display: flex; align-items: center; gap: 2px;
@@ -299,10 +319,21 @@ if (RECORD_MODE === 'hold') {
   }
   tipsBox.innerHTML = '<b>使用方法</b>　点「▶ 听原音」听标准发音 → <b>按住</b>「● 按住跟读」按钮说话（页面内录音，能看到自己的声音波形）→ <b>松手</b>自动打分。<br><b>音频授权</b>　首次录音浏览器会弹权限框，请点「允许」。';
 } else if (RECORD_MODE === 'guide') {
-  modeBadge.textContent = '✗ Android 微信·不支持';
+  // 顶部加一个常驻红色横幅（X5 屏蔽不了纯 DOM）
+  document.body.classList.add('mode-guide');
+  modeBadge.textContent = '⚠ 微信 X5';
   modeBadge.style.background = 'rgba(224,122,95,0.5)';
-  tipsBox.className = 'tips warn';
-  tipsBox.innerHTML = '<b>Android 微信内置浏览器不支持网页录音</b>　X5 内核硬伤，无解。<br><b>请按以下步骤操作</b>　点击右上角 <b>···</b> → 选择 <b>「在浏览器中打开」</b>（推荐 Chrome / Edge / Safari）→ 回到本页面 → <b>长按「● 按住跟读」说话 · 松手自动打分</b>。';
+  // 不依赖 modal：直接渲染常驻 banner 到 .top 后面
+  const banner = document.createElement('div');
+  banner.className = 'wechat-guide-banner';
+  banner.innerHTML =
+    '<div class="wgb-title">⚠️ 当前是微信内置浏览器，<b>无法录音</b></div>' +
+    '<div class="wgb-step"><span class="wgb-num">1</span>点下面 <b>「📋 复制链接」</b> 按钮</div>' +
+    '<div class="wgb-step"><span class="wgb-num">2</span>点右上角 <b>···</b> → <b>在浏览器中打开</b>（没这个选项就往下看）</div>' +
+    '<div class="wgb-step"><span class="wgb-num">3</span>没找到「在浏览器中打开」？<br>　点右上角 <b>···</b> → <b>复制链接</b> → 退出微信 → 打开 <b>手机浏览器</b>（Chrome/Edge/Safari）→ 长按地址栏 <b>粘贴</b> → 访问</div>' +
+    '<div class="wgb-foot">🌿 打开后体验：长按「● 按住跟读」→ 说话 → 松手自动打分</div>';
+  document.querySelector('.top').insertAdjacentElement('afterend', banner);
+  tipsBox.style.display = 'none';
 } else {
   // FILE 模式：系统录音器
   modeBadge.textContent = '系统录音器';
@@ -781,9 +812,15 @@ function bindLine(el) {
   const replayBtn = el.querySelector('.btn-replay');
   const retryBtn = el.querySelector('.btn-retake');
 
+  // GUIDE 模式：彻底不渲染 file input（X5 上 display:none 也可能被点穿）
+  if (RECORD_MODE === 'guide') {
+    if (fileInput) fileInput.remove();
+  }
+
   // 按钮文字按模式
   if (RECORD_MODE === 'guide') {
-    holdBtn.innerHTML = '● 跟读 <span class="hold-hint">需浏览器</span>';
+    holdBtn.innerHTML = '📋 <b>复制链接</b>';
+    holdBtn.classList.add('guide');
   } else if (RECORD_MODE === 'file') {
     holdBtn.innerHTML = '● 跟读';
   } else {
@@ -866,28 +903,62 @@ function bindLine(el) {
       fileInput.click();
     });
   } else if (RECORD_MODE === 'guide') {
-    // GUIDE 模式：点击 → 弹引导 modal（不再弹文件管理器）
-    holdBtn.addEventListener('click', () => {
-      window.__showRecModal(
-        '请在浏览器中打开',
-        '<b>Android 微信内置浏览器不支持网页录音</b><br><br>' +
-        '<b>操作步骤：</b><br>' +
-        '1. 点右上角 <b>···</b><br>' +
-        '2. 选择 <b>「在浏览器中打开」</b><br>' +
-        '3. 推荐 Chrome / Edge / Safari<br><br>' +
-        '<b>打开后体验：</b><br>' +
-        '🎙 长按「● 按住跟读」说话<br>' +
-        '✋ 松手自动打分（0-100）<br>' +
-        '🟢 90+ 深绿 / 🟢 70-89 中绿 / 🟩 50-69 浅绿 / 🟥 &lt;50 红'
-      );
+    // GUIDE 模式：点击 → 复制 URL 到剪贴板 + 弹页面内 toast
+    // 绝不调任何系统级 UI（不弹 file input / 不弹 modal / 不跳转外链）
+    holdBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const url = window.location.href;
+      let ok = false;
+      // 优先用现代 Clipboard API（iOS 13.4+ / Android Chrome 支持）
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(url);
+          ok = true;
+        }
+      } catch (err) { ok = false; }
+      // 兜底：textarea + execCommand（Android 微信 X5 上 Clipboard API 经常被拦）
+      if (!ok) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          ta.style.position = 'fixed';
+          ta.style.top = '0';
+          ta.style.left = '0';
+          ta.style.width = '1px';
+          ta.style.height = '1px';
+          ta.style.padding = '0';
+          ta.style.border = 'none';
+          ta.style.outline = 'none';
+          ta.style.boxShadow = 'none';
+          ta.style.background = 'transparent';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.setSelectionRange(0, url.length);
+          ta.focus();
+          ta.select();
+          ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+        } catch (err) { ok = false; }
+      }
+      // 弹页面内 toast（不调任何系统 UI）
+      const msg = ok ? '✅ 链接已复制，去浏览器粘贴吧' : '⚠️ 复制失败，请手动长按地址栏复制';
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 2200);
     });
   }
 
-  fileInput.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    await handleFileRecord(el, ctx, file);
-  });
+  if (fileInput) {
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      await handleFileRecord(el, ctx, file);
+    });
+  }
 
   replayBtn.addEventListener('click', () => {
     if (replayBtn.dataset.url) {
