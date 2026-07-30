@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.08 | 医院门诊与承包商安全管理</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px; border-radius: 4px; display: inline-block; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.08</div>
+  <h1>医院门诊与承包商安全管理</h1>
+  <div class="subtitle">Clinics & Contractor Safety Management (I)</div>
+  <div class="brand">安全五点半 · Frank聊EHS</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</div>
+
+<div class="sections" id="sections">
+<div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">前台咨询与挂号<small>Front Desk & Registration</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">Patient 病人</div>
+        <div class="en">Excuse me, where is the internal medicine department for fever and cold symptoms? Which floor and building is it on?</div>
+        <div class="zh">打扰一下，请问看感冒发烧的内科门诊在哪一栋楼、几楼？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">Receptionist 导诊员</div>
+        <div class="en">Internal medicine is on the 2nd floor of Building A. You can register your appointment right here first.</div>
+        <div class="zh">内科在A栋二楼，你可以先在我这里挂号。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">Patient 病人</div>
+        <div class="en">Alright, here is my medical insurance card.</div>
+        <div class="zh">好的，这是我的医保卡。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">Receptionist 导诊员</div>
+        <div class="en">Wait for your number on the screen. The doctor will call you when it's your turn.</div>
+        <div class="zh">在屏幕上等候叫号就可以，轮到你时医生会喊你的名字。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">internal medicine<small>内科</small></span>
+        <span class="kw">medical insurance card<small>医保卡</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">问诊医生：症状与诊断<small>Doctor Consultation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">Patient 病人</div>
+        <div class="en">I've had a bad cold for three days, with a high fever, sore throat and constant coughing.</div>
+        <div class="zh">我重感冒三天了，发高烧、喉咙疼，还一直咳嗽。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">Doctor 医生</div>
+        <div class="en">Let me check your temperature, pulse and breathing first. Have you had any chronic illness before?</div>
+        <div class="zh">我先帮你量体温、检查脉搏和呼吸。你以前有慢性病吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">Patient 病人</div>
+        <div class="en">No, I've always been pretty healthy.</div>
+        <div class="zh">没有，我身体一直都挺好的。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">Doctor 医生</div>
+        <div class="en">It's just a viral cold, no serious infection. I'll prescribe some fever-reducer and cough syrup for you.</div>
+        <div class="zh">只是病毒性感冒，没有严重感染。我给你开退烧药和止咳糖浆。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">chronic illness<small>慢性病</small></span>
+        <span class="kw">viral cold<small>病毒性感冒</small></span>
+        <span class="kw">follow-up check-up<small>定期复查</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">承包商分类与总体要求<small>Contractor Classification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">We will start a facility renovation project soon. What safety work should we arrange for contractors in advance?</div>
+        <div class="zh">我们马上要启动厂务设施改造项目，针对承包商，我们前期要做好哪些安全工作？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">Contractor safety management should be included in the whole project. We classify contractors into three categories: office-based team members, facilities support services, and renovation or construction contractors.</div>
+        <div class="zh">承包商安全管理要融入项目全程。我们将承包商分为三类：驻办公室团队服务、厂务后勤服务，以及装修、设备维保与施工工程。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">Are there different safety requirements for these three types?</div>
+        <div class="zh">这三类承包商的安全要求各不相同吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">Yes. They have different requirements for pre-qualifications, trainings, signing of a contract, safety meeting, PTP, worksite inspection, annual audit and quarterly performance review.</div>
+        <div class="zh">是的，他们在资格预审、培训、合同签署、安全会议、作业前方案/作业许可、现场检查、年度审核及季度绩效评审方面有着不同要求。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">office-based team<small>驻办公室团队</small></span>
+        <span class="kw">facilities support<small>厂务后勤</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3" data-start="94.14" data-end="138.64">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">资格预审与筛选<small>Pre-Qualification & Selection</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">What is the core task of the first stage, Pre-Qualification and Selection?</div>
+        <div class="zh">第一阶段资格预审与筛选，核心工作是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">We must collect a completed Contractor Prequalification Form from every bidding contractor at first.</div>
+        <div class="zh">我们首先必须收取所有投标承包商填写完整的《承包商资格预审表》。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">What key contents do we need to check on this pre-qualification form?</div>
+        <div class="zh">这份资格预审表，我们重点要核查哪些内容？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">We check their licences, certifications, qualifications, three-year reportable injuries, safety citations from Gov. agencies and some items of their E. H. S. management systems.</div>
+        <div class="zh">我们核查其执照、资质证书、从业资格、近三年可记录工伤事故、政府监管机构出具的安全违规处罚通知以及一些EHS管理系统方面的问题。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">Once we select a qualified contractor after pre-qualification, what is the next key step?</div>
+        <div class="zh">我们通过预审选定合格承包商之后，下一步关键流程是什么？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">All contractor staff must finish our designated online orientation training and their specific trainings.</div>
+        <div class="zh">所有承包商人员必须完成我们指定的线上入职安全培训，还有他们自己的专项培训。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">Prequalification Form<small>资格预审表</small></span>
+        <span class="kw">safety citations<small>安全违规通知</small></span>
+        <span class="kw">orientation training<small>入职培训</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">入场安全准备<small>Pre-Job Safety Preparation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">Great, training is very important. Anything else?</div>
+        <div class="zh">很好，培训十分重要，还有其他事项吗？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">Sure, they need to conduct hazard identification and risk assessment in advance for the contractor activities and submit their work safety plan.</div>
+        <div class="zh">当然，他们事先需针对承包商作业开展危险源辨识与风险评估，并提交作业安全方案。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">Does the second stage require them to sign a safety agreement?</div>
+        <div class="zh">第二阶段作业前安全准备，要求签订安全协议？</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker ehs">EHS Manager EHS经理</div>
+        <div class="en">Absolutely, we shall sign a formal Safety Agreement with them prior to the start of work in order to comply with Work Safety Law.</div>
+        <div class="zh">一定的，为了符合安全生产法的要求，在开工前和对方签订正式安全生产管理协议。</div>
+      </div>
+      <div class="dialogue">
+        <div class="speaker gm">PM 项目经理</div>
+        <div class="en">Got it. Safety is the foundation of every project.</div>
+        <div class="zh">明白了。安全是每一个项目的基础。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">hazard identification<small>危险源辨识</small></span>
+        <span class="kw">work safety plan<small>作业安全方案</small></span>
+        <span class="kw">safety agreement<small>安全协议</small></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hint">点击章节 ▶ 跳转播放 · 双击标题校准时间</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.08 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="audio/vol08_hospital_contractor.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = ['1. 前台咨询与挂号', '2. 问诊医生：症状与诊断', '3. 承包商分类与总体要求', '4. 资格预审与筛选', '5. 入场安全准备'];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+</script>
+</body>
+</html>
