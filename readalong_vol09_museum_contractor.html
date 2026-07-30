@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Vol09 跟读训练 · 博物馆 & 承包商</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin:0; padding:0; -webkit-font-smoothing:antialiased; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background: #F5F1EA;
+    color: #3D405B;
+    min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, #7BA7BC 0%, #5A8BA3 100%);
+    color: #fff;
+    padding: 18px 18px 14px;
+    position: sticky; top: 0; z-index: 20;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .header h1 { margin: 0 0 4px; font-size: 19px; font-weight: 600; letter-spacing: 0.3px; }
+  .header .meta { font-size: 12px; opacity: 0.85; }
+  .tabs {
+    display: flex; gap: 6px;
+    padding: 10px 14px;
+    background: #fff;
+    overflow-x: auto;
+    position: sticky; top: 76px; z-index: 19;
+    border-bottom: 1px solid #E5DED3;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    background: #F5F1EA;
+    border: none;
+    border-radius: 18px;
+    font-size: 13px;
+    color: #3D405B;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: inherit;
+  }
+  .tab.active {
+    background: #E07A5F;
+    color: #fff;
+  }
+  .part-title {
+    padding: 16px 18px 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #5A8BA3;
+  }
+  .line-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin: 0 14px 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-left: 3px solid transparent;
+  }
+  .line-card.recording {
+    border-left-color: #E07A5F;
+    background: #FFF7F2;
+  }
+  .line-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .role-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .role-tag.gm { background: #7BA7BC; }
+  .role-tag.ehs { background: #E07A5F; }
+  .line-dur {
+    font-size: 11px;
+    color: #8B8680;
+    font-variant-numeric: tabular-nums;
+  }
+  .en {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #3D405B;
+    margin-bottom: 6px;
+  }
+  .zh {
+    font-size: 13px;
+    color: #8B8680;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .btn-play {
+    background: #7BA7BC;
+    color: #fff;
+  }
+  .btn-play:active { background: #5A8BA3; }
+  .btn-rec {
+    background: #E07A5F;
+    color: #fff;
+  }
+  .btn-rec:active { background: #C9624A; }
+  .btn-rec.recording {
+    background: #C0392B;
+    animation: pulse 1.2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .rec-status {
+    display: none;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #C0392B;
+    font-weight: 500;
+  }
+  .rec-status.show { display: block; }
+  .recorded-info {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #F0F8FB;
+    border-radius: 8px;
+    border: 1px solid #D5E5EC;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .recorded-info.show { display: flex; }
+  .btn-mini {
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-replay {
+    background: #7BA7BC;
+    color: #fff;
+  }
+  .btn-reset {
+    background: #F5E6D8;
+    color: #8B5A40;
+  }
+  .rec-tip {
+    font-size: 11px;
+    color: #5A8BA3;
+    flex: 1;
+    min-width: 100%;
+  }
+  .footer {
+    padding: 24px 18px 40px;
+    text-align: center;
+    color: #8B8680;
+    font-size: 11px;
+  }
+  audio { display: none; }
+  .err-tip {
+    display: none;
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 10px;
+    z-index: 100;
+    font-size: 14px;
+    max-width: 80%;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🎙️ Vol09 跟读训练</h1>
+  <div class="meta">5 段对话 · 24 行 · 博物馆 & 承包商现场作业</div>
+</div>
+<div class="tabs"><button class="tab active" data-target="part-1" onclick="switchPart(0)">Part 1</button></div>
+
+    <div class="part" id="part-1" data-pid="1" style="display:block;">
+      <div class="part-title">Part 1: 博物馆建造历史与门票</div>
+      
+        <div class="line-card" id="lc-1-0">
+          <div class="line-head">
+            <span class="role-tag gm">👤 Visitor 访客</span>
+            <span class="line-dur">2.6s</span>
+          </div>
+          <div class="en">When was this museum built?</div>
+          <div class="zh">这座博物馆是什么时候建成的？</div>
+          <div class="controls">
+            <button class="btn btn-play" onclick="playLine(0, 0)">▶ 听原音</button>
+            <button class="btn btn-rec" id="rec-1-0" onclick="toggleRec(0, 0)">🎤 开始录音</button>
+          </div>
+          <div class="rec-status" id="status-1-0">● 录音中…最长 4.1s</div>
+          <div class="recorded-info" id="rec-info-1-0">
+            <button class="btn-mini btn-replay" onclick="replayMine(0, 0)">▶ 听我的</button>
+            <button class="btn-mini btn-reset" onclick="resetRec(0, 0)">🔄 重录</button>
+            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          </div>
+        </div>
+        <div class="line-card" id="lc-1-1">
+          <div class="line-head">
+            <span class="role-tag ehs">🎫 Staff 工作人员</span>
+            <span class="line-dur">3.7s</span>
+          </div>
+          <div class="en">This museum was built more than 100 years ago.</div>
+          <div class="zh">这座博物馆始建于一百多年前。</div>
+          <div class="controls">
+            <button class="btn btn-play" onclick="playLine(0, 1)">▶ 听原音</button>
+            <button class="btn btn-rec" id="rec-1-1" onclick="toggleRec(0, 1)">🎤 开始录音</button>
+          </div>
+          <div class="rec-status" id="status-1-1">● 录音中…最长 5.2s</div>
+          <div class="recorded-info" id="rec-info-1-1">
+            <button class="btn-mini btn-replay" onclick="replayMine(0, 1)">▶ 听我的</button>
+            <button class="btn-mini btn-reset" onclick="resetRec(0, 1)">🔄 重录</button>
+            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          </div>
+        </div>
+        <div class="line-card" id="lc-1-2">
+          <div class="line-head">
+            <span class="role-tag gm">👤 Visitor 访客</span>
+            <span class="line-dur">3.5s</span>
+          </div>
+          <div class="en">Is admission to this museum free for the public?</div>
+          <div class="zh">这家博物馆对公众免费开放吗？</div>
+          <div class="controls">
+            <button class="btn btn-play" onclick="playLine(0, 2)">▶ 听原音</button>
+            <button class="btn btn-rec" id="rec-1-2" onclick="toggleRec(0, 2)">🎤 开始录音</button>
+          </div>
+          <div class="rec-status" id="status-1-2">● 录音中…最长 5.0s</div>
+          <div class="recorded-info" id="rec-info-1-2">
+            <button class="btn-mini btn-replay" onclick="replayMine(0, 2)">▶ 听我的</button>
+            <button class="btn-mini btn-reset" onclick="resetRec(0, 2)">🔄 重录</button>
+            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          </div>
+        </div>
+        <div class="line-card" id="lc-1-3">
+          <div class="line-head">
+            <span class="role-tag ehs">🎫 Staff 工作人员</span>
+            <span class="line-dur">4.4s</span>
+          </div>
+          <div class="en">This museum is not open to the public free of charge all year round.</div>
+          <div class="zh">该博物馆不是全年免费向公众开放。</div>
+          <div class="controls">
+            <button class="btn btn-play" onclick="playLine(0, 3)">▶ 听原音</button>
+            <button class="btn btn-rec" id="rec-1-3" onclick="toggleRec(0, 3)">🎤 开始录音</button>
+          </div>
+          <div class="rec-status" id="status-1-3">● 录音中…最长 5.9s</div>
+          <div class="recorded-info" id="rec-info-1-3">
+            <button class="btn-mini btn-replay" onclick="replayMine(0, 3)">▶ 听我的</button>
+            <button class="btn-mini btn-reset" onclick="resetRec(0, 3)">🔄 重录</button>
+            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          </div>
+        </div>
+    </div>
+<div class="footer">Vol09 · 安全五点半 · EHS 英语训练营</div>
+<audio id="audio" src="audio/vol09_museum_contractor_full.mp3" preload="auto"></audio>
+<div class="err-tip" id="errTip"></div>
+
+<script>
+const data = [{"id": 1, "title": "Part 1: 博物馆建造历史与门票", "dialogue": [{"role": "Visitor", "en": "When was this museum built?", "zh": "这座博物馆是什么时候建成的？"}, {"role": "Staff", "en": "This museum was built more than 100 years ago.", "zh": "这座博物馆始建于一百多年前。"}, {"role": "Visitor", "en": "Is admission to this museum free for the public?", "zh": "这家博物馆对公众免费开放吗？"}, {"role": "Staff", "en": "This museum is not open to the public free of charge all year round.", "zh": "该博物馆不是全年免费向公众开放。"}]}];
+const timings = [{"id": 1, "lines": [{"idx": 0, "role": "Visitor", "start": 0.0, "end": 2.59, "duration": 2.59, "en": "When was this museum built?"}, {"idx": 1, "role": "Staff", "start": 3.09, "end": 6.81, "duration": 3.72, "en": "This museum was built more than 100 years ago."}, {"idx": 2, "role": "Visitor", "start": 7.31, "end": 10.84, "duration": 3.53, "en": "Is admission to this museum free for the public?"}, {"idx": 3, "role": "Staff", "start": 11.34, "end": 15.78, "duration": 4.44, "en": "This museum is not open to the public free of charge all year round."}]}];
+const audio = document.getElementById('audio');
+const recordings = {};
+const recorders = {};
+let playTimer = null;
+
+function switchPart(idx) {
+  document.querySelectorAll('.part').forEach((el, i) => {
+    el.style.display = i === idx ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function playLine(p, i) {
+  const line = timings[p].lines[i];
+  audio.currentTime = line.start;
+  audio.play().catch(e => showErr('音频播放失败：' + e.message));
+  if (playTimer) clearTimeout(playTimer);
+  playTimer = setTimeout(() => {
+    audio.pause();
+    playTimer = null;
+  }, (line.end - line.start) * 1000 + 300);
+}
+
+async function toggleRec(p, i) {
+  const key = p + '-' + i;
+  const btn = document.getElementById('rec-' + (p+1) + '-' + i);
+  const card = document.getElementById('lc-' + (p+1) + '-' + i);
+
+  // 已经在录 → 提前停止
+  if (recorders[key] && recorders[key].state === 'recording') {
+    recorders[key].stop();
+    return;
+  }
+
+  // 开始新录
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const rec = new MediaRecorder(stream);
+    const chunks = [];
+    rec.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    rec.onstop = () => {
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      if (recordings[key]) URL.revokeObjectURL(recordings[key]);
+      recordings[key] = URL.createObjectURL(blob);
+      document.getElementById('rec-info-' + (p+1) + '-' + i).classList.add('show');
+      document.getElementById('status-' + (p+1) + '-' + i).classList.remove('show');
+      btn.textContent = '🎤 重新录音';
+      btn.classList.remove('recording');
+      card.classList.remove('recording');
+      stream.getTracks().forEach(t => t.stop());
+    };
+    rec.start();
+    recorders[key] = rec;
+    btn.textContent = '⏹ 停止录音';
+    btn.classList.add('recording');
+    card.classList.add('recording');
+    document.getElementById('status-' + (p+1) + '-' + i).classList.add('show');
+    document.getElementById('rec-info-' + (p+1) + '-' + i).classList.remove('show');
+
+    // 自动停止（按 line duration + 1.5s）
+    const line = timings[p].lines[i];
+    const maxMs = (line.duration + 1.5) * 1000;
+    setTimeout(() => {
+      if (rec.state === 'recording') rec.stop();
+    }, maxMs);
+  } catch (e) {
+    showErr('请允许浏览器使用麦克风权限（首次需要点击允许）');
+  }
+}
+
+function replayMine(p, i) {
+  const key = p + '-' + i;
+  if (!recordings[key]) return;
+  const a = new Audio(recordings[key]);
+  a.play().catch(e => showErr('回放失败：' + e.message));
+}
+
+function resetRec(p, i) {
+  const key = p + '-' + i;
+  if (recordings[key]) {
+    URL.revokeObjectURL(recordings[key]);
+    delete recordings[key];
+  }
+  document.getElementById('rec-info-' + (p+1) + '-' + i).classList.remove('show');
+  const btn = document.getElementById('rec-' + (p+1) + '-' + i);
+  btn.textContent = '🎤 开始录音';
+  btn.classList.remove('recording');
+  document.getElementById('lc-' + (p+1) + '-' + i).classList.remove('recording');
+}
+
+function showErr(msg) {
+  const tip = document.getElementById('errTip');
+  tip.textContent = msg;
+  tip.style.display = 'block';
+  setTimeout(() => { tip.style.display = 'none'; }, 3500);
+}
+</script>
+</body>
+</html>
