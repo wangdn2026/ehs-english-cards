@@ -274,23 +274,37 @@ const TOTAL_LINES = 4;
 const UA = navigator.userAgent;
 const IS_WECHAT = /micromessenger/i.test(UA);
 const IS_ANDROID = /android/i.test(UA);
-// Android 微信 X5 上 capture="microphone" 不生效，弹文件管理器不是录音
-const NEED_FILE_FALLBACK = IS_WECHAT && IS_ANDROID;
-const HAS_GET_USER_MEDIA = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-  && !NEED_FILE_FALLBACK;
-let RECORD_MODE = HAS_GET_USER_MEDIA ? 'hold' : 'file';
+const IS_IOS = /iphone|ipad|ipod/i.test(UA);
+// Android 微信 X5 上：getUserMedia 被拦 + capture="microphone" 弹文件管理器
+// iOS 微信（WKWebView）：getUserMedia 支持
+const IS_ANDROID_WECHAT = IS_WECHAT && IS_ANDROID;
+const IS_IOS_WECHAT = IS_WECHAT && IS_IOS;
+// 三种模式：HOLD（长按页面内录音）/ FILE（系统录音器，文件选择）/ GUIDE（仅引导）
+let RECORD_MODE = 'hold';
+if (IS_ANDROID_WECHAT) RECORD_MODE = 'guide';
+else if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) RECORD_MODE = 'hold';
+  else RECORD_MODE = 'file';
+}
 
 const modeBadge = document.getElementById('modeBadge');
 const tipsBox = document.getElementById('tipsBox');
 if (RECORD_MODE === 'hold') {
-  modeBadge.textContent = '✓ 长按录音';
-  modeBadge.style.background = 'rgba(124,176,105,0.4)';
-  tipsBox.innerHTML = '<b>使用方法</b>　点「▶ 听原音」听标准发音 → <b>按住</b>「● 按住跟读」按钮说话（可看到自己的声音波形）→ <b>松手</b>自动打分。<br><b>音频授权</b>　首次录音浏览器会弹权限框，请点「允许」。';
-} else if (NEED_FILE_FALLBACK) {
-  modeBadge.textContent = '微信·系统录音';
+  if (IS_IOS_WECHAT) {
+    modeBadge.textContent = '✓ iOS 微信·长按';
+    modeBadge.style.background = 'rgba(124,176,105,0.4)';
+  } else {
+    modeBadge.textContent = '✓ 长按录音';
+    modeBadge.style.background = 'rgba(124,176,105,0.4)';
+  }
+  tipsBox.innerHTML = '<b>使用方法</b>　点「▶ 听原音」听标准发音 → <b>按住</b>「● 按住跟读」按钮说话（页面内录音，能看到自己的声音波形）→ <b>松手</b>自动打分。<br><b>音频授权</b>　首次录音浏览器会弹权限框，请点「允许」。';
+} else if (RECORD_MODE === 'guide') {
+  modeBadge.textContent = '✗ Android 微信·不支持';
+  modeBadge.style.background = 'rgba(224,122,95,0.5)';
   tipsBox.className = 'tips warn';
-  tipsBox.innerHTML = '<b>当前在微信里（Android）</b>　Android 微信内置浏览器不支持网页内录音，已切换为<b>手机自带录音器</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回看分数。<br><b>想获得按住跟读体验？</b>　点右上角 ··· → 选择「在浏览器中打开」（推荐 Chrome / Safari）。';
+  tipsBox.innerHTML = '<b>Android 微信内置浏览器不支持网页录音</b>　X5 内核硬伤，无解。<br><b>请按以下步骤操作</b>　点击右上角 <b>···</b> → 选择 <b>「在浏览器中打开」</b>（推荐 Chrome / Edge / Safari）→ 回到本页面 → <b>长按「● 按住跟读」说话 · 松手自动打分</b>。';
 } else {
+  // FILE 模式：系统录音器
   modeBadge.textContent = '系统录音器';
   tipsBox.className = 'tips warn';
   tipsBox.innerHTML = '<b>当前浏览器不支持网页内录音</b>　已自动切换为<b>手机自带录音器</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回看分数。';
@@ -768,7 +782,9 @@ function bindLine(el) {
   const retryBtn = el.querySelector('.btn-retake');
 
   // 按钮文字按模式
-  if (RECORD_MODE === 'file') {
+  if (RECORD_MODE === 'guide') {
+    holdBtn.innerHTML = '● 跟读 <span class="hold-hint">需浏览器</span>';
+  } else if (RECORD_MODE === 'file') {
     holdBtn.innerHTML = '● 跟读';
   } else {
     holdBtn.innerHTML = '● 按住跟读 <span class="hold-hint">长按</span>';
@@ -844,10 +860,26 @@ function bindLine(el) {
       }
     });
 
-  } else {
+  } else if (RECORD_MODE === 'file') {
     // FILE 模式：点击 → 弹 file input
     holdBtn.addEventListener('click', () => {
       fileInput.click();
+    });
+  } else if (RECORD_MODE === 'guide') {
+    // GUIDE 模式：点击 → 弹引导 modal（不再弹文件管理器）
+    holdBtn.addEventListener('click', () => {
+      window.__showRecModal(
+        '请在浏览器中打开',
+        '<b>Android 微信内置浏览器不支持网页录音</b><br><br>' +
+        '<b>操作步骤：</b><br>' +
+        '1. 点右上角 <b>···</b><br>' +
+        '2. 选择 <b>「在浏览器中打开」</b><br>' +
+        '3. 推荐 Chrome / Edge / Safari<br><br>' +
+        '<b>打开后体验：</b><br>' +
+        '🎙 长按「● 按住跟读」说话<br>' +
+        '✋ 松手自动打分（0-100）<br>' +
+        '🟢 90+ 深绿 / 🟢 70-89 中绿 / 🟩 50-69 浅绿 / 🟥 &lt;50 红'
+      );
     });
   }
 
@@ -874,7 +906,9 @@ function bindLine(el) {
     replayBtn.style.display = 'none';
     retryBtn.style.display = 'none';
     holdBtn.style.display = 'inline-flex';
-    holdBtn.innerHTML = RECORD_MODE === 'file' ? '● 跟读' : '● 按住跟读 <span class="hold-hint">长按</span>';
+    holdBtn.innerHTML = RECORD_MODE === 'guide' ? '● 跟读 <span class="hold-hint">需浏览器</span>'
+      : RECORD_MODE === 'file' ? '● 跟读'
+      : '● 按住跟读 <span class="hold-hint">长按</span>';
     holdBtn.disabled = false;
     el.classList.remove('recording');
     clearWaveform(el.querySelector('.waveform'));
