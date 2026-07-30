@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "vol": "09",
+    "topic": "博物馆与历史遗迹 & 承包商现场作业安全",
+    "topic_en": "Museums & Contractor On-Site Safety",
+    "difficulty": "★★☆",
+    "scheduled_live_date": "2026-08-05"
+  },
+  "parts": [
+    {
+      "id": 1,
+      "title": "Part 1: 博物馆建造历史与门票",
+      "dialogue": [
+        { "role": "Visitor", "en": "When was this museum built?", "zh": "这座博物馆是什么时候建成的？" },
+        { "role": "Staff", "en": "This museum was built more than 100 years ago.", "zh": "这座博物馆始建于一百多年前。" },
+        { "role": "Visitor", "en": "Is admission to this museum free for the public?", "zh": "这家博物馆对公众免费开放吗？" },
+        { "role": "Staff", "en": "This museum is not open to the public free of charge all year round.", "zh": "该博物馆不是全年免费向公众开放。" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Part 2: 免费人群与开放时间",
+      "dialogue": [
+        { "role": "Visitor", "en": "Who can enjoy free entry to the museum at all times?", "zh": "哪些人群可以随时免门票参观博物馆？" },
+        { "role": "Staff", "en": "Veterans, active military staff, unemployed people, disabled people, students and children can enjoy all year-round free admission.", "zh": "退役军人、现役军人、失业人士、残障人士、学生与儿童可全年免费入馆。" },
+        { "role": "Visitor", "en": "Could you tell me your opening hours?", "zh": "您可以告知一下博物馆的开放时间吗？" },
+        { "role": "Staff", "en": "We open seven days a week and only close on official holidays.", "zh": "我们一周七天开放，仅法定节假日闭馆。" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Part 3: 参观须知与感谢",
+      "dialogue": [
+        { "role": "Visitor", "en": "Can I take a photo of the exhibits inside?", "zh": "我可以给里面的展品拍照吗？" },
+        { "role": "Staff", "en": "Sorry, please do not take photos of any exhibits. All displays are only for viewing and appreciation.", "zh": "抱歉，请勿给任何展品拍照，所有陈列品仅供观赏。" },
+        { "role": "Visitor", "en": "Thank you so much for your detailed explanation.", "zh": "非常感谢您细致的解答。" },
+        { "role": "Staff", "en": "You are welcome. Wish you a nice visit!", "zh": "不客气，祝您参观愉快。" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Part 4: 承包商PTP 作业前方案",
+      "dialogue": [
+        { "role": "PM", "en": "Our contractors have finished all pre-qualification and pre-job preparations and will start on-site work very soon. What safety management process do they need to complete before they begin work?", "zh": "我们的承包商已经完成所有资格预审和入场准备，马上就要进场作业。开工前他们需要完成哪些安全管理工作？" },
+        { "role": "EHS Manager", "en": "Before any contractor task starts, they should complete an overall pre-task hazard identification and risk assessment for every upcoming work activity. This is the foundation of all on-site risk control.", "zh": "在承包商任何作业开始前，他们必须针对即将开展的所有工作，完成整体的危害辨识和风险评估，这是所有现场风险管控的基础。" },
+        { "role": "PM", "en": "After they finish hazard identification and risk evaluation, what do they need to do next?", "zh": "完成危害辨识和风险评估之后，下一步要做什么？" },
+        { "role": "EHS Manager", "en": "They need to fill out a Pre-Task Plan (PTP) and get approvals. PTP is also referred to as Work Permit in many companies. This document records the related risks, control measures and other safety requirements for the task.", "zh": "他们需要填写并审批作业前方案，也就是很多公司说的作业许可证。这份文件会记录作业相关的风险、管控措施和安全要求。" },
+        { "role": "PM", "en": "Besides risk analysis and permit approval, what on-site safety work do they need to conduct?", "zh": "除了风险分析和许可审批，开工后我们还要落实哪些现场安全工作？" },
+        { "role": "EHS Manager", "en": "They need to ensure all the safety measures indicated in the PTP are in place before the start of the work. In addition, they should perform routine on-site safety inspections at least every week to check contractor workers' behaviors, PPE compliance and risk control status.", "zh": "他们需要确保作业开始前，作业方案（PTP）中列明的所有安全措施均落实到位。此外，他们至少每周要开展现场安全巡查，核查承包商作业行为、防护用品佩戴以及风险管控的情况。" }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Part 5: 安全会议与奖惩",
+      "dialogue": [
+        { "role": "PM", "en": "Do they have regular safety meetings for ongoing contractor projects?", "zh": "针对承包商持续作业的项目，他们有定期安全会议吗？" },
+        { "role": "EHS Manager", "en": "Yes. They hold safety meetings at least on a weekly basis. We review current safety performance, existing hazards and closure status of the corrective actions.", "zh": "有的。承包商每周至少要开一次安全会议，复盘审核当前安全表现、现存隐患和整改进度。" },
+        { "role": "PM", "en": "Do they have reward and penalty rules for the contractors on site?", "zh": "他们针对现场承包商，有没有一套奖惩规则？" },
+        { "role": "EHS Manager", "en": "Yes. They issue fines for any safety violation by contractor workers. At the same time, anyone who proactively reports unsafe acts, unsafe conditions or offers good safety suggestions will receive a safety reward.", "zh": "有的。如果查到安全违规，他们会对承包商工人进行罚款；同时，对主动上报不安全行为、隐患或提出有效安全建议的，会给予安全奖励。" },
+        { "role": "PM", "en": "To summarize, the whole process covers pre-task hazard identification and risk assessment, PTP application and approval, ongoing site inspection, weekly safety review meetings, and a penalty and reward program. Correct?", "zh": "总结来说，整套流程包括：作业前危害辨识和风险评估、PTP 作业许可申请审批、持续现场巡查、每周安全复盘会议，以及奖惩制度。对吗？" },
+        { "role": "EHS Manager", "en": "Yes. This is the complete and standard contractor safety management process for our site.", "zh": "没错，这就是我们厂区标准、完整的承包商安全管理流程。" }
+      ]
+    }
+  ]
+}

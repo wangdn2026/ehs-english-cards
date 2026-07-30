@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>EHS英语口袋书 Vol.09 | 博物馆与承包商现场作业安全</title>
+<style>
+  :root {
+    --cyan: #7BA7BC;
+    --orange: #E07A5F;
+    --charcoal: #3D405B;
+    --light-bg: #F5F1EB;
+    --card-bg: #FFFFFF;
+    --kw-bg: #FFF3EE;
+    --active-border: #E07A5F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--light-bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    padding-bottom: 130px;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #2A2D42 100%);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  .header .series { font-size: 12px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 6px; }
+  .header .vol { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; }
+  .header .brand { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+  .player-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 10px 16px 14px; z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+  }
+  .player-bar .now-playing {
+    color: var(--cyan); font-size: 12px; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-bar audio { width: 100%; height: 36px; border-radius: 8px; }
+  .sections { padding: 16px; }
+  .section-card {
+    background: var(--card-bg); border-radius: 12px; margin-bottom: 16px;
+    overflow: hidden; border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .section-card.active { border-color: var(--active-border); box-shadow: 0 2px 16px rgba(224,122,95,0.2); }
+  .section-header {
+    display: flex; align-items: center; padding: 14px 16px;
+    cursor: pointer; background: var(--charcoal); color: white; gap: 10px;
+  }
+  .section-header .num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .section-header .title small { display: block; font-size: 11px; font-weight: 400; color: var(--cyan); margin-top: 2px; }
+  .section-header .play-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--cyan); border: none; color: white;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-header .play-btn:active { transform: scale(0.9); }
+  .section-body { padding: 16px; }
+  .dialogue { margin-bottom: 12px; }
+  .speaker { font-size: 12px; font-weight: 600; margin-bottom: 4px; padding: 2px 8px 2px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; }
+  .speaker.gm { background: #E8F4F8; color: #2B6CB0; }
+  .speaker.ehs { background: var(--kw-bg); color: #C05621; }
+  .line-play {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--orange); border: none; color: white;
+    font-size: 11px; cursor: pointer; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform 0.15s, background 0.2s; flex-shrink: 0;
+  }
+  .line-play:active { transform: scale(0.85); }
+  .line-play:hover { background: #C05621; }
+  .line-play.playing { background: var(--cyan); animation: pulse 1s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+  .dialogue.active { background: linear-gradient(90deg, rgba(224,122,95,0.10) 0%, rgba(224,122,95,0) 100%); border-left: 3px solid var(--orange); padding-left: 8px; margin-left: -11px; border-radius: 4px; transition: all 0.3s; }
+  .dialogue .en { font-size: 15px; margin-bottom: 4px; color: var(--charcoal); line-height: 1.6; }
+  .dialogue .zh { font-size: 13px; color: #718096; line-height: 1.6; padding-left: 10px; border-left: 3px solid #E2E8F0; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #E2E8F0; }
+  .kw { background: var(--kw-bg); color: var(--orange); font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(224,122,95,0.3); }
+  .kw small { color: #C05621; font-weight: 400; margin-left: 4px; }
+  .progress-dots { display: flex; justify-content: center; gap: 8px; padding: 12px; background: rgba(61,64,91,0.03); }
+  .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #CBD5E0; transition: background 0.3s, transform 0.3s; }
+  .progress-dots .dot.active { background: var(--orange); transform: scale(1.3); }
+  .progress-dots .dot.done { background: var(--cyan); }
+  .hint { text-align: center; font-size: 11px; color: #A0AEC0; padding: 8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="series">EHS英语口袋书</div>
+  <div class="vol">VOL.09</div>
+  <h1>博物馆与承包商现场作业安全</h1>
+  <div class="subtitle">Museums & Contractor On-Site Safety</div>
+  <div class="brand">安全五点半 · Frank聊EHS</div>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="dot" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</div>
+
+<div class="sections" id="sections">
+  <div class="section-card" data-section="0">
+    <div class="section-header" onclick="playSection(0)">
+      <div class="num">1</div>
+      <div class="title">博物馆建造历史与门票<small>Museum History & Admission</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="0.0" data-end="2.59">
+        <div class="speaker gm">Visitor 参观者</div><button class="line-play" data-start="0.0" data-end="2.59" aria-label="点读本句">🔊</button>
+        <div class="en">When was this museum built?</div>
+        <div class="zh">这座博物馆是什么时候建成的？</div>
+      </div>
+      <div class="dialogue" data-start="3.09" data-end="6.81">
+        <div class="speaker ehs">Staff 博物馆工作人员</div><button class="line-play" data-start="3.09" data-end="6.81" aria-label="点读本句">🔊</button>
+        <div class="en">This museum was built more than 100 years ago.</div>
+        <div class="zh">这座博物馆始建于一百多年前。</div>
+      </div>
+      <div class="dialogue" data-start="7.31" data-end="10.84">
+        <div class="speaker gm">Visitor 参观者</div><button class="line-play" data-start="7.31" data-end="10.84" aria-label="点读本句">🔊</button>
+        <div class="en">Is admission to this museum free for the public?</div>
+        <div class="zh">这家博物馆对公众免费开放吗？</div>
+      </div>
+      <div class="dialogue" data-start="11.34" data-end="15.78">
+        <div class="speaker ehs">Staff 博物馆工作人员</div><button class="line-play" data-start="11.34" data-end="15.78" aria-label="点读本句">🔊</button>
+        <div class="en">This museum is not open to the public free of charge all year round.</div>
+        <div class="zh">该博物馆不是全年免费向公众开放。</div>
+      </div>
+<div class="keywords">
+        <span class="kw">museum<small>博物馆</small></span>
+        <span class="kw">admission fee<small>门票</small></span>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">免费人群与开放时间<small>Free Entry & Opening Hours</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="16.98" data-end="20.94">
+        <div class="speaker gm">Visitor 参观者</div><button class="line-play" data-start="16.98" data-end="20.94" aria-label="点读本句">🔊</button>
+        <div class="en">Who can enjoy free entry to the museum at all times?</div>
+        <div class="zh">哪些人群可以随时免门票参观博物馆？</div>
+      </div>
+      <div class="dialogue" data-start="21.44" data-end="30.39">
+        <div class="speaker ehs">Staff 博物馆工作人员</div><button class="line-play" data-start="21.44" data-end="30.39" aria-label="点读本句">🔊</button>
+        <div class="en">Veterans, active military staff, unemployed people, disabled people, students and children can enjoy all year-round free admission.</div>
+        <div class="zh">退役军人、现役军人、失业人士、残障人士、学生与儿童可全年免费入馆。</div>
+      </div>
+      <div class="dialogue" data-start="30.89" data-end="33.7">
+        <div class="speaker gm">Visitor 参观者</div><button class="line-play" data-start="30.89" data-end="33.7" aria-label="点读本句">🔊</button>
+        <div class="en">Could you tell me your opening hours?</div>
+        <div class="zh">您可以告知一下博物馆的开放时间吗？</div>
+      </div>
+      <div class="dialogue" data-start="34.2" data-end="38.64">
+        <div class="speaker ehs">Staff 博物馆工作人员</div><button class="line-play" data-start="34.2" data-end="38.64" aria-label="点读本句">🔊</button>
+        <div class="en">We open seven days a week and only close on official holidays.</div>
+        <div class="zh">我们一周七天开放，仅法定节假日闭馆。</div>
+      </div>
+<div class="keywords">
+        <span class="kw">free entry<small>免费入场</small></span>
+        <span class="kw">opening hours<small>开放时间</small></span>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">参观须知与感谢<small>Visitor Etiquette & Thanks</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="39.84" data-end="43.13">
+        <div class="speaker gm">Visitor 参观者</div><button class="line-play" data-start="39.84" data-end="43.13" aria-label="点读本句">🔊</button>
+        <div class="en">Can I take a photo of the exhibits inside?</div>
+        <div class="zh">我可以给里面的展品拍照吗？</div>
+      </div>
+      <div class="dialogue" data-start="43.63" data-end="51.21">
+        <div class="speaker ehs">Staff 博物馆工作人员</div><button class="line-play" data-start="43.63" data-end="51.21" aria-label="点读本句">🔊</button>
+        <div class="en">Sorry, please do not take photos of any exhibits. All displays are only for viewing and appreciation.</div>
+        <div class="zh">抱歉，请勿给任何展品拍照，所有陈列品仅供观赏。</div>
+      </div>
+      <div class="dialogue" data-start="51.71" data-end="55.26">
+        <div class="speaker gm">Visitor 参观者</div><button class="line-play" data-start="51.71" data-end="55.26" aria-label="点读本句">🔊</button>
+        <div class="en">Thank you so much for your detailed explanation.</div>
+        <div class="zh">非常感谢您细致的解答。</div>
+      </div>
+      <div class="dialogue" data-start="55.76" data-end="59.84">
+        <div class="speaker ehs">Staff 博物馆工作人员</div><button class="line-play" data-start="55.76" data-end="59.84" aria-label="点读本句">🔊</button>
+        <div class="en">You are welcome. Wish you a nice visit!</div>
+        <div class="zh">不客气，祝您参观愉快。</div>
+      </div>
+<div class="keywords">
+        <span class="kw">take a photo<small>拍照</small></span>
+        <span class="kw">on display<small>陈列展示</small></span>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" data-section="3">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">承包商PTP 作业前方案<small>Contractor PTP Planning</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="61.04" data-end="72.52">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="61.04" data-end="72.52" aria-label="点读本句">🔊</button>
+        <div class="en">Our contractors have finished all pre-qualification and pre-job preparations and will start on-site work very soon. What safety management process do they need to complete before they begin work?</div>
+        <div class="zh">我们的承包商已经完成所有资格预审和入场准备，马上就要进场作业。开工前他们需要完成哪些安全管理工作？</div>
+      </div>
+      <div class="dialogue" data-start="73.02" data-end="85.93">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="73.02" data-end="85.93" aria-label="点读本句">🔊</button>
+        <div class="en">Before any contractor task starts, they should complete an overall pre-task hazard identification and risk assessment for every upcoming work activity. This is the foundation of all on-site risk control.</div>
+        <div class="zh">在承包商任何作业开始前，他们必须针对即将开展的所有工作，完成整体的危害辨识和风险评估，这是所有现场风险管控的基础。</div>
+      </div>
+      <div class="dialogue" data-start="86.43" data-end="92.16">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="86.43" data-end="92.16" aria-label="点读本句">🔊</button>
+        <div class="en">After they finish hazard identification and risk evaluation, what do they need to do next?</div>
+        <div class="zh">完成危害辨识和风险评估之后，下一步要做什么？</div>
+      </div>
+      <div class="dialogue" data-start="92.66" data-end="108.41">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="92.66" data-end="108.41" aria-label="点读本句">🔊</button>
+        <div class="en">They need to fill out a Pre-Task Plan (PTP) and get approvals. PTP is also referred to as Work Permit in many companies. This document records the related risks, control measures and other safety requirements for the task.</div>
+        <div class="zh">他们需要填写并审批作业前方案，也就是很多公司说的作业许可证。这份文件会记录作业相关的风险、管控措施和安全要求。</div>
+      </div>
+      <div class="dialogue" data-start="108.91" data-end="114.79">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="108.91" data-end="114.79" aria-label="点读本句">🔊</button>
+        <div class="en">Besides risk analysis and permit approval, what on-site safety work do they need to conduct?</div>
+        <div class="zh">除了风险分析和许可审批，开工后我们还要落实哪些现场安全工作？</div>
+      </div>
+      <div class="dialogue" data-start="115.29" data-end="132.4">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="115.29" data-end="132.4" aria-label="点读本句">🔊</button>
+        <div class="en">They need to ensure all the safety measures indicated in the PTP are in place before the start of the work. In addition, they should perform routine on-site safety inspections at least every week to check contractor workers' behaviors, PPE compliance and risk control status.</div>
+        <div class="zh">他们需要确保作业开始前，作业方案（PTP）中列明的所有安全措施均落实到位。此外，他们至少每周要开展现场安全巡查，核查承包商作业行为、防护用品佩戴以及风险管控的情况。</div>
+      </div>
+<div class="keywords">
+        <span class="kw">Pre-Task Plan (PTP)<small>作业前方案</small></span>
+        <span class="kw">hazard identification<small>危险源辨识</small></span>
+        <span class="kw">on-site safety inspection<small>现场安全巡查</small></span>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" data-section="4">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">安全会议与奖惩<small>Safety Meetings & Rewards</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="133.6" data-end="138.18">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="133.6" data-end="138.18" aria-label="点读本句">🔊</button>
+        <div class="en">Do they have regular safety meetings for ongoing contractor projects?</div>
+        <div class="zh">针对承包商持续作业的项目，他们有定期安全会议吗？</div>
+      </div>
+      <div class="dialogue" data-start="138.68" data-end="150.47">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="138.68" data-end="150.47" aria-label="点读本句">🔊</button>
+        <div class="en">Yes. They hold safety meetings at least on a weekly basis. We review current safety performance, existing hazards and closure status of the corrective actions.</div>
+        <div class="zh">有的。承包商每周至少要开一次安全会议，复盘审核当前安全表现、现存隐患和整改进度。</div>
+      </div>
+      <div class="dialogue" data-start="150.97" data-end="155.19">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="150.97" data-end="155.19" aria-label="点读本句">🔊</button>
+        <div class="en">Do they have reward and penalty rules for the contractors on site?</div>
+        <div class="zh">他们针对现场承包商，有没有一套奖惩规则？</div>
+      </div>
+      <div class="dialogue" data-start="155.69" data-end="171.12">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="155.69" data-end="171.12" aria-label="点读本句">🔊</button>
+        <div class="en">Yes. They issue fines for any safety violation by contractor workers. At the same time, anyone who proactively reports unsafe acts, unsafe conditions or offers good safety suggestions will receive a safety reward.</div>
+        <div class="zh">有的。如果查到安全违规，他们会对承包商工人进行罚款；同时，对主动上报不安全行为、隐患或提出有效安全建议的，会给予安全奖励。</div>
+      </div>
+      <div class="dialogue" data-start="171.62" data-end="185.45">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="171.62" data-end="185.45" aria-label="点读本句">🔊</button>
+        <div class="en">To summarize, the whole process covers pre-task hazard identification and risk assessment, PTP application and approval, ongoing site inspection, weekly safety review meetings, and a penalty and reward program. Correct?</div>
+        <div class="zh">总结来说，整套流程包括：作业前危害辨识和风险评估、PTP 作业许可申请审批、持续现场巡查、每周安全复盘会议，以及奖惩制度。对吗？</div>
+      </div>
+      <div class="dialogue" data-start="185.95" data-end="192.69">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="185.95" data-end="192.69" aria-label="点读本句">🔊</button>
+        <div class="en">Yes. This is the complete and standard contractor safety management process for our site.</div>
+        <div class="zh">没错，这就是我们厂区标准、完整的承包商安全管理流程。</div>
+      </div>
+<div class="keywords">
+        <span class="kw">safety meeting<small>安全会议</small></span>
+        <span class="kw">safety violation<small>安全违规</small></span>
+        <span class="kw">safety reward<small>安全奖励</small></span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="section-card" data-section="1">
+    <div class="section-header" onclick="playSection(1)">
+      <div class="num">2</div>
+      <div class="title">问诊医生：症状与诊断<small>Doctor Consultation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="26.58" data-end="31.98">
+        <div class="speaker gm">Patient 病人</div><button class="line-play" data-start="26.58" data-end="31.98" aria-label="点读本句">🔊</button>
+        <div class="en">I've had a bad cold for three days, with a high fever, sore throat and constant coughing.</div>
+        <div class="zh">我重感冒三天了，发高烧、喉咙疼，还一直咳嗽。</div>
+      </div>
+      <div class="dialogue" data-start="32.48" data-end="39.3">
+        <div class="speaker ehs">Doctor 医生</div><button class="line-play" data-start="32.48" data-end="39.3" aria-label="点读本句">🔊</button>
+        <div class="en">Let me check your temperature, pulse and breathing first. Have you had any chronic illness before?</div>
+        <div class="zh">我先帮你量体温、检查脉搏和呼吸。你以前有慢性病吗？</div>
+      </div>
+      <div class="dialogue" data-start="39.8" data-end="42.84">
+        <div class="speaker gm">Patient 病人</div><button class="line-play" data-start="39.8" data-end="42.84" aria-label="点读本句">🔊</button>
+        <div class="en">No, I've always been pretty healthy.</div>
+        <div class="zh">没有，我身体一直都挺好的。</div>
+      </div>
+      <div class="dialogue" data-start="43.34" data-end="50.71">
+        <div class="speaker ehs">Doctor 医生</div><button class="line-play" data-start="43.34" data-end="50.71" aria-label="点读本句">🔊</button>
+        <div class="en">It's just a viral cold, no serious infection. I'll prescribe some fever-reducer and cough syrup for you.</div>
+        <div class="zh">只是病毒性感冒，没有严重感染。我给你开退烧药和止咳糖浆。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">chronic illness<small>慢性病</small></span>
+        <span class="kw">viral cold<small>病毒性感冒</small></span>
+        <span class="kw">follow-up check-up<small>定期复查</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="2">
+    <div class="section-header" onclick="playSection(2)">
+      <div class="num">3</div>
+      <div class="title">承包商分类与总体要求<small>Contractor Classification</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="51.91" data-end="59.83">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="51.91" data-end="59.83" aria-label="点读本句">🔊</button>
+        <div class="en">We will start a facility renovation project soon. What safety work should we arrange for contractors in advance?</div>
+        <div class="zh">我们马上要启动厂务设施改造项目，针对承包商，我们前期要做好哪些安全工作？</div>
+      </div>
+      <div class="dialogue" data-start="60.33" data-end="74.66">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="60.33" data-end="74.66" aria-label="点读本句">🔊</button>
+        <div class="en">Contractor safety management should be included in the whole project. We classify contractors into three categories: office-based team members, facilities support services, and renovation or construction contractors.</div>
+        <div class="zh">承包商安全管理要融入项目全程。我们将承包商分为三类：驻办公室团队服务、厂务后勤服务，以及装修、设备维保与施工工程。</div>
+      </div>
+      <div class="dialogue" data-start="75.16" data-end="79.02">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="75.16" data-end="79.02" aria-label="点读本句">🔊</button>
+        <div class="en">Are there different safety requirements for these three types?</div>
+        <div class="zh">这三类承包商的安全要求各不相同吗？</div>
+      </div>
+      <div class="dialogue" data-start="79.52" data-end="92.94">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="79.52" data-end="92.94" aria-label="点读本句">🔊</button>
+        <div class="en">Yes. They have different requirements for pre-qualifications, trainings, signing of a contract, safety meeting, PTP, worksite inspection, annual audit and quarterly performance review.</div>
+        <div class="zh">是的，他们在资格预审、培训、合同签署、安全会议、作业前方案/作业许可、现场检查、年度审核及季度绩效评审方面有着不同要求。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">office-based team<small>驻办公室团队</small></span>
+        <span class="kw">facilities support<small>厂务后勤</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="3" data-start="94.14" data-end="138.64">
+    <div class="section-header" onclick="playSection(3)">
+      <div class="num">4</div>
+      <div class="title">资格预审与筛选<small>Pre-Qualification & Selection</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="94.14" data-end="99.25">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="94.14" data-end="99.25" aria-label="点读本句">🔊</button>
+        <div class="en">What is the core task of the first stage, Pre-Qualification and Selection?</div>
+        <div class="zh">第一阶段资格预审与筛选，核心工作是什么？</div>
+      </div>
+      <div class="dialogue" data-start="99.75" data-end="106.21">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="99.75" data-end="106.21" aria-label="点读本句">🔊</button>
+        <div class="en">We must collect a completed Contractor Prequalification Form from every bidding contractor at first.</div>
+        <div class="zh">我们首先必须收取所有投标承包商填写完整的《承包商资格预审表》。</div>
+      </div>
+      <div class="dialogue" data-start="106.71" data-end="111.17">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="106.71" data-end="111.17" aria-label="点读本句">🔊</button>
+        <div class="en">What key contents do we need to check on this pre-qualification form?</div>
+        <div class="zh">这份资格预审表，我们重点要核查哪些内容？</div>
+      </div>
+      <div class="dialogue" data-start="111.67" data-end="123.72">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="111.67" data-end="123.72" aria-label="点读本句">🔊</button>
+        <div class="en">We check their licences, certifications, qualifications, three-year reportable injuries, safety citations from Gov. agencies and some items of their E. H. S. management systems.</div>
+        <div class="zh">我们核查其执照、资质证书、从业资格、近三年可记录工伤事故、政府监管机构出具的安全违规处罚通知以及一些EHS管理系统方面的问题。</div>
+      </div>
+      <div class="dialogue" data-start="124.22" data-end="130.15">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="124.22" data-end="130.15" aria-label="点读本句">🔊</button>
+        <div class="en">Once we select a qualified contractor after pre-qualification, what is the next key step?</div>
+        <div class="zh">我们通过预审选定合格承包商之后，下一步关键流程是什么？</div>
+      </div>
+      <div class="dialogue" data-start="130.65" data-end="137.44">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="130.65" data-end="137.44" aria-label="点读本句">🔊</button>
+        <div class="en">All contractor staff must finish our designated online orientation training and their specific trainings.</div>
+        <div class="zh">所有承包商人员必须完成我们指定的线上入职安全培训，还有他们自己的专项培训。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">Prequalification Form<small>资格预审表</small></span>
+        <span class="kw">safety citations<small>安全违规通知</small></span>
+        <span class="kw">orientation training<small>入职培训</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" data-section="4">
+    <div class="section-header" onclick="playSection(4)">
+      <div class="num">5</div>
+      <div class="title">入场安全准备<small>Pre-Job Safety Preparation</small></div>
+      <button class="play-btn">▶</button>
+    </div>
+    <div class="section-body">
+      <div class="dialogue" data-start="138.64" data-end="143.42">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="138.64" data-end="143.42" aria-label="点读本句">🔊</button>
+        <div class="en">Great, training is very important. Anything else?</div>
+        <div class="zh">很好，培训十分重要，还有其他事项吗？</div>
+      </div>
+      <div class="dialogue" data-start="143.92" data-end="152.75">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="143.92" data-end="152.75" aria-label="点读本句">🔊</button>
+        <div class="en">Sure, they need to conduct hazard identification and risk assessment in advance for the contractor activities and submit their work safety plan.</div>
+        <div class="zh">当然，他们事先需针对承包商作业开展危险源辨识与风险评估，并提交作业安全方案。</div>
+      </div>
+      <div class="dialogue" data-start="153.25" data-end="157.5">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="153.25" data-end="157.5" aria-label="点读本句">🔊</button>
+        <div class="en">Does the second stage require them to sign a safety agreement?</div>
+        <div class="zh">第二阶段作业前安全准备，要求签订安全协议？</div>
+      </div>
+      <div class="dialogue" data-start="158.0" data-end="165.65">
+        <div class="speaker ehs">EHS Manager EHS经理</div><button class="line-play" data-start="158.0" data-end="165.65" aria-label="点读本句">🔊</button>
+        <div class="en">Absolutely, we shall sign a formal Safety Agreement with them prior to the start of work in order to comply with Work Safety Law.</div>
+        <div class="zh">一定的，为了符合安全生产法的要求，在开工前和对方签订正式安全生产管理协议。</div>
+      </div>
+      <div class="dialogue" data-start="166.15" data-end="171.07">
+        <div class="speaker gm">PM 项目经理</div><button class="line-play" data-start="166.15" data-end="171.07" aria-label="点读本句">🔊</button>
+        <div class="en">Got it. Safety is the foundation of every project.</div>
+        <div class="zh">明白了。安全是每一个项目的基础。</div>
+      </div>
+      <div class="keywords">
+        <span class="kw">hazard identification<small>危险源辨识</small></span>
+        <span class="kw">work safety plan<small>作业安全方案</small></span>
+        <span class="kw">safety agreement<small>安全协议</small></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hint">EHS英语口袋书 Vol.09 · 2026-08-05 · 点章节 ▶ 整段播 · 点每句 🔊 单句点读</div>
+
+<div class="player-bar" id="playerBar">
+  <div class="now-playing" id="nowPlaying">EHS英语口袋书 Vol.08 - 点击章节开始听读</div>
+  <audio id="audioPlayer" preload="auto">
+    <source src="audio/vol09_museum_contractor_full.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+var audio = document.getElementById('audioPlayer');
+var cards = document.querySelectorAll('.section-card');
+var dots = document.querySelectorAll('.progress-dots .dot');
+var nowPlaying = document.getElementById('nowPlaying');
+var sectionTitles = ['1. 博物馆建造历史与门票', '2. 免费人群与开放时间', '3. 参观须知与感谢', '4. 承包商PTP 作业前方案', '5. 安全会议与奖惩'];
+var currentSection = -1;
+
+function playSection(idx) {
+  audio.play();
+  setActive(idx);
+  cards[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setActive(idx) {
+  if (currentSection === idx) return;
+  currentSection = idx;
+  for (var i = 0; i < cards.length; i++) {
+    if (i === idx) cards[i].classList.add('active');
+    else cards[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active', 'done');
+    if (i === idx) dots[i].classList.add('active');
+    else if (i < idx) dots[i].classList.add('done');
+  }
+  nowPlaying.textContent = '正在播放: ' + sectionTitles[idx];
+}
+
+audio.addEventListener('ended', function() {
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); dots[i].classList.add('done'); }
+  document.querySelectorAll('.dialogue').forEach(function(d){ d.classList.remove('active'); });
+  document.querySelectorAll('.line-play').forEach(function(b){ b.classList.remove('playing'); });
+  nowPlaying.textContent = '播放完毕';
+  currentSection = -1;
+});
+
+// 行级点读：点击喇叭跳到该句起点
+document.querySelectorAll('.line-play').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var start = parseFloat(btn.dataset.start);
+    audio.currentTime = start;
+    audio.play();
+    var card = btn.closest('.section-card');
+    if (card) {
+      var idx = parseInt(card.dataset.section);
+      setActive(idx);
+    }
+  });
+});
+
+// timeupdate：当前播放行高亮 + 喇叭脉冲
+audio.addEventListener('timeupdate', function() {
+  var t = audio.currentTime;
+  var dialogues = document.querySelectorAll('.dialogue');
+  var currentLine = null;
+  dialogues.forEach(function(d) {
+    var s = parseFloat(d.dataset.start);
+    var e = parseFloat(d.dataset.end);
+    if (t >= s && t < e) {
+      d.classList.add('active');
+      currentLine = d;
+    } else {
+      d.classList.remove('active');
+    }
+  });
+  document.querySelectorAll('.line-play').forEach(function(b) {
+    if (currentLine && b.closest('.dialogue') === currentLine) {
+      b.classList.add('playing');
+    } else {
+      b.classList.remove('playing');
+    }
+  });
+});
+</script>
+</body>
+</html>

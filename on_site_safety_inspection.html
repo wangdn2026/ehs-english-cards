@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>EHS领读卡 - hazard identification</title>
+<title>EHS领读卡 - on-site safety inspection</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#7BA7BC;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
@@ -25,20 +25,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 <body>
 <div class="card">
 <span class="tag">承包商管理</span>
-<div class="en-title">hazard identification</div>
+<div class="en-title">on-site safety inspection</div>
 <div class="divider"></div>
-<div class="cn-title">危险源辨识</div>
+<div class="cn-title">现场安全巡查</div>
 <button class="play-btn" id="pb" onclick="play()">&#128266; 发音</button>
 <div class="ex-section">
 <div class="ex-item">
-<div class="ex-en">Before any contractor task starts, they complete pre-task hazard identification.</div>
+<div class="ex-en">They should perform routine on-site safety inspections at least every week.</div>
 </div>
 </div>
 </div>
 <div class="brand">安全五点半 · EHS英语领读卡</div>
 <script>
 var aud=null;
-function play(){var btn=document.getElementById('pb');if(aud){try{aud.pause();aud.currentTime=0}catch(e){}}aud=new Audio('https://dict.youdao.com/dictvoice?audio=hazard%20identification&type=1');btn.className='play-btn on';aud.onended=function(){btn.className='play-btn'};aud.onerror=function(){btn.className='play-btn';aud=new Audio('https://dict.youdao.com/dictvoice?audio=hazard%20identification&type=2');aud.play().catch(function(){})};aud.play().catch(function(){btn.className='play-btn'});}
+function play(){var btn=document.getElementById('pb');if(aud){try{aud.pause();aud.currentTime=0}catch(e){}}aud=new Audio('https://dict.youdao.com/dictvoice?audio=on-site%20safety%20inspection&type=1');btn.className='play-btn on';aud.onended=function(){btn.className='play-btn'};aud.onerror=function(){btn.className='play-btn';aud=new Audio('https://dict.youdao.com/dictvoice?audio=on-site%20safety%20inspection&type=2');aud.play().catch(function(){})};aud.play().catch(function(){btn.className='play-btn'});}
 </script>
 </body>
 </html>
