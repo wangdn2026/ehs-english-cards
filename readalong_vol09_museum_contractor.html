@@ -92,10 +92,6 @@
   .btn-hold .hold-hint { font-size: 11px; opacity: 0.85; margin-left: 2px; }
   .btn-hold.guide { background: var(--c-tian); }
   .btn-hold.guide:active { background: #5B8FA8; }
-  /* 微信 X5 提示条（浅灰色，不抢眼） */
-  .wechat-hint-bar { background: #EAF2F6; color: #4A5858; margin: 0; padding: 9px 16px;
-    border-bottom: 1px solid #D4E0E6; line-height: 1.55; font-size: 12.5px; }
-  .wechat-hint-bar b { color: var(--c-tian); }
   .toast { position: fixed; top: 30%; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,0.85); color: #fff; padding: 12px 22px; border-radius: 24px;
     font-size: 14px; z-index: 10000; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -298,14 +294,8 @@ if (RECORD_MODE === 'hold') {
   }
   tipsBox.style.display = 'none';
 } else if (RECORD_MODE === 'guide') {
-  // 顶部加一个浅色提示条（不抢眼）
   document.body.classList.add('mode-guide');
-  modeBadge.textContent = '📋 复制链接';
-  modeBadge.style.background = 'rgba(123,167,188,0.4)';
-  const banner = document.createElement('div');
-  banner.className = 'wechat-hint-bar';
-  banner.innerHTML = '本页面无法录音　点下面任一 <b>「📋 复制链接」</b> 按钮，把链接到 <b>手机浏览器</b> / <b>电脑浏览器</b> 打开';
-  document.querySelector('.top').insertAdjacentElement('afterend', banner);
+  modeBadge.style.display = 'none';
   tipsBox.style.display = 'none';
 } else {
   // FILE 模式：系统录音器
