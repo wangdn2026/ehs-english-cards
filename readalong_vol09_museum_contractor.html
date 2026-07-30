@@ -179,7 +179,6 @@
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_0">▶ 听原音</button>
     <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 听自己</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
@@ -198,7 +197,6 @@
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_1">▶ 听原音</button>
     <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 听自己</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
@@ -217,7 +215,6 @@
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_2">▶ 听原音</button>
     <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 听自己</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
@@ -236,7 +233,6 @@
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_3">▶ 听原音</button>
     <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 听自己</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
@@ -263,15 +259,28 @@ const PARTS_DATA = [{"id": 1, "title": "Part 1: 博物馆建造历史与门票",
 const AUDIO_BASE = 'https://wangdn2026.github.io/ehs-english-cards/audio/';
 const TOTAL_LINES = 4;
 
-// ====== 录音模式检测（极简版：只保留 hold / file 两种，不做特殊 X5 引导）======
-// 任何浏览器进来都默认 hold（页内录音），不支持 getUserMedia 才降级 file（系统录音器）
-let RECORD_MODE = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? 'hold' : 'file';
+// ====== 录音能力检测（极简版：2026-07-31 砍掉 file input 降级）======
+// 只能 hold（页内录音）；不支持 getUserMedia → 按钮置灰 + 提示文字，不弹任何东西
+const SUPPORTS_RECORD = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
 
 // 冬妮明确要求"不要任何顶部提示" → modeBadge / tipsBox 一律不显示
 const modeBadge = document.getElementById('modeBadge');
 const tipsBox = document.getElementById('tipsBox');
 if (modeBadge) modeBadge.style.display = 'none';
 if (tipsBox) tipsBox.style.display = 'none';
+
+// 浏览器不支持录音时，延迟把按钮全部置灰（等 bindLine 注册完）
+if (!SUPPORTS_RECORD) {
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.btn-hold').forEach(btn => {
+      btn.disabled = true;
+      btn.innerHTML = '🚫 <b>此浏览器不支持录音</b>';
+      btn.title = '请在 Chrome / Safari 中打开';
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'not-allowed';
+    });
+  });
+}
 
 // === 极简版：只保留听原音 / 录自己 / 听自己录的；不再打分 ===
 const lineState = {};
@@ -537,34 +546,22 @@ function cancelHoldRecord() {
   s.lineEl.classList.remove('recording');
 }
 
-// ====== 系统录音器降级（file input）======
-async function handleFileRecord(lineEl, ctx, file) {
+// ====== file input 降级已砍（2026-07-31 反馈：跳系统录音 App 体验极差）======
+// 改为：浏览器不支持 → 按钮置灰；getUserMedia 失败 → 显示 inline 提示，不弹任何东西
+async function showRecordError(lineEl, err) {
   const recBtn = lineEl.querySelector('.btn-hold');
-  const replayBtn = lineEl.querySelector('.btn-replay');
-  const retryBtn = lineEl.querySelector('.btn-retake');
-
-  recBtn.disabled = true;
-  const origText = recBtn.innerHTML;
-  recBtn.textContent = '处理中…';
-  try {
-    const url = URL.createObjectURL(file);
-    recBtn.style.display = 'none';
-    replayBtn.dataset.url = url;
-    replayBtn.style.display = 'inline-flex';
-    retryBtn.style.display = 'inline-flex';
-    lineEl.classList.add('done');
-    lineState[ctx.key] = { done: true };
-    saveProgress(ctx.key);
-    updateProgress();
-  } catch (err) {
-    let msg = '音频处理失败';
-    if (err && err.message) msg += '：' + err.message;
-    window.__showRecModal('跟读失败', msg);
+  if (!recBtn) return;
+  let msg = '录音失败';
+  if (err && err.name === 'NotAllowedError') {
+    msg = '麦克风被拒绝授权。请到浏览器设置里允许麦克风权限，然后刷新页面。';
+  } else if (err && err.name === 'NotFoundError') {
+    msg = '没找到麦克风设备。请检查手机麦克风。';
+  } else if (err && err.message) {
+    msg = '录音失败：' + err.message;
   }
-  recBtn.innerHTML = origText;
+  recBtn.innerHTML = '⚠️ <b>点此重试</b>';
+  recBtn.title = msg;
   recBtn.disabled = false;
-  const fi = lineEl.querySelector('.file-input');
-  if (fi) fi.value = '';
 }
 
 function bindLine(el) {
@@ -578,11 +575,10 @@ function bindLine(el) {
 
   const playBtn = el.querySelector('.btn-play');
   const holdBtn = el.querySelector('.btn-hold');
-  const fileInput = el.querySelector('.file-input');
   const replayBtn = el.querySelector('.btn-replay');
   const retryBtn = el.querySelector('.btn-retake');
 
-  // 按钮文字统一（不再分模式，砍掉 GUIDE 模式）
+  // 按钮文字统一
   holdBtn.innerHTML = '🎤 <b>点这里录</b>';
   holdBtn.classList.remove('guide');
 
@@ -595,8 +591,9 @@ function bindLine(el) {
     }
   });
 
-  // ====== 录音交互（HOLD 模式 或 FILE 模式）======
-  if (RECORD_MODE === 'hold') {
+  // ====== 录音交互（页内录音，2026-07-31 砍掉 file 降级）======
+  // 浏览器不支持 getUserMedia 时，由顶部 SUPPORTS_RECORD 监听统一置灰按钮
+  if (SUPPORTS_RECORD) {
     // 单击切换：点开始，再点结束（更稳，Android 微信不吞单击）
     let holdStarted = false;
     const onToggle = async () => {
@@ -608,22 +605,10 @@ function bindLine(el) {
         try {
           await startHoldRecord(el, ctx);
         } catch (err) {
+          // 不再降级 file input，改为 inline 提示 + 重试按钮
           holdStarted = false;
           holdBtn.classList.remove('pressing');
-          holdBtn.innerHTML = '🎤 <b>点这里录</b>';
-          // 自动降级：弹 file input（系统录音器）
-          if (fileInput) {
-            RECORD_MODE = 'file';
-            fileInput.click();
-          } else {
-            let msg = '当前浏览器不支持录音，请用手机自带录音器录完回放。';
-            if (err && err.name === 'NotAllowedError') {
-              msg = '麦克风被拒绝授权。请到浏览器设置里允许麦克风权限，然后刷新页面。';
-            } else if (err && err.name === 'NotFoundError') {
-              msg = '没找到麦克风设备。请检查手机麦克风。';
-            }
-            window.__showRecModal('录音失败', msg);
-          }
+          await showRecordError(el, err);
         }
       } else {
         // 结束
@@ -633,20 +618,6 @@ function bindLine(el) {
       }
     };
     holdBtn.addEventListener('click', onToggle);
-
-  } else if (RECORD_MODE === 'file') {
-    // FILE 模式：点击 → 弹 file input（系统录音器）
-    holdBtn.addEventListener('click', () => {
-      fileInput.click();
-    });
-  }
-
-  if (fileInput) {
-    fileInput.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      await handleFileRecord(el, ctx, file);
-    });
   }
 
   replayBtn.addEventListener('click', () => {
