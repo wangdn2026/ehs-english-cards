@@ -146,23 +146,6 @@
   }
   .rec-mask-timer { color: #fff; font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
   .rec-mask-hint { color: rgba(255,255,255,0.7); font-size: 12px; }
-  .score-panel { margin-top: 10px; padding: 12px; background: var(--c-bg); border-radius: 8px;
-    display: none; align-items: center; gap: 14px; }
-  .score-panel.show { display: flex; }
-  .score-ring { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
-  .score-ring svg { transform: rotate(-90deg); }
-  .score-ring .bg-circle { fill: none; stroke: var(--c-line); stroke-width: 6; }
-  .score-ring .fg-circle { fill: none; stroke-width: 6; stroke-linecap: round;
-    transition: stroke-dashoffset 0.8s ease, stroke 0.4s; }
-  .score-num { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 22px; font-weight: 700; color: var(--c-charcoal);
-    font-variant-numeric: tabular-nums; }
-  .score-num small { font-size: 11px; font-weight: 400; color: var(--c-soft); display: block; text-align: center; }
-  .score-info { flex: 1; min-width: 0; }
-  .score-grade { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-  .score-detail { font-size: 11.5px; color: var(--c-soft); line-height: 1.65; }
-  .score-detail span { display: inline-block; margin-right: 8px; }
-  .score-detail b { color: var(--c-charcoal); font-weight: 600; }
   .footer { text-align: center; padding: 24px 14px 30px; font-size: 11.5px; color: var(--c-soft); }
   .footer a { color: var(--c-tian); text-decoration: none; }
   .modal-mask { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
@@ -210,13 +193,11 @@
   <div class="line-zh">这座博物馆是什么时候建成的？</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_0">▶ 听原音</button>
-    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
+    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
-    <button class="btn btn-replay" style="display:none">↺ 回放</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
+    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
+    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
-  <div class="score-panel"></div>
 </div>
 
 <div class="line" data-line-key="1_1" data-part-id="1" data-line-idx="1"
@@ -231,13 +212,11 @@
   <div class="line-zh">这座博物馆始建于一百多年前。</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_1">▶ 听原音</button>
-    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
+    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
-    <button class="btn btn-replay" style="display:none">↺ 回放</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
+    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
+    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
-  <div class="score-panel"></div>
 </div>
 
 <div class="line" data-line-key="1_2" data-part-id="1" data-line-idx="2"
@@ -252,13 +231,11 @@
   <div class="line-zh">这家博物馆对公众免费开放吗？</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_2">▶ 听原音</button>
-    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
+    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
-    <button class="btn btn-replay" style="display:none">↺ 回放</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
+    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
+    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
-  <div class="score-panel"></div>
 </div>
 
 <div class="line" data-line-key="1_3" data-part-id="1" data-line-idx="3"
@@ -273,13 +250,11 @@
   <div class="line-zh">该博物馆不是全年免费向公众开放。</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_3">▶ 听原音</button>
-    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
-    <button class="btn btn-hold">● 按住跟读 <span class="hold-hint">长按</span></button>
+    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
     <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
-    <button class="btn btn-replay" style="display:none">↺ 回放</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
+    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
+    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
   </div>
-  <div class="score-panel"></div>
 </div>
 
 </div>
@@ -340,11 +315,9 @@ if (RECORD_MODE === 'hold') {
   const banner = document.createElement('div');
   banner.className = 'wechat-guide-banner';
   banner.innerHTML =
-    '<div class="wgb-title">⚠️ 当前是微信内置浏览器，<b>无法录音</b></div>' +
-    '<div class="wgb-step"><span class="wgb-num">1</span>点下面 <b>「📋 复制链接」</b> 按钮</div>' +
-    '<div class="wgb-step"><span class="wgb-num">2</span>点右上角 <b>···</b> → <b>在浏览器中打开</b>（没这个选项就往下看）</div>' +
-    '<div class="wgb-step"><span class="wgb-num">3</span>没找到「在浏览器中打开」？<br>　点右上角 <b>···</b> → <b>复制链接</b> → 退出微信 → 打开 <b>手机浏览器</b>（Chrome/Edge/Safari）→ 长按地址栏 <b>粘贴</b> → 访问</div>' +
-    '<div class="wgb-foot">🌿 打开后体验：长按「● 按住跟读」→ 说话 → 松手自动打分</div>';
+    '<div class="wgb-title">📋 当前浏览器无法录音</div>' +
+    '<div class="wgb-step">点下面 <b>「复制链接」</b> 按钮，把链接发给自己的 <b>电脑浏览器</b> 或 <b>手机浏览器</b>（Chrome/Edge/Safari）打开。</div>' +
+    '<div class="wgb-foot">🌿 手机上打开后可以 <b>听原音 + 自己录 + 听自己的录音</b></div>';
   document.querySelector('.top').insertAdjacentElement('afterend', banner);
   tipsBox.style.display = 'none';
 } else {
@@ -354,103 +327,7 @@ if (RECORD_MODE === 'hold') {
   tipsBox.innerHTML = '<b>当前浏览器不支持网页内录音</b>　已自动切换为<b>手机自带录音器</b>。点「● 跟读」会弹录音器，录完点「完成」自动返回看分数。';
 }
 
-class Scorer {
-  constructor() {
-    this.audioCtx = null;
-    this.refEnvelopes = {};
-  }
-  async init() {
-    try {
-      this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    } catch (e) { console.warn('AudioContext 不可用', e); }
-  }
-  async preloadRefEnvelope(partId, lineIdx, start, end) {
-    const key = partId + '_' + lineIdx;
-    if (this.refEnvelopes[key]) return this.refEnvelopes[key];
-    if (!this.audioCtx) return null;
-    try {
-      const url = AUDIO_BASE + 'vol09_museum_contractor_full.mp3';
-      const resp = await fetch(url);
-      const buf = await resp.arrayBuffer();
-      const audioBuf = await this.audioCtx.decodeAudioData(buf);
-      const data = audioBuf.getChannelData(0);
-      const sr = audioBuf.sampleRate;
-      const s = Math.max(0, Math.floor(start * sr));
-      const e = Math.min(data.length, Math.floor(end * sr));
-      const seg = data.slice(s, e);
-      const env = this.extractEnvelope(seg, sr, 0.08);
-      this.refEnvelopes[key] = env;
-      return env;
-    } catch (err) { return null; }
-  }
-  extractEnvelope(samples, sr, frameSec) {
-    const frameSize = Math.max(1, Math.floor(sr * frameSec));
-    const env = [];
-    for (let i = 0; i < samples.length; i += frameSize) {
-      const end = Math.min(i + frameSize, samples.length);
-      let sum = 0;
-      for (let j = i; j < end; j++) sum += samples[j] * samples[j];
-      const rms = Math.sqrt(sum / (end - i));
-      env.push({ t: i / sr, v: rms });
-    }
-    return env;
-  }
-  async analyzeBlob(blob) {
-    if (!this.audioCtx) throw new Error('浏览器不支持音频分析');
-    const arrayBuffer = await blob.arrayBuffer();
-    const audioBuf = await this.audioCtx.decodeAudioData(arrayBuffer.slice(0));
-    const data = audioBuf.getChannelData(0);
-    const sr = audioBuf.sampleRate;
-    const env = this.extractEnvelope(data, sr, 0.08);
-    return { envelope: env, duration: audioBuf.duration, sampleRate: sr };
-  }
-  computeScore(userSamples, refEnv, refDuration, userDuration) {
-    const ratio = userDuration / Math.max(0.1, refDuration);
-    let durScore;
-    if (ratio < 0.25 || ratio > 3.5) durScore = 0;
-    else if (ratio < 0.4 || ratio > 2.5) durScore = 50;
-    else if (ratio < 0.6 || ratio > 1.7) durScore = 75;
-    else if (ratio < 0.8 || ratio > 1.3) durScore = 90;
-    else durScore = 100;
-
-    const avgVol = userSamples.length > 0
-      ? userSamples.reduce((a, b) => a + b.v, 0) / userSamples.length : 0;
-    const volScore = Math.max(0, Math.min(100, Math.round((avgVol - 0.008) * 1800)));
-
-    let rhythmScore = 0;
-    if (refEnv && refEnv.length > 3 && userSamples.length > 3) {
-      const us = userSamples.map(s => s.v);
-      const rs = refEnv.map(s => s.v);
-      const minLen = Math.min(us.length, rs.length);
-      const u = us.slice(0, minLen);
-      const r = rs.slice(0, minLen);
-      rhythmScore = Math.max(0, this.pearson(u, r)) * 100;
-    }
-
-    const total = Math.round(durScore * 0.4 + volScore * 0.2 + rhythmScore * 0.4);
-    return {
-      total, durScore: Math.round(durScore), volScore: Math.round(volScore),
-      rhythmScore: Math.round(rhythmScore), ratio: ratio.toFixed(2),
-      userDuration: userDuration.toFixed(1), refDuration: refDuration.toFixed(1)
-    };
-  }
-  pearson(xs, ys) {
-    const n = Math.min(xs.length, ys.length);
-    if (n < 2) return 0;
-    let mx = 0, my = 0;
-    for (let i = 0; i < n; i++) { mx += xs[i]; my += ys[i]; }
-    mx /= n; my /= n;
-    let num = 0, dx2 = 0, dy2 = 0;
-    for (let i = 0; i < n; i++) {
-      const dx = xs[i] - mx, dy = ys[i] - my;
-      num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
-    }
-    const den = Math.sqrt(dx2 * dy2);
-    return den === 0 ? 0 : num / den;
-  }
-}
-
-const scorer = new Scorer();
+// === 极简版：只保留听原音 / 录自己 / 听自己录的；不再打分 ===
 const lineState = {};
 
 const audioPlayer = new Audio();
@@ -473,60 +350,11 @@ function playSegment(btn, start, end) {
 }
 
 function getScoreStyle(total) {
-  // 4 档颜色：90+ 深绿 / 70-89 中绿 / 50-69 浅绿 / <50 红
+  // 4 档颜色：90+ 深绿 / 70-89 中绿 / 50-69 浅绿 / <50 红（暂未使用，保留备用）
   if (total >= 90) return { grade: '优秀 Excellent', color: '#4A8B3A' };
   if (total >= 70) return { grade: '良好 Good', color: '#7CB069' };
   if (total >= 50) return { grade: '还行 OK', color: '#B5D4A0' };
   return { grade: '没读到 Try Again', color: '#E07A5F' };
-}
-
-function renderScore(panel, score) {
-  const { grade, color } = getScoreStyle(score.total);
-  const C = 2 * Math.PI * 30;
-  const offset = C * (1 - score.total / 100);
-  panel.innerHTML = `
-    <div class="score-ring">
-      <svg width="72" height="72" viewBox="0 0 72 72">
-        <circle class="bg-circle" cx="36" cy="36" r="30"></circle>
-        <circle class="fg-circle" cx="36" cy="36" r="30"
-          stroke="${color}" stroke-dasharray="${C}" stroke-dashoffset="${C}"></circle>
-      </svg>
-      <div class="score-num">${score.total}<small>/100</small></div>
-    </div>
-    <div class="score-info">
-      <div class="score-grade" style="color:${color}">${grade}</div>
-      <div class="score-detail">
-        <span>节奏 <b>${score.rhythmScore}</b></span>
-        <span>时长 <b>${score.durScore}</b></span>
-        <span>音量 <b>${score.volScore}</b></span>
-        <br>
-        <span>用时 ${score.userDuration}s / 原音 ${score.refDuration}s（${score.ratio}x）</span>
-      </div>
-    </div>
-  `;
-  panel.classList.add('show');
-  setTimeout(() => {
-    const fg = panel.querySelector('.fg-circle');
-    if (fg) fg.style.strokeDashoffset = offset;
-  }, 50);
-}
-
-function renderStaticWaveform(waveformEl, envelope) {
-  const bars = waveformEl.querySelectorAll('.wave-bar');
-  bars.forEach(b => b.classList.remove('live', 'user', 'rec'));
-  if (!envelope || envelope.length === 0) {
-    bars.forEach(b => { b.style.height = '4px'; });
-    return;
-  }
-  const step = Math.max(1, Math.floor(envelope.length / bars.length));
-  bars.forEach((bar, i) => {
-    const seg = envelope.slice(i * step, (i + 1) * step);
-    if (seg.length === 0) { bar.style.height = '4px'; return; }
-    const max = Math.max(...seg.map(s => s.v));
-    const h = Math.max(4, Math.min(28, max * 100));
-    bar.style.height = h + 'px';
-    bar.classList.add('user');
-  });
 }
 
 function clearWaveform(waveformEl) {
@@ -576,7 +404,7 @@ function showHoldMask(lineEl, show) {
       <div class="rec-mask-mic">🎙</div>
       <div class="rec-mask-text">正在录音…</div>
       <div class="rec-mask-timer" id="holdMaskTimer">0.0s</div>
-      <div class="rec-mask-hint">松手自动打分</div>
+      <div class="rec-mask-hint">再点一次按钮结束</div>
     `;
     document.body.appendChild(mask);
   }
@@ -585,6 +413,11 @@ function showHoldMask(lineEl, show) {
     document.getElementById('holdMaskTimer').textContent = '0.0s';
   } else {
     mask.classList.remove('show');
+  }
+  // 简化 mask 提示
+  if (show) {
+    const hintEl = mask.querySelector('.rec-mask-hint');
+    if (hintEl) hintEl.textContent = '再点一次按钮结束';
   }
 }
 
@@ -661,7 +494,7 @@ async function startHoldRecord(lineEl, ctx) {
     cancelled: false, finished: false,
   };
 
-  const finishPromise = new Promise((resolve, reject) => {
+  const finishPromise = new Promise((resolve) => {
     recorder.onstop = async () => {
       if (session.finished) return;
       session.finished = true;
@@ -679,52 +512,46 @@ async function startHoldRecord(lineEl, ctx) {
       const blob = new Blob(chunks, { type: mimeType || 'audio/webm' });
       const url = URL.createObjectURL(blob);
 
+      // 简单获取时长（不调 scorer）
+      let duration = 0;
       try {
-        const refEnv = await scorer.preloadRefEnvelope(partId, lineIdx, start, end);
-        const { envelope, duration } = await scorer.analyzeBlob(blob);
-        if (duration < 0.3) {
-          URL.revokeObjectURL(url);
-          clearWaveform(waveformEl);
-          window.__showRecModal('录音太短', '请按住久一点再松手（至少 0.3 秒）');
-          resolve(null);
-          return;
-        }
-        if (duration > 30) {
-          URL.revokeObjectURL(url);
-          clearWaveform(waveformEl);
-          window.__showRecModal('录音太长', '一句话最多 30 秒');
-          resolve(null);
-          return;
-        }
+        const tmpA = new Audio(url);
+        await new Promise((res) => { tmpA.addEventListener('loadedmetadata', res, { once: true }); tmpA.addEventListener('error', res, { once: true }); });
+        duration = tmpA.duration || 0;
+      } catch (e) { duration = 0; }
 
-        const score = scorer.computeScore(envelope, refEnv, refDuration, duration);
-        renderStaticWaveform(waveformEl, envelope);
-        renderScore(lineEl.querySelector('.score-panel'), score);
-
-        // 切回完成态 UI
-        const recBtn = lineEl.querySelector('.btn-hold');
-        const replayBtn = lineEl.querySelector('.btn-replay');
-        const retryBtn = lineEl.querySelector('.btn-retake');
-        recBtn.style.display = 'none';
-        replayBtn.dataset.url = url;
-        replayBtn.style.display = 'inline-flex';
-        retryBtn.style.display = 'inline-flex';
-        lineEl.classList.remove('recording');
-
-        if (score.total >= 50) {
-          lineEl.classList.add('done');
-          lineState[key] = { done: true, score };
-          saveProgress(key);
-          updateProgress();
-        }
-        resolve(score);
-      } catch (err) {
+      if (duration > 0 && duration < 0.3) {
         URL.revokeObjectURL(url);
-        reject(err);
+        clearWaveform(waveformEl);
+        window.__showRecModal('录音太短', '请再录长一点（至少 0.3 秒）');
+        resolve(null);
+        return;
       }
+      if (duration > 30) {
+        URL.revokeObjectURL(url);
+        clearWaveform(waveformEl);
+        window.__showRecModal('录音太长', '一句话最多 30 秒');
+        resolve(null);
+        return;
+      }
+
+      // 切到完成态 UI：显示"▶ 听自己"和"重录"
+      const recBtn = lineEl.querySelector('.btn-hold');
+      const replayBtn = lineEl.querySelector('.btn-replay');
+      const retryBtn = lineEl.querySelector('.btn-retake');
+      recBtn.style.display = 'none';
+      replayBtn.dataset.url = url;
+      replayBtn.style.display = 'inline-flex';
+      retryBtn.style.display = 'inline-flex';
+      lineEl.classList.remove('recording');
+      lineEl.classList.add('done');
+      lineState[key] = { done: true };
+      saveProgress(key);
+      updateProgress();
+      resolve({ duration });
     };
 
-    recorder.onerror = (e) => reject(e.error || new Error('录音出错'));
+    recorder.onerror = (e) => { window.__showRecModal('录音出错', (e.error && e.error.message) || '未知错误'); };
   });
 
   recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
@@ -766,39 +593,23 @@ function cancelHoldRecord() {
 
 // ====== 系统录音器降级（file input）======
 async function handleFileRecord(lineEl, ctx, file) {
-  const { key, partId, lineIdx, start, end, refDuration } = ctx;
   const recBtn = lineEl.querySelector('.btn-hold');
   const replayBtn = lineEl.querySelector('.btn-replay');
   const retryBtn = lineEl.querySelector('.btn-retake');
-  const scorePanel = lineEl.querySelector('.score-panel');
-  const waveformEl = lineEl.querySelector('.waveform');
 
   recBtn.disabled = true;
   const origText = recBtn.innerHTML;
   recBtn.textContent = '处理中…';
   try {
-    const refEnv = await scorer.preloadRefEnvelope(partId, lineIdx, start, end);
-    const { envelope, duration } = await scorer.analyzeBlob(file);
-    if (duration < 0.3) throw new Error('录音太短（不到 0.3 秒），请重录');
-    if (duration > 30) throw new Error('录音超过 30 秒，请只录这一句');
-
-    const score = scorer.computeScore(envelope, refEnv, refDuration, duration);
-
     const url = URL.createObjectURL(file);
-    renderStaticWaveform(waveformEl, envelope);
-    renderScore(scorePanel, score);
-
     recBtn.style.display = 'none';
     replayBtn.dataset.url = url;
     replayBtn.style.display = 'inline-flex';
     retryBtn.style.display = 'inline-flex';
-
-    if (score.total >= 50) {
-      lineEl.classList.add('done');
-      lineState[key] = { done: true, score };
-      saveProgress(key);
-      updateProgress();
-    }
+    lineEl.classList.add('done');
+    lineState[ctx.key] = { done: true };
+    saveProgress(ctx.key);
+    updateProgress();
   } catch (err) {
     let msg = '音频处理失败';
     if (err && err.message) msg += '：' + err.message;
@@ -835,9 +646,9 @@ function bindLine(el) {
     holdBtn.innerHTML = '📋 <b>复制链接</b>';
     holdBtn.classList.add('guide');
   } else if (RECORD_MODE === 'file') {
-    holdBtn.innerHTML = '● 跟读';
+    holdBtn.innerHTML = '🎤 <b>点这里录</b>';
   } else {
-    holdBtn.innerHTML = '● 按住跟读 <span class="hold-hint">长按</span>';
+    holdBtn.innerHTML = '🎤 <b>点这里录</b>';
   }
 
   playBtn.addEventListener('click', () => {
@@ -851,67 +662,41 @@ function bindLine(el) {
 
   // ====== 录音交互（HOLD 模式 或 FILE 模式）======
   if (RECORD_MODE === 'hold') {
-    // 长按：pointerdown 开始，pointerup/cancel 结束
+    // 单击切换：点开始，再点结束（更稳，Android 微信不吞单击）
     let holdStarted = false;
-
-    const onDown = async (e) => {
-      e.preventDefault();
-      if (holdStarted) return;
-      holdStarted = true;
-      holdBtn.classList.add('pressing');
-      try {
-        await startHoldRecord(el, ctx);
-      } catch (err) {
-        holdStarted = false;
-        holdBtn.classList.remove('pressing');
-        // 降级到 file input
-        let msg = '麦克风打开失败';
-        if (err && err.name === 'NotAllowedError') {
-          msg = '麦克风被拒绝授权。已切换为「系统录音器」模式。';
-        } else if (err && err.name === 'NotFoundError') {
-          msg = '没找到麦克风设备。已切换为「系统录音器」模式。';
-        } else if (err && err.name) {
-          msg = '录音功能不可用（' + err.name + '）。已切换为「系统录音器」模式。';
+    const onToggle = async () => {
+      if (!holdStarted) {
+        // 开始
+        holdStarted = true;
+        holdBtn.classList.add('pressing');
+        holdBtn.innerHTML = '⏹ <b>结束录音</b>';
+        try {
+          await startHoldRecord(el, ctx);
+        } catch (err) {
+          holdStarted = false;
+          holdBtn.classList.remove('pressing');
+          holdBtn.innerHTML = '🎤 <b>点这里录</b>';
+          let msg = '麦克风打开失败';
+          if (err && err.name === 'NotAllowedError') {
+            msg = '麦克风被拒绝授权。请到浏览器设置里允许麦克风权限，然后刷新页面。';
+          } else if (err && err.name === 'NotFoundError') {
+            msg = '没找到麦克风设备。请检查手机麦克风。';
+          } else if (err && err.name) {
+            msg = '录音功能不可用（' + err.name + '）。请到浏览器打开本页面。';
+          }
+          window.__showRecModal('录音失败', msg);
         }
-        RECORD_MODE = 'file';
-        // 重新设置按钮
-        holdBtn.innerHTML = '● 跟读';
-        // 提示
-        window.__showRecModal('切换录音方式', msg);
-      }
-    };
-
-    const onUp = (e) => {
-      if (!holdStarted) return;
-      holdStarted = false;
-      holdBtn.classList.remove('pressing');
-      if (activeHoldSession) stopHoldRecord();
-    };
-
-    // pointer events 统一处理鼠标 + 触屏
-    holdBtn.addEventListener('pointerdown', onDown);
-    holdBtn.addEventListener('pointerup', onUp);
-    holdBtn.addEventListener('pointerleave', onUp);
-    holdBtn.addEventListener('pointercancel', onUp);
-    // 兜底兼容老浏览器
-    holdBtn.addEventListener('mousedown', onDown);
-    holdBtn.addEventListener('mouseup', onUp);
-    holdBtn.addEventListener('mouseleave', onUp);
-    holdBtn.addEventListener('touchstart', onDown, { passive: false });
-    holdBtn.addEventListener('touchend', onUp);
-    holdBtn.addEventListener('touchcancel', onUp);
-
-    // 全局兜底：pointerup 没在按钮上时也停止
-    document.addEventListener('pointerup', () => {
-      if (holdStarted && activeHoldSession) {
+      } else {
+        // 结束
         holdStarted = false;
         holdBtn.classList.remove('pressing');
-        stopHoldRecord();
+        if (activeHoldSession) stopHoldRecord();
       }
-    });
+    };
+    holdBtn.addEventListener('click', onToggle);
 
   } else if (RECORD_MODE === 'file') {
-    // FILE 模式：点击 → 弹 file input
+    // FILE 模式：点击 → 弹 file input（系统录音器）
     holdBtn.addEventListener('click', () => {
       fileInput.click();
     });
@@ -1003,22 +788,18 @@ function bindLine(el) {
       URL.revokeObjectURL(replayBtn.dataset.url);
       replayBtn.dataset.url = '';
     }
-    el.querySelector('.score-panel').classList.remove('show');
-    el.querySelector('.score-panel').innerHTML = '';
     replayBtn.style.display = 'none';
     retryBtn.style.display = 'none';
     holdBtn.style.display = 'inline-flex';
-    holdBtn.innerHTML = RECORD_MODE === 'guide' ? '● 跟读 <span class="hold-hint">需浏览器</span>'
-      : RECORD_MODE === 'file' ? '● 跟读'
-      : '● 按住跟读 <span class="hold-hint">长按</span>';
+    holdBtn.innerHTML = RECORD_MODE === 'guide' ? '📋 <b>复制链接</b>'
+      : '🎤 <b>点这里录</b>';
     holdBtn.disabled = false;
     el.classList.remove('recording');
     clearWaveform(el.querySelector('.waveform'));
   });
 }
 
-(async function init() {
-  await scorer.init();
+(function init() {
   document.querySelectorAll('.line').forEach(bindLine);
   loadProgress();
 
