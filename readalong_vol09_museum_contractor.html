@@ -598,18 +598,54 @@ async function showRecordError(lineEl, err) {
   recBtn.disabled = false;
 
   // 错误信息显示在按钮下方（手机能看到，2026-07-31 反馈加）
-  // 同时给"在 Chrome 中打开"的快捷按钮（2026-07-31 反馈加：自动跳浏览器）
+  // 同时给快捷操作：复制链接 + 微信好友 + 系统分享（2026-07-31 反馈：自动跳浏览器不灵）
   const errBox = document.createElement('div');
   errBox.className = 'rec-error';
   const currentUrl = location.href.split('?')[0];
+  const isSecure = location.protocol === 'https:' || location.hostname === 'localhost';
   const chromeIntent = 'intent://wangdn2026.github.io/ehs-english-cards/readalong_vol09_museum_contractor.html#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' +
     encodeURIComponent(currentUrl) + ';end';
   const chromeScheme = 'googlechrome://navigate?url=' + encodeURIComponent(currentUrl);
   errBox.innerHTML = '<b>❌ ' + reason + '</b><br>' +
     '<span style="color:#888;font-size:11px">错误码: ' + name + ' | 浏览器: ' +
     (isWechat ? '微信' : isOppoBrowser ? 'OPPO浏览器' : isIOS ? 'iOS' : isAndroid ? 'Android' : '其他') + '</span><br>' +
-    '<a href="' + chromeScheme + '" class="open-chrome-btn">👉 在 Chrome 中打开</a> ' +
-    '<a href="' + chromeIntent + '" class="open-chrome-btn">👀 试试其他浏览器</a>';
+    '<button class="open-chrome-btn" data-action="copy">📋 复制链接</button> ' +
+    (navigator.share ? '<button class="open-chrome-btn" data-action="share">📤 系统分享</button> ' : '') +
+    '<a href="' + chromeIntent + '" class="open-chrome-btn">👀 弹浏览器选择</a>';
+  // 复制链接（带 fallback：旧浏览器用 execCommand）
+  const copyBtn = errBox.querySelector('[data-action="copy"]');
+  copyBtn.addEventListener('click', async () => {
+    const txt = currentUrl + '?v=91bd854';
+    let ok = false;
+    try {
+      if (isSecure && navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(txt);
+        ok = true;
+      }
+    } catch (e) { ok = false; }
+    if (!ok) {
+      // fallback：旧方案
+      const ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); ok = true; } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+    }
+    copyBtn.textContent = ok ? '✅ 已复制' : '❌ 复制失败';
+    setTimeout(() => { copyBtn.textContent = '📋 复制链接'; }, 2000);
+  });
+  // 系统分享
+  const shareBtn = errBox.querySelector('[data-action="share"]');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      try {
+        await navigator.share({ title: 'E.H.S. 跟读训练 Vol09', url: currentUrl + '?v=91bd854' });
+      } catch (e) { /* 用户取消 */ }
+    });
+  }
   recBtn.parentNode.insertBefore(errBox, recBtn.nextSibling);
   console.error('[跟读训练] 录音失败', { name, message: msgRaw, ua, isWechat, isOppoBrowser, isAndroid, isIOS });
 }
