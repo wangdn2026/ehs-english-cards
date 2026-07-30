@@ -90,8 +90,6 @@
     box-shadow: 0 0 0 6px rgba(224,122,95,0.25);
   }
   .btn-hold .hold-hint { font-size: 11px; opacity: 0.85; margin-left: 2px; }
-  .btn-hold.guide { background: var(--c-tian); }
-  .btn-hold.guide:active { background: #5B8FA8; }
   .toast { position: fixed; top: 30%; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,0.85); color: #fff; padding: 12px 22px; border-radius: 24px;
     font-size: 14px; z-index: 10000; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -265,44 +263,15 @@ const PARTS_DATA = [{"id": 1, "title": "Part 1: 博物馆建造历史与门票",
 const AUDIO_BASE = 'https://wangdn2026.github.io/ehs-english-cards/audio/';
 const TOTAL_LINES = 4;
 
-// ====== 录音模式检测 ======
-const UA = navigator.userAgent;
-const IS_WECHAT = /micromessenger/i.test(UA);
-const IS_ANDROID = /android/i.test(UA);
-const IS_IOS = /iphone|ipad|ipod/i.test(UA);
-// Android 微信 X5 上：getUserMedia 被拦 + capture="microphone" 弹文件管理器
-// iOS 微信（WKWebView）：getUserMedia 支持
-const IS_ANDROID_WECHAT = IS_WECHAT && IS_ANDROID;
-const IS_IOS_WECHAT = IS_WECHAT && IS_IOS;
-// 三种模式：HOLD（长按页面内录音）/ FILE（系统录音器，文件选择）/ GUIDE（仅引导）
-let RECORD_MODE = 'hold';
-if (IS_ANDROID_WECHAT) RECORD_MODE = 'guide';
-else if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) RECORD_MODE = 'hold';
-  else RECORD_MODE = 'file';
-}
+// ====== 录音模式检测（极简版：只保留 hold / file 两种，不做特殊 X5 引导）======
+// 任何浏览器进来都默认 hold（页内录音），不支持 getUserMedia 才降级 file（系统录音器）
+let RECORD_MODE = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? 'hold' : 'file';
 
+// 冬妮明确要求"不要任何顶部提示" → modeBadge / tipsBox 一律不显示
 const modeBadge = document.getElementById('modeBadge');
 const tipsBox = document.getElementById('tipsBox');
-if (RECORD_MODE === 'hold') {
-  if (IS_IOS_WECHAT) {
-    modeBadge.textContent = '✓ iOS 微信·单击';
-    modeBadge.style.background = 'rgba(124,176,105,0.4)';
-  } else {
-    modeBadge.textContent = '✓ 单击录音';
-    modeBadge.style.background = 'rgba(124,176,105,0.4)';
-  }
-  tipsBox.style.display = 'none';
-} else if (RECORD_MODE === 'guide') {
-  document.body.classList.add('mode-guide');
-  modeBadge.style.display = 'none';
-  tipsBox.style.display = 'none';
-} else {
-  // FILE 模式：系统录音器
-  modeBadge.textContent = '系统录音器';
-  modeBadge.style.background = 'rgba(123,167,188,0.4)';
-  tipsBox.style.display = 'none';
-}
+if (modeBadge) modeBadge.style.display = 'none';
+if (tipsBox) tipsBox.style.display = 'none';
 
 // === 极简版：只保留听原音 / 录自己 / 听自己录的；不再打分 ===
 const lineState = {};
@@ -613,20 +582,9 @@ function bindLine(el) {
   const replayBtn = el.querySelector('.btn-replay');
   const retryBtn = el.querySelector('.btn-retake');
 
-  // GUIDE 模式：彻底不渲染 file input（X5 上 display:none 也可能被点穿）
-  if (RECORD_MODE === 'guide') {
-    if (fileInput) fileInput.remove();
-  }
-
-  // 按钮文字按模式
-  if (RECORD_MODE === 'guide') {
-    holdBtn.innerHTML = '📋 <b>复制链接</b>';
-    holdBtn.classList.add('guide');
-  } else if (RECORD_MODE === 'file') {
-    holdBtn.innerHTML = '🎤 <b>点这里录</b>';
-  } else {
-    holdBtn.innerHTML = '🎤 <b>点这里录</b>';
-  }
+  // 按钮文字统一（不再分模式，砍掉 GUIDE 模式）
+  holdBtn.innerHTML = '🎤 <b>点这里录</b>';
+  holdBtn.classList.remove('guide');
 
   playBtn.addEventListener('click', () => {
     if (playBtn.classList.contains('playing')) {
@@ -681,72 +639,6 @@ function bindLine(el) {
     holdBtn.addEventListener('click', () => {
       fileInput.click();
     });
-  } else if (RECORD_MODE === 'guide') {
-    // GUIDE 模式：点击 → 复制 URL 到剪贴板 + 弹页面内 toast
-    // 绝不调任何系统级 UI（不弹 file input / 不弹 modal / 不跳转外链）
-    holdBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const url = window.location.href;
-      let ok = false;
-      // 优先用现代 Clipboard API（iOS 13.4+ / Android Chrome 支持）
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(url);
-          ok = true;
-        }
-      } catch (err) { ok = false; }
-      // 兜底：textarea + execCommand（Android 微信 X5 上 Clipboard API 经常被拦）
-      if (!ok) {
-        try {
-          const ta = document.createElement('textarea');
-          ta.value = url;
-          ta.style.position = 'fixed';
-          ta.style.top = '0';
-          ta.style.left = '0';
-          ta.style.width = '1px';
-          ta.style.height = '1px';
-          ta.style.padding = '0';
-          ta.style.border = 'none';
-          ta.style.outline = 'none';
-          ta.style.boxShadow = 'none';
-          ta.style.background = 'transparent';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.setSelectionRange(0, url.length);
-          ta.focus();
-          ta.select();
-          ok = document.execCommand('copy');
-          document.body.removeChild(ta);
-        } catch (err) { ok = false; }
-      }
-      // 弹页面内 toast（不调任何系统 UI）
-      if (ok) {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = '✅ <b>链接已复制</b><br><span style="font-size:12px;opacity:0.85">退出微信 → 打开浏览器 → 粘贴</span>';
-        document.body.appendChild(toast);
-        setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2500);
-      } else {
-        // 兜底失败：显示完整 URL 让用户长按选择复制
-        const mask = document.createElement('div');
-        mask.className = 'manual-copy-mask';
-        mask.innerHTML =
-          '<div class="mc-box">' +
-          '<div class="mc-title">📋 请长按下方链接复制</div>' +
-          '<div class="mc-hint">长按文字 → 全选 → 复制 → 打开浏览器粘贴</div>' +
-          '<div class="mc-url" id="mcUrl"></div>' +
-          '<button class="mc-close" id="mcClose">关闭</button>' +
-          '</div>';
-        document.body.appendChild(mask);
-        document.getElementById('mcUrl').textContent = url;
-        document.getElementById('mcClose').addEventListener('click', () => {
-          if (mask.parentNode) mask.parentNode.removeChild(mask);
-        });
-        mask.addEventListener('click', (e) => {
-          if (e.target === mask) mask.parentNode.removeChild(mask);
-        });
-      }
-    });
   }
 
   if (fileInput) {
@@ -772,8 +664,7 @@ function bindLine(el) {
     replayBtn.style.display = 'none';
     retryBtn.style.display = 'none';
     holdBtn.style.display = 'inline-flex';
-    holdBtn.innerHTML = RECORD_MODE === 'guide' ? '📋 <b>复制链接</b>'
-      : '🎤 <b>点这里录</b>';
+    holdBtn.innerHTML = '🎤 <b>点这里录</b>';
     holdBtn.disabled = false;
     el.classList.remove('recording');
     clearWaveform(el.querySelector('.waveform'));
