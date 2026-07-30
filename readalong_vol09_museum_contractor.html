@@ -90,6 +90,9 @@
     box-shadow: 0 0 0 6px rgba(224,122,95,0.25);
   }
   .btn-hold .hold-hint { font-size: 11px; opacity: 0.85; margin-left: 2px; }
+  .rec-error { color: #C0392B; font-size: 12px; margin-top: 6px; line-height: 1.5;
+    padding: 6px 10px; background: #FCEBEA; border-radius: 6px;
+    word-break: break-all; }
   .toast { position: fixed; top: 30%; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,0.85); color: #fff; padding: 12px 22px; border-radius: 24px;
     font-size: 14px; z-index: 10000; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -547,21 +550,57 @@ function cancelHoldRecord() {
 }
 
 // ====== file input 降级已砍（2026-07-31 反馈：跳系统录音 App 体验极差）======
-// 改为：浏览器不支持 → 按钮置灰；getUserMedia 失败 → 显示 inline 提示，不弹任何东西
+// 改为：浏览器不支持 → 按钮置灰；getUserMedia 失败 → 按钮下方 inline 错误（手机能看到）
 async function showRecordError(lineEl, err) {
   const recBtn = lineEl.querySelector('.btn-hold');
   if (!recBtn) return;
-  let msg = '录音失败';
-  if (err && err.name === 'NotAllowedError') {
-    msg = '麦克风被拒绝授权。请到浏览器设置里允许麦克风权限，然后刷新页面。';
-  } else if (err && err.name === 'NotFoundError') {
-    msg = '没找到麦克风设备。请检查手机麦克风。';
-  } else if (err && err.message) {
-    msg = '录音失败：' + err.message;
+  // 移除旧错误
+  const oldErr = lineEl.querySelector('.rec-error');
+  if (oldErr) oldErr.remove();
+
+  // 错误分类（2026-07-31 扩展：覆盖更多错误码 + 显示浏览器信息）
+  const name = err && err.name ? err.name : '';
+  const msgRaw = err && err.message ? err.message : '';
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  const isWechat = /MicroMessenger/i.test(ua);
+  const isOppoBrowser = /OPPO|OppoBrowser/i.test(ua);
+
+  let reason = '';
+  if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
+    reason = '麦克风被拒绝授权';
+    if (isWechat) reason += '（微信内请点右上角 · · · → 设置 → 麦克风，允许）';
+    else if (isOppoBrowser) reason += '（OPPO 浏览器：设置 → 网站设置 → 麦克风，允许）';
+    else reason += '（浏览器设置里允许麦克风权限，刷新页面）';
+  } else if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+    reason = '没找到麦克风设备';
+  } else if (name === 'NotReadableError' || name === 'TrackStartError') {
+    reason = '麦克风被其他应用占用，请关闭后重试';
+  } else if (name === 'OverconstrainedError') {
+    reason = '麦克风参数不支持';
+  } else if (name === 'NotSupportedError' || name === 'TypeError') {
+    reason = '当前浏览器不支持录音';
+    if (isWechat) reason += '（请点右上角 · · · 选择"在浏览器中打开"）';
+    else if (isAndroid) reason += '（建议用 Chrome 打开）';
+    else reason += '（请用 Chrome / Safari 打开）';
+  } else if (name === 'SecurityError') {
+    reason = '安全限制（需 https 或 localhost）';
+  } else {
+    reason = msgRaw || '未知错误';
   }
+
   recBtn.innerHTML = '⚠️ <b>点此重试</b>';
-  recBtn.title = msg;
   recBtn.disabled = false;
+
+  // 错误信息显示在按钮下方（手机能看到，2026-07-31 反馈加）
+  const errBox = document.createElement('div');
+  errBox.className = 'rec-error';
+  errBox.innerHTML = '<b>❌ ' + reason + '</b><br>' +
+    '<span style="color:#888;font-size:11px">错误码: ' + name + ' | 浏览器: ' +
+    (isWechat ? '微信' : isOppoBrowser ? 'OPPO浏览器' : isIOS ? 'iOS' : isAndroid ? 'Android' : '其他') + '</span>';
+  recBtn.parentNode.insertBefore(errBox, recBtn.nextSibling);
+  console.error('[跟读训练] 录音失败', { name, message: msgRaw, ua, isWechat, isOppoBrowser, isAndroid, isIOS });
 }
 
 function bindLine(el) {
