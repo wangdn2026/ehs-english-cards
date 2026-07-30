@@ -77,15 +77,15 @@
   .btn { border: none; border-radius: 18px; padding: 8px 16px; font-size: 13px; cursor: pointer;
     font-weight: 500; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s;
     font-family: inherit; -webkit-tap-highlight-color: transparent; }
-  .btn-play { background: var(--c-tian); color: #fff; }
+  .btn-play { background: #7BA7BC; color: #fff; }
   .btn-play:active { background: #5B8FA8; }
-  .btn-play.playing { background: var(--c-orange); }
+  .btn-play.playing { background: #E07A5F; }
   /* 长按录音按钮：核心交互 */
-  .btn-hold { background: var(--c-orange); color: #fff; padding: 9px 18px;
+  .btn-hold { background: #E07A5F; color: #fff; padding: 9px 18px;
     font-weight: 600; -webkit-user-select: none; user-select: none;
     touch-action: none; position: relative; }
   .btn-hold:active, .btn-hold.pressing {
-    background: var(--c-orange-deep);
+    background: #C9623F;
     transform: scale(0.96);
     box-shadow: 0 0 0 6px rgba(224,122,95,0.25);
   }
@@ -149,7 +149,7 @@
 <body>
 <div class="top">
   <h1>跟读训练 · Vol09 博物馆 &amp; 承包商安全</h1>
-  <div class="sub">听原音 → 长按「● 按住跟读」说话 → 松手自动打分</div>
+  <div class="sub">听原音 → 录自己 → 听自己的录音</div>
   <span class="meta-tag">5 段对话 · 24 行 · E. H. S. 训练营 · Demo（Part 1）</span>
   <span class="mode-badge" id="modeBadge">检测中…</span>
 </div>
@@ -653,15 +653,19 @@ function bindLine(el) {
           holdStarted = false;
           holdBtn.classList.remove('pressing');
           holdBtn.innerHTML = '🎤 <b>点这里录</b>';
-          let msg = '麦克风打开失败';
-          if (err && err.name === 'NotAllowedError') {
-            msg = '麦克风被拒绝授权。请到浏览器设置里允许麦克风权限，然后刷新页面。';
-          } else if (err && err.name === 'NotFoundError') {
-            msg = '没找到麦克风设备。请检查手机麦克风。';
-          } else if (err && err.name) {
-            msg = '录音功能不可用（' + err.name + '）。请到浏览器打开本页面。';
+          // 自动降级：弹 file input（系统录音器）
+          if (fileInput) {
+            RECORD_MODE = 'file';
+            fileInput.click();
+          } else {
+            let msg = '当前浏览器不支持录音，请用手机自带录音器录完回放。';
+            if (err && err.name === 'NotAllowedError') {
+              msg = '麦克风被拒绝授权。请到浏览器设置里允许麦克风权限，然后刷新页面。';
+            } else if (err && err.name === 'NotFoundError') {
+              msg = '没找到麦克风设备。请检查手机麦克风。';
+            }
+            window.__showRecModal('录音失败', msg);
           }
-          window.__showRecModal('录音失败', msg);
         }
       } else {
         // 结束
