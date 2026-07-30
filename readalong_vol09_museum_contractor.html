@@ -93,6 +93,10 @@
   .rec-error { color: #C0392B; font-size: 12px; margin-top: 6px; line-height: 1.5;
     padding: 6px 10px; background: #FCEBEA; border-radius: 6px;
     word-break: break-all; }
+  .rec-error .open-chrome-btn { display: inline-block; margin-top: 6px;
+    padding: 6px 12px; background: #4285F4; color: #fff !important;
+    text-decoration: none !important; border-radius: 6px; font-size: 13px;
+    font-weight: 600; }
   .toast { position: fixed; top: 30%; left: 50%; transform: translateX(-50%);
     background: rgba(0,0,0,0.85); color: #fff; padding: 12px 22px; border-radius: 24px;
     font-size: 14px; z-index: 10000; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -594,11 +598,18 @@ async function showRecordError(lineEl, err) {
   recBtn.disabled = false;
 
   // 错误信息显示在按钮下方（手机能看到，2026-07-31 反馈加）
+  // 同时给"在 Chrome 中打开"的快捷按钮（2026-07-31 反馈加：自动跳浏览器）
   const errBox = document.createElement('div');
   errBox.className = 'rec-error';
+  const currentUrl = location.href.split('?')[0];
+  const chromeIntent = 'intent://wangdn2026.github.io/ehs-english-cards/readalong_vol09_museum_contractor.html#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' +
+    encodeURIComponent(currentUrl) + ';end';
+  const chromeScheme = 'googlechrome://navigate?url=' + encodeURIComponent(currentUrl);
   errBox.innerHTML = '<b>❌ ' + reason + '</b><br>' +
     '<span style="color:#888;font-size:11px">错误码: ' + name + ' | 浏览器: ' +
-    (isWechat ? '微信' : isOppoBrowser ? 'OPPO浏览器' : isIOS ? 'iOS' : isAndroid ? 'Android' : '其他') + '</span>';
+    (isWechat ? '微信' : isOppoBrowser ? 'OPPO浏览器' : isIOS ? 'iOS' : isAndroid ? 'Android' : '其他') + '</span><br>' +
+    '<a href="' + chromeScheme + '" class="open-chrome-btn">👉 在 Chrome 中打开</a> ' +
+    '<a href="' + chromeIntent + '" class="open-chrome-btn">👀 试试其他浏览器</a>';
   recBtn.parentNode.insertBefore(errBox, recBtn.nextSibling);
   console.error('[跟读训练] 录音失败', { name, message: msgRaw, ua, isWechat, isOppoBrowser, isAndroid, isIOS });
 }
