@@ -16,18 +16,27 @@
   .header {
     background: linear-gradient(135deg, #7BA7BC 0%, #5A8BA3 100%);
     color: #fff;
-    padding: 18px 18px 14px;
+    padding: 14px 18px 12px;
     position: sticky; top: 0; z-index: 20;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
-  .header h1 { margin: 0 0 4px; font-size: 19px; font-weight: 600; letter-spacing: 0.3px; }
-  .header .meta { font-size: 12px; opacity: 0.85; }
+  .header h1 { margin: 0 0 2px; font-size: 18px; font-weight: 600; letter-spacing: 0.3px; }
+  .header .meta { font-size: 11px; opacity: 0.85; }
+  .browser-tip {
+    background: #FFF7E6;
+    color: #8B5A00;
+    padding: 10px 18px;
+    font-size: 12px;
+    border-bottom: 1px solid #FFE0A6;
+    display: none;
+  }
+  .browser-tip.show { display: block; }
   .tabs {
     display: flex; gap: 6px;
     padding: 10px 14px;
     background: #fff;
     overflow-x: auto;
-    position: sticky; top: 76px; z-index: 19;
+    position: sticky; top: 60px; z-index: 19;
     border-bottom: 1px solid #E5DED3;
     -webkit-overflow-scrolling: touch;
   }
@@ -65,6 +74,9 @@
     border-left-color: #E07A5F;
     background: #FFF7F2;
   }
+  .line-card.assessed {
+    border-left-color: #7BA7BC;
+  }
   .line-head {
     display: flex;
     justify-content: space-between;
@@ -89,10 +101,18 @@
   .en {
     font-size: 16px;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.7;
     color: #3D405B;
     margin-bottom: 6px;
   }
+  .en .word {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .en .word.good { background: #C8E6C9; color: #1B5E20; }
+  .en .word.miss { background: #ECEFF1; color: #90A4AE; }
   .zh {
     font-size: 13px;
     color: #8B8680;
@@ -114,15 +134,10 @@
     font-family: inherit;
     transition: background 0.15s;
   }
-  .btn-play {
-    background: #7BA7BC;
-    color: #fff;
-  }
+  .btn-play { background: #7BA7BC; color: #fff; }
   .btn-play:active { background: #5A8BA3; }
-  .btn-rec {
-    background: #E07A5F;
-    color: #fff;
-  }
+  .btn-rec { background: #E07A5F; color: #fff; }
+  .btn-rec:disabled { background: #C9C2B8; cursor: not-allowed; }
   .btn-rec:active { background: #C9624A; }
   .btn-rec.recording {
     background: #C0392B;
@@ -140,18 +155,53 @@
     font-weight: 500;
   }
   .rec-status.show { display: block; }
-  .recorded-info {
+  .assess-result {
     display: none;
     margin-top: 10px;
-    padding: 10px 12px;
+    padding: 12px;
     background: #F0F8FB;
     border-radius: 8px;
     border: 1px solid #D5E5EC;
+  }
+  .assess-result.show { display: block; }
+  .assess-summary {
+    display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
   }
-  .recorded-info.show { display: flex; }
+  .score {
+    font-size: 22px;
+    font-weight: 700;
+    color: #5A8BA3;
+    font-variant-numeric: tabular-nums;
+    min-width: 44px;
+    text-align: center;
+  }
+  .score-label {
+    font-size: 11px;
+    color: #8B8680;
+  }
+  .legend {
+    font-size: 10px;
+    color: #8B8680;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .dot.good { background: #4CAF50; }
+  .dot.miss { background: #B0BEC5; }
+  .assess-tip {
+    font-size: 11px;
+    color: #8B8680;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
   .btn-mini {
     border: none;
     border-radius: 6px;
@@ -160,25 +210,14 @@
     cursor: pointer;
     font-family: inherit;
   }
-  .btn-replay {
-    background: #7BA7BC;
-    color: #fff;
-  }
-  .btn-reset {
-    background: #F5E6D8;
-    color: #8B5A40;
-  }
-  .rec-tip {
-    font-size: 11px;
-    color: #5A8BA3;
-    flex: 1;
-    min-width: 100%;
-  }
+  .btn-replay { background: #7BA7BC; color: #fff; }
+  .btn-reset { background: #F5E6D8; color: #8B5A40; }
   .footer {
     padding: 24px 18px 40px;
     text-align: center;
     color: #8B8680;
     font-size: 11px;
+    line-height: 1.6;
   }
   audio { display: none; }
   .err-tip {
@@ -199,7 +238,10 @@
 <body>
 <div class="header">
   <h1>🎙️ Vol09 跟读训练</h1>
-  <div class="meta">5 段对话 · 24 行 · 博物馆 & 承包商现场作业</div>
+  <div class="meta">5 段对话 · 24 行 · 博物馆 & 承包商现场作业 · Demo（Part 1）</div>
+</div>
+<div class="browser-tip" id="browserTip">
+  ⚠️ 当前浏览器不支持语音识别，请用 Chrome / Edge / Safari 14.5+ 打开。微信内置浏览器可能也不行。
 </div>
 <div class="tabs"><button class="tab active" data-target="part-1" onclick="switchPart(0)">Part 1</button></div>
 
@@ -211,17 +253,25 @@
             <span class="role-tag gm">👤 Visitor 访客</span>
             <span class="line-dur">2.6s</span>
           </div>
-          <div class="en">When was this museum built?</div>
+          <div class="en" id="en-1-0" data-text="When was this museum built?"><span class="word" data-idx="0">When</span> <span class="word" data-idx="1">was</span> <span class="word" data-idx="2">this</span> <span class="word" data-idx="3">museum</span> <span class="word" data-idx="4">built?</span></div>
           <div class="zh">这座博物馆是什么时候建成的？</div>
           <div class="controls">
             <button class="btn btn-play" onclick="playLine(0, 0)">▶ 听原音</button>
             <button class="btn btn-rec" id="rec-1-0" onclick="toggleRec(0, 0)">🎤 开始录音</button>
           </div>
           <div class="rec-status" id="status-1-0">● 录音中…最长 4.1s</div>
-          <div class="recorded-info" id="rec-info-1-0">
-            <button class="btn-mini btn-replay" onclick="replayMine(0, 0)">▶ 听我的</button>
-            <button class="btn-mini btn-reset" onclick="resetRec(0, 0)">🔄 重录</button>
-            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          <div class="assess-result" id="assess-1-0">
+            <div class="assess-summary">
+              <span class="score" id="score-1-0">--</span>
+              <span class="score-label">识别匹配%</span>
+              <span class="legend"><i class="dot good"></i>识别到</span>
+              <span class="legend"><i class="dot miss"></i>未识别</span>
+            </div>
+            <div class="assess-tip" id="tip-1-0">提示：未识别 ≠ 读错，可能是连读/术语/口音。多读几遍试试。</div>
+            <div class="controls" style="margin-top:8px;">
+              <button class="btn-mini btn-replay" onclick="replayMine(0, 0)">▶ 听我的</button>
+              <button class="btn-mini btn-reset" onclick="resetRec(0, 0)">🔄 重录</button>
+            </div>
           </div>
         </div>
         <div class="line-card" id="lc-1-1">
@@ -229,17 +279,25 @@
             <span class="role-tag ehs">🎫 Staff 工作人员</span>
             <span class="line-dur">3.7s</span>
           </div>
-          <div class="en">This museum was built more than 100 years ago.</div>
+          <div class="en" id="en-1-1" data-text="This museum was built more than 100 years ago."><span class="word" data-idx="0">This</span> <span class="word" data-idx="1">museum</span> <span class="word" data-idx="2">was</span> <span class="word" data-idx="3">built</span> <span class="word" data-idx="4">more</span> <span class="word" data-idx="5">than</span> <span class="word" data-idx="6">100</span> <span class="word" data-idx="7">years</span> <span class="word" data-idx="8">ago.</span></div>
           <div class="zh">这座博物馆始建于一百多年前。</div>
           <div class="controls">
             <button class="btn btn-play" onclick="playLine(0, 1)">▶ 听原音</button>
             <button class="btn btn-rec" id="rec-1-1" onclick="toggleRec(0, 1)">🎤 开始录音</button>
           </div>
           <div class="rec-status" id="status-1-1">● 录音中…最长 5.2s</div>
-          <div class="recorded-info" id="rec-info-1-1">
-            <button class="btn-mini btn-replay" onclick="replayMine(0, 1)">▶ 听我的</button>
-            <button class="btn-mini btn-reset" onclick="resetRec(0, 1)">🔄 重录</button>
-            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          <div class="assess-result" id="assess-1-1">
+            <div class="assess-summary">
+              <span class="score" id="score-1-1">--</span>
+              <span class="score-label">识别匹配%</span>
+              <span class="legend"><i class="dot good"></i>识别到</span>
+              <span class="legend"><i class="dot miss"></i>未识别</span>
+            </div>
+            <div class="assess-tip" id="tip-1-1">提示：未识别 ≠ 读错，可能是连读/术语/口音。多读几遍试试。</div>
+            <div class="controls" style="margin-top:8px;">
+              <button class="btn-mini btn-replay" onclick="replayMine(0, 1)">▶ 听我的</button>
+              <button class="btn-mini btn-reset" onclick="resetRec(0, 1)">🔄 重录</button>
+            </div>
           </div>
         </div>
         <div class="line-card" id="lc-1-2">
@@ -247,17 +305,25 @@
             <span class="role-tag gm">👤 Visitor 访客</span>
             <span class="line-dur">3.5s</span>
           </div>
-          <div class="en">Is admission to this museum free for the public?</div>
+          <div class="en" id="en-1-2" data-text="Is admission to this museum free for the public?"><span class="word" data-idx="0">Is</span> <span class="word" data-idx="1">admission</span> <span class="word" data-idx="2">to</span> <span class="word" data-idx="3">this</span> <span class="word" data-idx="4">museum</span> <span class="word" data-idx="5">free</span> <span class="word" data-idx="6">for</span> <span class="word" data-idx="7">the</span> <span class="word" data-idx="8">public?</span></div>
           <div class="zh">这家博物馆对公众免费开放吗？</div>
           <div class="controls">
             <button class="btn btn-play" onclick="playLine(0, 2)">▶ 听原音</button>
             <button class="btn btn-rec" id="rec-1-2" onclick="toggleRec(0, 2)">🎤 开始录音</button>
           </div>
           <div class="rec-status" id="status-1-2">● 录音中…最长 5.0s</div>
-          <div class="recorded-info" id="rec-info-1-2">
-            <button class="btn-mini btn-replay" onclick="replayMine(0, 2)">▶ 听我的</button>
-            <button class="btn-mini btn-reset" onclick="resetRec(0, 2)">🔄 重录</button>
-            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          <div class="assess-result" id="assess-1-2">
+            <div class="assess-summary">
+              <span class="score" id="score-1-2">--</span>
+              <span class="score-label">识别匹配%</span>
+              <span class="legend"><i class="dot good"></i>识别到</span>
+              <span class="legend"><i class="dot miss"></i>未识别</span>
+            </div>
+            <div class="assess-tip" id="tip-1-2">提示：未识别 ≠ 读错，可能是连读/术语/口音。多读几遍试试。</div>
+            <div class="controls" style="margin-top:8px;">
+              <button class="btn-mini btn-replay" onclick="replayMine(0, 2)">▶ 听我的</button>
+              <button class="btn-mini btn-reset" onclick="resetRec(0, 2)">🔄 重录</button>
+            </div>
           </div>
         </div>
         <div class="line-card" id="lc-1-3">
@@ -265,21 +331,32 @@
             <span class="role-tag ehs">🎫 Staff 工作人员</span>
             <span class="line-dur">4.4s</span>
           </div>
-          <div class="en">This museum is not open to the public free of charge all year round.</div>
+          <div class="en" id="en-1-3" data-text="This museum is not open to the public free of charge all year round."><span class="word" data-idx="0">This</span> <span class="word" data-idx="1">museum</span> <span class="word" data-idx="2">is</span> <span class="word" data-idx="3">not</span> <span class="word" data-idx="4">open</span> <span class="word" data-idx="5">to</span> <span class="word" data-idx="6">the</span> <span class="word" data-idx="7">public</span> <span class="word" data-idx="8">free</span> <span class="word" data-idx="9">of</span> <span class="word" data-idx="10">charge</span> <span class="word" data-idx="11">all</span> <span class="word" data-idx="12">year</span> <span class="word" data-idx="13">round.</span></div>
           <div class="zh">该博物馆不是全年免费向公众开放。</div>
           <div class="controls">
             <button class="btn btn-play" onclick="playLine(0, 3)">▶ 听原音</button>
             <button class="btn btn-rec" id="rec-1-3" onclick="toggleRec(0, 3)">🎤 开始录音</button>
           </div>
           <div class="rec-status" id="status-1-3">● 录音中…最长 5.9s</div>
-          <div class="recorded-info" id="rec-info-1-3">
-            <button class="btn-mini btn-replay" onclick="replayMine(0, 3)">▶ 听我的</button>
-            <button class="btn-mini btn-reset" onclick="resetRec(0, 3)">🔄 重录</button>
-            <span class="rec-tip">听自己回放，对比原音找差距</span>
+          <div class="assess-result" id="assess-1-3">
+            <div class="assess-summary">
+              <span class="score" id="score-1-3">--</span>
+              <span class="score-label">识别匹配%</span>
+              <span class="legend"><i class="dot good"></i>识别到</span>
+              <span class="legend"><i class="dot miss"></i>未识别</span>
+            </div>
+            <div class="assess-tip" id="tip-1-3">提示：未识别 ≠ 读错，可能是连读/术语/口音。多读几遍试试。</div>
+            <div class="controls" style="margin-top:8px;">
+              <button class="btn-mini btn-replay" onclick="replayMine(0, 3)">▶ 听我的</button>
+              <button class="btn-mini btn-reset" onclick="resetRec(0, 3)">🔄 重录</button>
+            </div>
           </div>
         </div>
     </div>
-<div class="footer">Vol09 · 安全五点半 · EHS 英语训练营</div>
+<div class="footer">
+  Vol09 · 安全五点半 · EHS 英语训练营<br>
+  绿色 = 浏览器识别到 · 灰色 = 未识别（不是读错，是口齿/术语提示）
+</div>
 <audio id="audio" src="audio/vol09_museum_contractor_full.mp3" preload="auto"></audio>
 <div class="err-tip" id="errTip"></div>
 
@@ -290,6 +367,14 @@ const audio = document.getElementById('audio');
 const recordings = {};
 const recorders = {};
 let playTimer = null;
+
+// 检测浏览器支持
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const SR_SUPPORTED = !!SR;
+if (!SR_SUPPORTED) {
+  document.getElementById('browserTip').classList.add('show');
+  document.querySelectorAll('.btn-rec').forEach(b => b.disabled = true);
+}
 
 function switchPart(idx) {
   document.querySelectorAll('.part').forEach((el, i) => {
@@ -313,19 +398,25 @@ function playLine(p, i) {
 }
 
 async function toggleRec(p, i) {
+  if (!SR_SUPPORTED) {
+    showErr('浏览器不支持语音识别');
+    return;
+  }
   const key = p + '-' + i;
   const btn = document.getElementById('rec-' + (p+1) + '-' + i);
   const card = document.getElementById('lc-' + (p+1) + '-' + i);
 
-  // 已经在录 → 提前停止
+  // 已经在录 → 停止
   if (recorders[key] && recorders[key].state === 'recording') {
-    recorders[key].stop();
+    stopRec(p, i);
     return;
   }
 
-  // 开始新录
+  // 开始录
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    // 1) MediaRecorder 录音（用于回放）
     const rec = new MediaRecorder(stream);
     const chunks = [];
     rec.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
@@ -333,30 +424,96 @@ async function toggleRec(p, i) {
       const blob = new Blob(chunks, { type: 'audio/webm' });
       if (recordings[key]) URL.revokeObjectURL(recordings[key]);
       recordings[key] = URL.createObjectURL(blob);
-      document.getElementById('rec-info-' + (p+1) + '-' + i).classList.add('show');
-      document.getElementById('status-' + (p+1) + '-' + i).classList.remove('show');
       btn.textContent = '🎤 重新录音';
       btn.classList.remove('recording');
       card.classList.remove('recording');
+      document.getElementById('status-' + (p+1) + '-' + i).classList.remove('show');
       stream.getTracks().forEach(t => t.stop());
+      // 用识别结果做匹配渲染
+      const transcript = recorders[key + '_transcript'] || '';
+      renderMatch(p, i, transcript);
     };
     rec.start();
     recorders[key] = rec;
+
+    // 2) Web Speech Recognition 边录边识别
+    const recog = new SR();
+    recog.lang = 'en-US';
+    recog.interimResults = false;
+    recog.continuous = false;
+    recog.maxAlternatives = 1;
+    recog.onresult = (e) => {
+      const t = e.results[0][0].transcript;
+      recorders[key + '_transcript'] = t;
+    };
+    recog.onerror = (e) => {
+      // 'no-speech' / 'audio-capture' / 'not-allowed' 等
+      if (e.error !== 'no-speech' && e.error !== 'aborted') {
+        console.warn('Recognition error:', e.error);
+      }
+    };
+    try {
+      recog.start();
+      recorders[key + '_recog'] = recog;
+    } catch (e) {
+      console.warn('Recognition start failed:', e);
+    }
+
     btn.textContent = '⏹ 停止录音';
     btn.classList.add('recording');
     card.classList.add('recording');
     document.getElementById('status-' + (p+1) + '-' + i).classList.add('show');
-    document.getElementById('rec-info-' + (p+1) + '-' + i).classList.remove('show');
+    document.getElementById('assess-' + (p+1) + '-' + i).classList.remove('show');
 
-    // 自动停止（按 line duration + 1.5s）
+    // 自动停止
     const line = timings[p].lines[i];
     const maxMs = (line.duration + 1.5) * 1000;
     setTimeout(() => {
-      if (rec.state === 'recording') rec.stop();
+      if (recorders[key] && recorders[key].state === 'recording') stopRec(p, i);
     }, maxMs);
   } catch (e) {
-    showErr('请允许浏览器使用麦克风权限（首次需要点击允许）');
+    showErr('请允许浏览器使用麦克风权限');
   }
+}
+
+function stopRec(p, i) {
+  const key = p + '-' + i;
+  const rec = recorders[key];
+  const recog = recorders[key + '_recog'];
+  if (rec && rec.state === 'recording') rec.stop();
+  if (recog && recog.state !== 'stopped') {
+    try { recog.stop(); } catch (e) {}
+  }
+}
+
+function renderMatch(p, i, transcript) {
+  const enDiv = document.getElementById('en-' + (p+1) + '-' + i);
+  const scoreEl = document.getElementById('score-' + (p+1) + '-' + i);
+  const refText = enDiv.dataset.text;
+  const refWords = refText.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w);
+  const gotWords = transcript.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w);
+  const gotSet = new Set(gotWords);
+
+  const wordSpans = enDiv.querySelectorAll('.word');
+  let matched = 0;
+  refWords.forEach((w, idx) => {
+    if (idx >= wordSpans.length) return;
+    const span = wordSpans[idx];
+    span.classList.remove('good', 'miss');
+    if (gotSet.has(w)) {
+      span.classList.add('good');
+      matched++;
+    } else {
+      span.classList.add('miss');
+    }
+  });
+
+  const score = refWords.length ? Math.round(matched / refWords.length * 100) : 0;
+  scoreEl.textContent = score;
+
+  const card = document.getElementById('lc-' + (p+1) + '-' + i);
+  card.classList.add('assessed');
+  document.getElementById('assess-' + (p+1) + '-' + i).classList.add('show');
 }
 
 function replayMine(p, i) {
@@ -372,11 +529,16 @@ function resetRec(p, i) {
     URL.revokeObjectURL(recordings[key]);
     delete recordings[key];
   }
-  document.getElementById('rec-info-' + (p+1) + '-' + i).classList.remove('show');
+  delete recorders[key + '_transcript'];
+  document.getElementById('assess-' + (p+1) + '-' + i).classList.remove('show');
   const btn = document.getElementById('rec-' + (p+1) + '-' + i);
   btn.textContent = '🎤 开始录音';
   btn.classList.remove('recording');
-  document.getElementById('lc-' + (p+1) + '-' + i).classList.remove('recording');
+  const card = document.getElementById('lc-' + (p+1) + '-' + i);
+  card.classList.remove('recording', 'assessed');
+  card.querySelectorAll('.word').forEach(s => {
+    s.classList.remove('good', 'miss');
+  });
 }
 
 function showErr(msg) {
