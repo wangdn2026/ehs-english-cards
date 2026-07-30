@@ -28,7 +28,7 @@
   .top { background: linear-gradient(135deg, var(--c-tian) 0%, #5B8FA8 100%);
     color: #fff; padding: 20px 18px 18px; }
   .top h1 { margin: 0 0 4px; font-size: 19px; font-weight: 600; letter-spacing: 0.3px; }
-  .top .sub { font-size: 12.5px; opacity: 0.85; }
+  .top .sub { font-size: 12.5px; opacity: 0.88; line-height: 1.55; }
   .meta-tag { display: inline-block; margin-top: 8px; padding: 2px 9px; background: rgba(255,255,255,0.18);
     border-radius: 10px; font-size: 11px; }
   .progress { background: var(--c-card); margin: 12px 14px 0; padding: 12px 14px;
@@ -36,36 +36,14 @@
   .progress-bar { flex: 1; height: 6px; background: var(--c-line); border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--c-orange); width: 0%; transition: width 0.4s ease; }
   .progress-text { font-size: 12px; color: var(--c-soft); white-space: nowrap; font-weight: 500; }
-  .tips { margin: 12px 14px; padding: 10px 12px; background: #FFF8E5; border-left: 3px solid #E5B65C;
-    border-radius: 4px; font-size: 12px; color: #6B5A2A; line-height: 1.55; }
-  .tips b { color: #8B6F1A; }
-  .wechat-warn { display: none; margin: 12px 14px; padding: 12px 14px;
-    background: linear-gradient(135deg, #FFE5DC 0%, #FFD4C2 100%);
-    border-radius: 10px; font-size: 13px; color: #8B3A1F; line-height: 1.6;
-    border: 1px solid #E07A5F; }
-  .wechat-warn.show { display: block; }
-  .wechat-warn b { color: #C0392B; }
-  .wechat-warn ol { margin: 8px 0 0 18px; padding: 0; }
-  .wechat-warn li { margin: 4px 0; }
-  .wechat-warn .copy-link { background: var(--c-orange); color: #fff; border: none;
-    padding: 7px 14px; border-radius: 16px; font-size: 12.5px; cursor: pointer;
-    margin-top: 8px; font-family: inherit; font-weight: 500; }
-  .wechat-warn .copy-link:active { background: #C0593F; }
-  .modal-mask { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-    z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-  .modal-mask.show { display: flex; }
-  .modal-box { background: #fff; border-radius: 14px; padding: 22px 20px; max-width: 320px;
-    width: 100%; text-align: center; }
-  .modal-box h3 { margin: 0 0 10px; font-size: 16px; color: var(--c-charcoal); }
-  .modal-box p { font-size: 13px; color: var(--c-charcoal); line-height: 1.6; margin: 0 0 14px; }
-  .modal-box .modal-close { background: var(--c-orange); color: #fff; border: none;
-    padding: 9px 24px; border-radius: 18px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  .tips { margin: 12px 14px; padding: 11px 13px; background: #EAF2F6; border-left: 3px solid var(--c-tian);
+    border-radius: 4px; font-size: 12px; color: #2C4A5C; line-height: 1.6; }
+  .tips b { color: #1A3548; }
   .part { margin: 16px 14px 8px; }
   .part-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
   .part-id { background: var(--c-charcoal); color: #fff; font-size: 11px; padding: 3px 9px;
     border-radius: 10px; font-weight: 600; letter-spacing: 0.5px; }
   .part-title { font-size: 14px; font-weight: 600; color: var(--c-charcoal); }
-  .part-ctx { font-size: 12px; color: var(--c-soft); margin: 4px 0 10px; }
   .line { background: var(--c-card); border-radius: 12px; padding: 14px 14px 12px;
     margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: relative; overflow: hidden;
     border: 2px solid transparent; transition: border-color 0.3s; }
@@ -89,18 +67,13 @@
   .btn-play:active { background: #5B8FA8; }
   .btn-play.playing { background: var(--c-orange); }
   .btn-rec { background: var(--c-orange); color: #fff; padding: 7px 16px; }
-  .btn-rec.recording { background: #C0392B; animation: pulse 1.2s infinite; }
-  .btn-rec:disabled { background: #C8C5B6; cursor: not-allowed; }
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.4); }
-    50% { box-shadow: 0 0 0 8px rgba(192, 57, 43, 0); }
-  }
+  .btn-rec:disabled { background: #C8C5B6; cursor: not-allowed; opacity: 0.7; }
   .btn-replay { background: var(--c-line); color: var(--c-charcoal); }
   .btn-retry { background: transparent; color: var(--c-soft); border: 1px solid var(--c-line); }
-  .btn-ref { background: transparent; color: var(--c-tian); border: 1px solid var(--c-tian); }
   .waveform { flex: 1; min-width: 100px; height: 28px; display: flex; align-items: center; gap: 2px; }
-  .wave-bar { width: 3px; background: var(--c-line); border-radius: 1.5px; transition: height 0.08s; }
-  .wave-bar.live { background: var(--c-orange); }
+  .wave-bar { width: 3px; background: var(--c-line); border-radius: 1.5px; transition: height 0.2s; }
+  .wave-bar.live { background: var(--c-tian); }
+  .wave-bar.user { background: var(--c-orange); }
   .score-panel { margin-top: 10px; padding: 12px; background: var(--c-bg); border-radius: 8px;
     display: none; align-items: center; gap: 14px; }
   .score-panel.show { display: flex; }
@@ -114,11 +87,20 @@
   .score-num small { font-size: 11px; font-weight: 400; color: var(--c-soft); display: block; text-align: center; }
   .score-info { flex: 1; min-width: 0; }
   .score-grade { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-  .score-detail { font-size: 11.5px; color: var(--c-soft); line-height: 1.6; }
+  .score-detail { font-size: 11.5px; color: var(--c-soft); line-height: 1.65; }
   .score-detail span { display: inline-block; margin-right: 8px; }
   .score-detail b { color: var(--c-charcoal); font-weight: 600; }
   .footer { text-align: center; padding: 24px 14px 30px; font-size: 11.5px; color: var(--c-soft); }
   .footer a { color: var(--c-tian); text-decoration: none; }
+  .modal-mask { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+  .modal-mask.show { display: flex; }
+  .modal-box { background: #fff; border-radius: 14px; padding: 22px 20px; max-width: 320px;
+    width: 100%; text-align: center; }
+  .modal-box h3 { margin: 0 0 10px; font-size: 16px; color: var(--c-charcoal); }
+  .modal-box p { font-size: 13px; color: var(--c-charcoal); line-height: 1.6; margin: 0 0 14px; }
+  .modal-box .modal-close { background: var(--c-orange); color: #fff; border: none;
+    padding: 9px 24px; border-radius: 18px; font-size: 13px; cursor: pointer; font-family: inherit; }
 </style>
 </head>
 <body>
@@ -134,19 +116,8 @@
 </div>
 
 <div class="tips">
-  <b>使用说明</b>　点「▶ 听原音」听标准发音 → 点「● 跟读」录自己声音 → 录完自动出分（基于节奏相似度 + 时长匹配 + 音量充分度）。建议戴耳机，录时正常音量说话，不要赶也不要拖。<br>
-  <b>浏览器</b>　Chrome / Edge / Safari 14.5+ 均支持。微信内置浏览器可能弹出授权，点「允许」即可。
-</div>
-
-<div class="wechat-warn" id="wechatWarn">
-  <b>检测到你在微信中打开，录音功能不可用</b>（微信内置浏览器禁止网页调用麦克风，不只是本页面限制——专业 App 同样不行）<br>
-  请按以下方式在浏览器中打开本页面：
-  <ol>
-    <li>点击右上角 <b>···</b> 按钮</li>
-    <li>选择 <b>「在浏览器打开」</b>（或「Safari 打开」/「Chrome 打开」）</li>
-    <li>在浏览器里即可正常使用录音 + 跟读打分</li>
-  </ol>
-  <button class="copy-link" id="copyLinkBtn">📋 复制本页面链接</button>
+  <b>使用方法</b>　点「▶ 听原音」听标准发音 → 点「● 跟读」会弹出<b>手机自带的录音机</b>（不是浏览器录音）→ 录完一句话点完成 → 系统自动回放你的录音 + 出分数。<br>
+  <b>为什么用录音机而不是浏览器录音？</b>　国内浏览器（包括微信 / 移动 Edge）对网页录音支持不稳定。这是英语流利说、扇贝等 App 在微信里也都引导用户去 App 录的原因——本方案直接调用系统录音机，<b>所有手机 / 浏览器都能用</b>。
 </div>
 
 
@@ -155,7 +126,6 @@
     <span class="part-id">1</span>
     <span class="part-title">Part 1: 博物馆建造历史与门票</span>
   </div>
-  <div class="part-ctx"></div>
   
 <div class="line" data-line-key="1_0" data-part-id="1" data-line-idx="0"
   data-start="0.0" data-end="2.59">
@@ -169,21 +139,9 @@
   <div class="line-zh">这座博物馆是什么时候建成的？</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_0">▶ 听原音</button>
-    <div class="waveform">
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-    </div>
+    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
     <button class="btn btn-rec">● 跟读</button>
+    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
   </div>
@@ -202,21 +160,9 @@
   <div class="line-zh">这座博物馆始建于一百多年前。</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_1">▶ 听原音</button>
-    <div class="waveform">
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-    </div>
+    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
     <button class="btn btn-rec">● 跟读</button>
+    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
   </div>
@@ -235,21 +181,9 @@
   <div class="line-zh">这家博物馆对公众免费开放吗？</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_2">▶ 听原音</button>
-    <div class="waveform">
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-    </div>
+    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
     <button class="btn btn-rec">● 跟读</button>
+    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
   </div>
@@ -268,21 +202,9 @@
   <div class="line-zh">该博物馆不是全年免费向公众开放。</div>
   <div class="actions">
     <button class="btn btn-play" data-line-key="1_3">▶ 听原音</button>
-    <div class="waveform">
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-      <div class="wave-bar" style="height:4px"></div>
-    </div>
+    <div class="waveform"><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div><div class="wave-bar" style="height:4px"></div></div>
     <button class="btn btn-rec">● 跟读</button>
+    <input type="file" accept="audio/*" capture="microphone" class="file-input" style="display:none">
     <button class="btn btn-replay" style="display:none">↺ 回放</button>
     <button class="btn btn-retry btn-retake" style="display:none">↻ 再录</button>
   </div>
@@ -299,8 +221,8 @@
 
 <div class="modal-mask" id="recModal">
   <div class="modal-box">
-    <h3 id="modalTitle">录音受限</h3>
-    <p id="modalContent">请在浏览器中打开本页面以使用录音功能。</p>
+    <h3 id="modalTitle">提示</h3>
+    <p id="modalContent">内容</p>
     <button class="modal-close" id="modalCloseBtn">知道了</button>
   </div>
 </div>
@@ -310,26 +232,21 @@ const PARTS_DATA = [{"id": 1, "title": "Part 1: 博物馆建造历史与门票",
 const AUDIO_BASE = 'https://wangdn2026.github.io/ehs-english-cards/audio/';
 const TOTAL_LINES = 4;
 
-// 评分系统
 class Scorer {
   constructor() {
     this.audioCtx = null;
-    this.refEnvelopes = {};  // partId_lineIdx -> [{t, v}]
+    this.refEnvelopes = {};
   }
   async init() {
     try {
       this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     } catch (e) { console.warn('AudioContext 不可用', e); }
   }
-  // 预加载原音包络（每条 line 单独加载对应片段）
   async preloadRefEnvelope(partId, lineIdx, start, end) {
     const key = partId + '_' + lineIdx;
     if (this.refEnvelopes[key]) return this.refEnvelopes[key];
     if (!this.audioCtx) return null;
     try {
-      // 直接加载完整音频 + 用 start/end 切片
-      // 为节省请求，复用单条 line mp3（如果有）
-      // 简化：直接用完整音频的时间窗口
       const url = AUDIO_BASE + 'vol09_museum_contractor_full.mp3';
       const resp = await fetch(url);
       const buf = await resp.arrayBuffer();
@@ -338,7 +255,7 @@ class Scorer {
       const sr = audioBuf.sampleRate;
       const s = Math.max(0, Math.floor(start * sr));
       const e = Math.min(data.length, Math.floor(end * sr));
-      const seg = data.subarray ? data.subarray(s, e) : data.slice(s, e);
+      const seg = data.slice(s, e);
       const env = this.extractEnvelope(seg, sr, 0.08);
       this.refEnvelopes[key] = env;
       return env;
@@ -359,71 +276,16 @@ class Scorer {
     }
     return env;
   }
-  // 用音频元素的当前时间 + analyser 实时采用户包络
-  async recordWithAnalysis(lineEl, refEnv, refDuration) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const source = this.audioCtx.createMediaStreamSource(stream);
-        const analyser = this.audioCtx.createAnalyser();
-        analyser.fftSize = 1024;
-        source.connect(analyser);
-        const data = new Uint8Array(analyser.fftSize);
-
-        // 同步用 MediaRecorder 录 webm 用于回放
-        const mr = new MediaRecorder(stream);
-        const chunks = [];
-        mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
-
-        const userSamples = [];  // [{t, v}]
-        const startTime = this.audioCtx.currentTime;
-        let live = true;
-
-        const waveformEl = lineEl.querySelector('.waveform');
-        const bars = waveformEl ? waveformEl.querySelectorAll('.wave-bar') : [];
-
-        const tick = () => {
-          if (!live) return;
-          analyser.getByteTimeDomainData(data);
-          let sum = 0;
-          for (let i = 0; i < data.length; i++) {
-            const v = (data[i] - 128) / 128;
-            sum += v * v;
-          }
-          const rms = Math.sqrt(sum / data.length);
-          const t = this.audioCtx.currentTime - startTime;
-          userSamples.push({ t, v: rms });
-          // 实时波形（前 12 个 bar）
-          for (let i = 0; i < bars.length; i++) {
-            const v = userSamples[userSamples.length - bars.length + i];
-            const h = v ? Math.max(4, Math.min(28, v * 120)) : 4;
-            bars[i].style.height = h + 'px';
-            bars[i].classList.add('live');
-          }
-          requestAnimationFrame(tick);
-        };
-
-        mr.start();
-        tick();
-
-        // 暴露停止函数
-        lineEl._stopRec = () => {
-          live = false;
-          mr.stop();
-          stream.getTracks().forEach(t => t.stop());
-        };
-
-        mr.onstop = () => {
-          const blob = new Blob(chunks, { type: 'audio/webm' });
-          const duration = userSamples.length > 0
-            ? userSamples[userSamples.length - 1].t : 0;
-          const score = this.computeScore(userSamples, refEnv, refDuration, duration);
-          resolve({ blob, duration, score });
-        };
-      } catch (err) {
-        reject(err);
-      }
-    });
+  // 解析用户上传/录制的音频文件，返回包络
+  async analyzeFile(file) {
+    if (!this.audioCtx) throw new Error('浏览器不支持音频分析');
+    const arrayBuffer = await file.arrayBuffer();
+    // 兼容：iOS Safari 需要 slice
+    const audioBuf = await this.audioCtx.decodeAudioData(arrayBuffer.slice(0));
+    const data = audioBuf.getChannelData(0);
+    const sr = audioBuf.sampleRate;
+    const env = this.extractEnvelope(data, sr, 0.08);
+    return { envelope: env, duration: audioBuf.duration, sampleRate: sr };
   }
   computeScore(userSamples, refEnv, refDuration, userDuration) {
     // 1. 时长匹配度
@@ -445,7 +307,6 @@ class Scorer {
     if (refEnv && refEnv.length > 3 && userSamples.length > 3) {
       const us = userSamples.map(s => s.v);
       const rs = refEnv.map(s => s.v);
-      // 长度对齐
       const minLen = Math.min(us.length, rs.length);
       const u = us.slice(0, minLen);
       const r = rs.slice(0, minLen);
@@ -480,9 +341,8 @@ class Scorer {
 }
 
 const scorer = new Scorer();
-const lineState = {};  // lineKey -> {done, score, blob}
+const lineState = {};
 
-// 播放原音（单句 / 全段）
 const audioPlayer = new Audio();
 audioPlayer.preload = 'auto';
 let currentPlayBtn = null;
@@ -494,14 +354,7 @@ function playSegment(btn, start, end) {
   audioPlayer.src = AUDIO_BASE + 'vol09_museum_contractor_full.mp3';
   audioPlayer.currentTime = start;
   currentPlayBtn = btn;
-  audioPlayer.play().catch(e => {
-    // 单独 line mp3 回退（如果存在）
-    const lineUrl = AUDIO_BASE + 'vol09_museum_contractor_line_' + btn.dataset.lineKey + '.mp3';
-    const fallback = new Audio(lineUrl);
-    fallback.play();
-    fallback.onended = () => { if (currentPlayBtn) currentPlayBtn.classList.remove('playing'); currentPlayBtn = null; };
-  });
-  // 到 end 时暂停
+  audioPlayer.play().catch(e => console.warn('播放失败', e));
   const check = () => {
     if (audioPlayer.currentTime >= end) { audioPlayer.pause(); }
     else if (!audioPlayer.paused) requestAnimationFrame(check);
@@ -509,15 +362,14 @@ function playSegment(btn, start, end) {
   requestAnimationFrame(check);
 }
 
-// 评分渲染
 function renderScore(panel, score) {
   const total = score.total;
-  let grade, gradeColor, ringColor, bgClass;
-  if (total >= 70) { grade = '优秀 Excellent'; ringColor = '#7CB069'; bgClass = 'good'; }
-  else if (total >= 50) { grade = '良好 Good'; ringColor = '#E07A5F'; bgClass = 'ok'; }
-  else { grade = '再练 Try Again'; ringColor = '#8C99AB'; bgClass = 'low'; }
+  let grade, ringColor;
+  if (total >= 70) { grade = '优秀 Excellent'; ringColor = '#7CB069'; }
+  else if (total >= 50) { grade = '良好 Good'; ringColor = '#E07A5F'; }
+  else { grade = '再练 Try Again'; ringColor = '#8C99AB'; }
 
-  const C = 2 * Math.PI * 30;  // r=30, 周长
+  const C = 2 * Math.PI * 30;
   const offset = C * (1 - total / 100);
   panel.innerHTML = `
     <div class="score-ring">
@@ -543,14 +395,32 @@ function renderScore(panel, score) {
     </div>
   `;
   panel.classList.add('show');
-  // 触发动画
   setTimeout(() => {
     const fg = panel.querySelector('.fg-circle');
     if (fg) fg.style.strokeDashoffset = offset;
   }, 50);
 }
 
-// 更新进度
+// 用包络数据画静态波形条
+function renderStaticWaveform(waveformEl, envelope, isUser) {
+  const bars = waveformEl.querySelectorAll('.wave-bar');
+  if (!envelope || envelope.length === 0) {
+    bars.forEach(b => { b.style.height = '4px'; b.classList.remove('live', 'user'); });
+    return;
+  }
+  // 取最近 N 个采样（对齐 bars 数量）
+  const step = Math.max(1, Math.floor(envelope.length / bars.length));
+  bars.forEach((bar, i) => {
+    const seg = envelope.slice(i * step, (i + 1) * step);
+    if (seg.length === 0) { bar.style.height = '4px'; return; }
+    const max = Math.max(...seg.map(s => s.v));
+    const h = Math.max(4, Math.min(28, max * 100));
+    bar.style.height = h + 'px';
+    bar.classList.remove('live');
+    bar.classList.add(isUser ? 'user' : 'live');
+  });
+}
+
 function updateProgress() {
   const doneCount = Object.values(lineState).filter(s => s.done).length;
   const fill = document.getElementById('progFill');
@@ -559,7 +429,6 @@ function updateProgress() {
   if (text) text.textContent = doneCount + ' / ' + TOTAL_LINES + ' 已打卡';
 }
 
-// 持久化（localStorage）
 const STORAGE_KEY = 'vol09_readalong_done';
 function loadProgress() {
   try {
@@ -580,7 +449,6 @@ function saveProgress(key) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
 }
 
-// 绑定每个 line 的按钮
 function bindLine(el) {
   const key = el.dataset.lineKey;
   const start = parseFloat(el.dataset.start);
@@ -589,9 +457,11 @@ function bindLine(el) {
 
   const playBtn = el.querySelector('.btn-play');
   const recBtn = el.querySelector('.btn-rec');
+  const fileInput = el.querySelector('.file-input');
   const replayBtn = el.querySelector('.btn-replay');
   const retryBtn = el.querySelector('.btn-retake');
   const scorePanel = el.querySelector('.score-panel');
+  const waveformEl = el.querySelector('.waveform');
 
   let currentBlob = null;
   let currentBlobUrl = null;
@@ -605,64 +475,71 @@ function bindLine(el) {
     }
   });
 
-  recBtn.addEventListener('click', async () => {
-    if (recBtn.classList.contains('recording')) {
-      // 停止录音
-      if (el._stopRec) el._stopRec();
-      recBtn.classList.remove('recording');
-      recBtn.textContent = '● 跟读中...';
-      recBtn.disabled = true;
-      // 等异步结果
-    } else {
-      // 预加载原音包络（如果还没加载）
+  recBtn.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    recBtn.disabled = true;
+    const origText = recBtn.textContent;
+    recBtn.textContent = '处理中...';
+    try {
+      // 预加载原音包络
       const partId = el.dataset.partId;
       const lineIdx = parseInt(el.dataset.lineIdx);
       const refEnv = await scorer.preloadRefEnvelope(partId, lineIdx, start, end);
-      recBtn.classList.add('recording');
-      recBtn.textContent = '■ 停止';
-      try {
-        const { blob, duration, score } = await scorer.recordWithAnalysis(el, refEnv, refDuration);
-        currentBlob = blob;
-        if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
-        currentBlobUrl = URL.createObjectURL(blob);
-        replayBtn.style.display = 'inline-flex';
-        retryBtn.style.display = 'inline-flex';
-        recBtn.style.display = 'none';
-        renderScore(scorePanel, score);
-        // 标记完成
-        if (score.total >= 50) {
-          el.classList.add('done');
-          lineState[key] = { done: true, score: score };
-          saveProgress(key);
-          updateProgress();
-        }
-      } catch (err) {
-        let msg = '请检查麦克风权限';
-        if (err && err.name === 'NotAllowedError') {
-          msg = '麦克风权限被拒绝。请在浏览器设置中允许本页面使用麦克风，然后刷新页面重试。';
-        } else if (err && err.name === 'NotFoundError') {
-          msg = '未检测到麦克风设备。请检查手机/电脑麦克风是否被其他应用占用。';
-        } else if (err && (err.name === 'NotSupportedError' || err.name === 'NotReadableError')) {
-          msg = '当前浏览器不支持录音。微信内置浏览器禁止网页调用麦克风，请点击右上角 ··· 选择「在浏览器打开」后重试。';
-        } else if (err && err.message) {
-          msg = err.message;
-        }
-        if (window.__showRecModal) {
-          window.__showRecModal('录音失败', msg);
-        } else {
-          alert('录音失败：' + msg);
-        }
-        recBtn.classList.remove('recording');
-        recBtn.textContent = '● 跟读';
+
+      // 解码用户音频
+      const { envelope, duration } = await scorer.analyzeFile(file);
+      if (duration < 0.3) throw new Error('录音太短（不到 0.3 秒），请重录');
+      if (duration > 30) throw new Error('录音超过 30 秒，请只录这一句');
+
+      // 打分
+      const score = scorer.computeScore(envelope, refEnv, refDuration, duration);
+
+      // 保存文件用于回放
+      currentBlob = file;
+      if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+      currentBlobUrl = URL.createObjectURL(file);
+
+      // 画用户录音波形
+      renderStaticWaveform(waveformEl, envelope, true);
+
+      // 切换按钮状态
+      recBtn.style.display = 'none';
+      replayBtn.style.display = 'inline-flex';
+      retryBtn.style.display = 'inline-flex';
+
+      // 渲染分数
+      renderScore(scorePanel, score);
+
+      // 标记完成
+      if (score.total >= 50) {
+        el.classList.add('done');
+        lineState[key] = { done: true, score: score };
+        saveProgress(key);
+        updateProgress();
       }
-      recBtn.disabled = false;
+    } catch (err) {
+      let msg = '音频处理失败';
+      if (err && err.message) msg += '：' + err.message;
+      if (window.__showRecModal) {
+        window.__showRecModal('跟读失败', msg);
+      } else {
+        alert(msg);
+      }
     }
+    recBtn.textContent = origText;
+    recBtn.disabled = false;
+    fileInput.value = '';  // 允许重选同一文件
   });
 
   replayBtn.addEventListener('click', () => {
     if (currentBlobUrl) {
       const a = new Audio(currentBlobUrl);
-      a.play();
+      a.play().catch(e => console.warn('回放失败', e));
     }
   });
 
@@ -676,42 +553,16 @@ function bindLine(el) {
     retryBtn.style.display = 'none';
     recBtn.style.display = 'inline-flex';
     recBtn.textContent = '● 跟读';
+    renderStaticWaveform(waveformEl, [], false);
   });
 }
 
-// 启动
 (async function init() {
   await scorer.init();
   document.querySelectorAll('.line').forEach(bindLine);
   loadProgress();
 
-  // 微信检测
-  const IS_WECHAT = /micromessenger/i.test(navigator.userAgent);
-  if (IS_WECHAT) {
-    document.getElementById('wechatWarn').classList.add('show');
-    document.getElementById('copyLinkBtn').addEventListener('click', () => {
-      const url = window.location.href;
-      const fallbackCopy = () => {
-        const ta = document.createElement('textarea');
-        ta.value = url;
-        ta.style.position = 'fixed';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); alert('已复制链接，去浏览器粘贴打开'); }
-        catch (e) { alert('请手动复制链接：' + url); }
-        document.body.removeChild(ta);
-      };
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(
-          () => alert('已复制链接，去浏览器粘贴打开'),
-          fallbackCopy
-        );
-      } else fallbackCopy();
-    });
-  }
-
-  // 录音失败 modal
+  // modal
   const modal = document.getElementById('recModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalContent = document.getElementById('modalContent');
@@ -723,10 +574,7 @@ function bindLine(el) {
   };
   modalCloseBtn.addEventListener('click', () => modal.classList.remove('show'));
   modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('show'); });
-
-  // 暴露 modal 给录音按钮用
   window.__showRecModal = showModal;
-  window.__IS_WECHAT = IS_WECHAT;
 })();
 </script>
 </body>
