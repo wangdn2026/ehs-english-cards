@@ -39,6 +39,27 @@
   .tips { margin: 12px 14px; padding: 10px 12px; background: #FFF8E5; border-left: 3px solid #E5B65C;
     border-radius: 4px; font-size: 12px; color: #6B5A2A; line-height: 1.55; }
   .tips b { color: #8B6F1A; }
+  .wechat-warn { display: none; margin: 12px 14px; padding: 12px 14px;
+    background: linear-gradient(135deg, #FFE5DC 0%, #FFD4C2 100%);
+    border-radius: 10px; font-size: 13px; color: #8B3A1F; line-height: 1.6;
+    border: 1px solid #E07A5F; }
+  .wechat-warn.show { display: block; }
+  .wechat-warn b { color: #C0392B; }
+  .wechat-warn ol { margin: 8px 0 0 18px; padding: 0; }
+  .wechat-warn li { margin: 4px 0; }
+  .wechat-warn .copy-link { background: var(--c-orange); color: #fff; border: none;
+    padding: 7px 14px; border-radius: 16px; font-size: 12.5px; cursor: pointer;
+    margin-top: 8px; font-family: inherit; font-weight: 500; }
+  .wechat-warn .copy-link:active { background: #C0593F; }
+  .modal-mask { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+  .modal-mask.show { display: flex; }
+  .modal-box { background: #fff; border-radius: 14px; padding: 22px 20px; max-width: 320px;
+    width: 100%; text-align: center; }
+  .modal-box h3 { margin: 0 0 10px; font-size: 16px; color: var(--c-charcoal); }
+  .modal-box p { font-size: 13px; color: var(--c-charcoal); line-height: 1.6; margin: 0 0 14px; }
+  .modal-box .modal-close { background: var(--c-orange); color: #fff; border: none;
+    padding: 9px 24px; border-radius: 18px; font-size: 13px; cursor: pointer; font-family: inherit; }
   .part { margin: 16px 14px 8px; }
   .part-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
   .part-id { background: var(--c-charcoal); color: #fff; font-size: 11px; padding: 3px 9px;
@@ -115,6 +136,17 @@
 <div class="tips">
   <b>使用说明</b>　点「▶ 听原音」听标准发音 → 点「● 跟读」录自己声音 → 录完自动出分（基于节奏相似度 + 时长匹配 + 音量充分度）。建议戴耳机，录时正常音量说话，不要赶也不要拖。<br>
   <b>浏览器</b>　Chrome / Edge / Safari 14.5+ 均支持。微信内置浏览器可能弹出授权，点「允许」即可。
+</div>
+
+<div class="wechat-warn" id="wechatWarn">
+  <b>检测到你在微信中打开，录音功能不可用</b>（微信内置浏览器禁止网页调用麦克风，不只是本页面限制——专业 App 同样不行）<br>
+  请按以下方式在浏览器中打开本页面：
+  <ol>
+    <li>点击右上角 <b>···</b> 按钮</li>
+    <li>选择 <b>「在浏览器打开」</b>（或「Safari 打开」/「Chrome 打开」）</li>
+    <li>在浏览器里即可正常使用录音 + 跟读打分</li>
+  </ol>
+  <button class="copy-link" id="copyLinkBtn">📋 复制本页面链接</button>
 </div>
 
 
@@ -263,6 +295,14 @@
 <div class="footer">
   安全五点半 E. H. S. 训练营 · 跟读训练模块<br>
   评分基于浏览器本地音频分析，结果仅作跟读流利度参考
+</div>
+
+<div class="modal-mask" id="recModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">录音受限</h3>
+    <p id="modalContent">请在浏览器中打开本页面以使用录音功能。</p>
+    <button class="modal-close" id="modalCloseBtn">知道了</button>
+  </div>
 </div>
 
 <script>
@@ -597,7 +637,21 @@ function bindLine(el) {
           updateProgress();
         }
       } catch (err) {
-        alert('录音失败：' + (err.message || err.name || '请检查麦克风权限'));
+        let msg = '请检查麦克风权限';
+        if (err && err.name === 'NotAllowedError') {
+          msg = '麦克风权限被拒绝。请在浏览器设置中允许本页面使用麦克风，然后刷新页面重试。';
+        } else if (err && err.name === 'NotFoundError') {
+          msg = '未检测到麦克风设备。请检查手机/电脑麦克风是否被其他应用占用。';
+        } else if (err && (err.name === 'NotSupportedError' || err.name === 'NotReadableError')) {
+          msg = '当前浏览器不支持录音。微信内置浏览器禁止网页调用麦克风，请点击右上角 ··· 选择「在浏览器打开」后重试。';
+        } else if (err && err.message) {
+          msg = err.message;
+        }
+        if (window.__showRecModal) {
+          window.__showRecModal('录音失败', msg);
+        } else {
+          alert('录音失败：' + msg);
+        }
         recBtn.classList.remove('recording');
         recBtn.textContent = '● 跟读';
       }
@@ -630,6 +684,49 @@ function bindLine(el) {
   await scorer.init();
   document.querySelectorAll('.line').forEach(bindLine);
   loadProgress();
+
+  // 微信检测
+  const IS_WECHAT = /micromessenger/i.test(navigator.userAgent);
+  if (IS_WECHAT) {
+    document.getElementById('wechatWarn').classList.add('show');
+    document.getElementById('copyLinkBtn').addEventListener('click', () => {
+      const url = window.location.href;
+      const fallbackCopy = () => {
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); alert('已复制链接，去浏览器粘贴打开'); }
+        catch (e) { alert('请手动复制链接：' + url); }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(
+          () => alert('已复制链接，去浏览器粘贴打开'),
+          fallbackCopy
+        );
+      } else fallbackCopy();
+    });
+  }
+
+  // 录音失败 modal
+  const modal = document.getElementById('recModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalContent = document.getElementById('modalContent');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const showModal = (title, content) => {
+    modalTitle.textContent = title;
+    modalContent.textContent = content;
+    modal.classList.add('show');
+  };
+  modalCloseBtn.addEventListener('click', () => modal.classList.remove('show'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('show'); });
+
+  // 暴露 modal 给录音按钮用
+  window.__showRecModal = showModal;
+  window.__IS_WECHAT = IS_WECHAT;
 })();
 </script>
 </body>
