@@ -1,0 +1,221 @@
+{
+  "parts": [
+    {
+      "id": 1,
+      "lines": [
+        {
+          "idx": 0,
+          "role": "Visitor",
+          "start": 0.0,
+          "end": 2.59,
+          "duration": 2.59,
+          "en": "When was this museum built?"
+        },
+        {
+          "idx": 1,
+          "role": "Staff",
+          "start": 3.09,
+          "end": 6.81,
+          "duration": 3.72,
+          "en": "This museum was built more than 100 years ago."
+        },
+        {
+          "idx": 2,
+          "role": "Visitor",
+          "start": 7.31,
+          "end": 10.84,
+          "duration": 3.53,
+          "en": "Is admission to this museum free for the public?"
+        },
+        {
+          "idx": 3,
+          "role": "Staff",
+          "start": 11.34,
+          "end": 15.78,
+          "duration": 4.44,
+          "en": "This museum is not open to the public free of charge all year round."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "lines": [
+        {
+          "idx": 0,
+          "role": "Visitor",
+          "start": 16.98,
+          "end": 20.94,
+          "duration": 3.96,
+          "en": "Who can enjoy free entry to the museum at all times?"
+        },
+        {
+          "idx": 1,
+          "role": "Staff",
+          "start": 21.44,
+          "end": 30.39,
+          "duration": 8.95,
+          "en": "Veterans, active military staff, unemployed people, disabled people, students and children can enjoy all year-round free admission."
+        },
+        {
+          "idx": 2,
+          "role": "Visitor",
+          "start": 30.89,
+          "end": 33.7,
+          "duration": 2.81,
+          "en": "Could you tell me your opening hours?"
+        },
+        {
+          "idx": 3,
+          "role": "Staff",
+          "start": 34.2,
+          "end": 38.64,
+          "duration": 4.44,
+          "en": "We open seven days a week and only close on official holidays."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "lines": [
+        {
+          "idx": 0,
+          "role": "Visitor",
+          "start": 39.84,
+          "end": 43.13,
+          "duration": 3.29,
+          "en": "Can I take a photo of the exhibits inside?"
+        },
+        {
+          "idx": 1,
+          "role": "Staff",
+          "start": 43.63,
+          "end": 51.21,
+          "duration": 7.58,
+          "en": "Sorry, please do not take photos of any exhibits. All displays are only for viewing and appreciation."
+        },
+        {
+          "idx": 2,
+          "role": "Visitor",
+          "start": 51.71,
+          "end": 55.26,
+          "duration": 3.55,
+          "en": "Thank you so much for your detailed explanation."
+        },
+        {
+          "idx": 3,
+          "role": "Staff",
+          "start": 55.76,
+          "end": 59.84,
+          "duration": 4.08,
+          "en": "You are welcome. Wish you a nice visit!"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 61.04,
+          "end": 72.52,
+          "duration": 11.47,
+          "en": "Our contractors have finished all pre-qualification and pre-job preparations and will start on-site work very soon. What safety management process do they need to complete before they begin work?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 73.02,
+          "end": 85.93,
+          "duration": 12.91,
+          "en": "Before any contractor task starts, they should complete an overall pre-task hazard identification and risk assessment for every upcoming work activity. This is the foundation of all on-site risk control."
+        },
+        {
+          "idx": 2,
+          "role": "PM",
+          "start": 86.43,
+          "end": 92.16,
+          "duration": 5.74,
+          "en": "After they finish hazard identification and risk evaluation, what do they need to do next?"
+        },
+        {
+          "idx": 3,
+          "role": "EHS Manager",
+          "start": 92.66,
+          "end": 108.41,
+          "duration": 15.74,
+          "en": "They need to fill out a Pre-Task Plan (PTP) and get approvals. PTP is also referred to as Work Permit in many companies. This document records the related risks, control measures and other safety requirements for the task."
+        },
+        {
+          "idx": 4,
+          "role": "PM",
+          "start": 108.91,
+          "end": 114.79,
+          "duration": 5.88,
+          "en": "Besides risk analysis and permit approval, what on-site safety work do they need to conduct?"
+        },
+        {
+          "idx": 5,
+          "role": "EHS Manager",
+          "start": 115.29,
+          "end": 132.4,
+          "duration": 17.11,
+          "en": "They need to ensure all the safety measures indicated in the PTP are in place before the start of the work. In addition, they should perform routine on-site safety inspections at least every week to check contractor workers' behaviors, PPE compliance and risk control status."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 133.6,
+          "end": 138.18,
+          "duration": 4.58,
+          "en": "Do they have regular safety meetings for ongoing contractor projects?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 138.68,
+          "end": 150.47,
+          "duration": 11.78,
+          "en": "Yes. They hold safety meetings at least on a weekly basis. We review current safety performance, existing hazards and closure status of the corrective actions."
+        },
+        {
+          "idx": 2,
+          "role": "PM",
+          "start": 150.97,
+          "end": 155.19,
+          "duration": 4.22,
+          "en": "Do they have reward and penalty rules for the contractors on site?"
+        },
+        {
+          "idx": 3,
+          "role": "EHS Manager",
+          "start": 155.69,
+          "end": 171.12,
+          "duration": 15.43,
+          "en": "Yes. They issue fines for any safety violation by contractor workers. At the same time, anyone who proactively reports unsafe acts, unsafe conditions or offers good safety suggestions will receive a safety reward."
+        },
+        {
+          "idx": 4,
+          "role": "PM",
+          "start": 171.62,
+          "end": 185.45,
+          "duration": 13.82,
+          "en": "To summarize, the whole process covers pre-task hazard identification and risk assessment, PTP application and approval, ongoing site inspection, weekly safety review meetings, and a penalty and reward program. Correct?"
+        },
+        {
+          "idx": 5,
+          "role": "EHS Manager",
+          "start": 185.95,
+          "end": 192.69,
+          "duration": 6.74,
+          "en": "Yes. This is the complete and standard contractor safety management process for our site."
+        }
+      ]
+    }
+  ]
+}

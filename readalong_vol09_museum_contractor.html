@@ -149,13 +149,47 @@
   .modal-box p { font-size: 13px; color: var(--c-charcoal); line-height: 1.6; margin: 0 0 14px; }
   .modal-box .modal-close { background: var(--c-orange); color: #fff; border: none;
     padding: 9px 24px; border-radius: 18px; font-size: 13px; cursor: pointer; font-family: inherit; }
+
+  /* ===== 讯飞 ISE 评分展示（2026-08-03 新增）===== */
+  .score-loading { color: var(--c-soft); font-size: 12px; padding: 8px 12px;
+    background: #F4F1DE; border-radius: 6px; margin-top: 8px;
+    display: inline-flex; align-items: center; gap: 6px; }
+  .score-loading::before { content: '⏳'; animation: spin 1s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .score-box { margin-top: 10px; padding: 10px 12px; border-radius: 8px;
+    background: var(--c-card); border: 1px solid var(--c-line); }
+  .score-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .score-total { font-size: 24px; font-weight: 700; line-height: 1; }
+  .score-grade { font-size: 12px; padding: 3px 8px; border-radius: 10px; color: #fff;
+    font-weight: 600; }
+  .score-detail { display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px;
+    color: var(--c-soft); margin-top: 6px; }
+  .score-detail b { color: var(--c-charcoal); font-weight: 600; }
+  .score-words { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--c-line); }
+  .score-words summary { font-size: 12px; color: var(--c-soft); cursor: pointer; user-select: none; }
+  .score-words-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .score-word { display: inline-flex; align-items: baseline; gap: 4px; padding: 3px 8px;
+    background: #F4F1DE; border-radius: 10px; font-size: 12px; }
+  .score-word b { font-weight: 600; color: var(--c-charcoal); }
+  .score-word i { font-style: normal; font-size: 11px; }
+  .score-error { color: #C0392B; font-size: 12px; margin-top: 8px; line-height: 1.5;
+    padding: 8px 10px; background: #FCEBEA; border-radius: 6px; }
+  .score-retry { margin-top: 6px; padding: 5px 12px; background: var(--c-orange);
+    color: #fff; border: none; border-radius: 14px; font-size: 12px; cursor: pointer; }
+  .score-retry:active { background: var(--c-orange-deep); }
+  /* 5 段主题色（沿用 4 档）+ Part 4-5 区分色 */
+  .part-tag-PM { background: #3D405B !important; } /* 深炭灰 - PM */
+  .part-tag-EHS { background: #C9623F !important; } /* 深橙 - EHS Manager */
+  .part-tag-Visitor { background: #7BA7BC !important; } /* 天青 - Visitor */
+  .part-tag-Staff { background: #E07A5F !important; } /* 暖橙 - Staff */
+  .role-label { font-size: 12px; color: var(--c-soft); }
 </style>
 </head>
 <body>
 <div class="top">
   <h1>跟读训练 · Vol09 博物馆 &amp; 承包商安全</h1>
   <div class="sub">听原音 → 录自己 → 听自己的录音</div>
-  <span class="meta-tag">5 段对话 · 24 行 · E. H. S. 训练营 · Demo（Part 1）</span>
+  <span class="meta-tag" id="metaTag">5 段对话 · 24 行 · E. H. S. 训练营</span>
   <span class="mode-badge" id="modeBadge">检测中…</span>
 </div>
 
@@ -167,90 +201,15 @@
 <div class="tips" id="tipsBox">加载中…</div>
 
 
-<div class="part">
-  <div class="part-head">
-    <span class="part-id">1</span>
-    <span class="part-title">Part 1: 博物馆建造历史与门票</span>
-  </div>
-  
-<div class="line" data-line-key="1_0" data-part-id="1" data-line-idx="0"
-  data-start="0.0" data-end="2.59">
-  <div class="done-mark">✓</div>
-  <div class="line-head">
-    <span class="role-tag" style="background:#7BA7BC">V</span>
-    <span style="font-size:12px;color:var(--c-soft)">访客 Visitor</span>
-    <span class="line-no">L1 · 2.59s</span>
-  </div>
-  <div class="line-en">When was this museum built?</div>
-  <div class="line-zh">这座博物馆是什么时候建成的？</div>
-  <div class="actions">
-    <button class="btn btn-play" data-line-key="1_0">▶ 听原音</button>
-    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
-  </div>
+<div class="parts-container" id="partsContainer">
+  <div style="text-align:center;padding:40px 20px;color:var(--c-soft)">加载对话数据…</div>
 </div>
 
-<div class="line" data-line-key="1_1" data-part-id="1" data-line-idx="1"
-  data-start="3.09" data-end="6.81">
-  <div class="done-mark">✓</div>
-  <div class="line-head">
-    <span class="role-tag" style="background:#E07A5F">S</span>
-    <span style="font-size:12px;color:var(--c-soft)">工作人员 Staff</span>
-    <span class="line-no">L2 · 3.72s</span>
-  </div>
-  <div class="line-en">This museum was built more than 100 years ago.</div>
-  <div class="line-zh">这座博物馆始建于一百多年前。</div>
-  <div class="actions">
-    <button class="btn btn-play" data-line-key="1_1">▶ 听原音</button>
-    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
-  </div>
-</div>
-
-<div class="line" data-line-key="1_2" data-part-id="1" data-line-idx="2"
-  data-start="7.31" data-end="10.84">
-  <div class="done-mark">✓</div>
-  <div class="line-head">
-    <span class="role-tag" style="background:#7BA7BC">V</span>
-    <span style="font-size:12px;color:var(--c-soft)">访客 Visitor</span>
-    <span class="line-no">L3 · 3.53s</span>
-  </div>
-  <div class="line-en">Is admission to this museum free for the public?</div>
-  <div class="line-zh">这家博物馆对公众免费开放吗？</div>
-  <div class="actions">
-    <button class="btn btn-play" data-line-key="1_2">▶ 听原音</button>
-    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
-  </div>
-</div>
-
-<div class="line" data-line-key="1_3" data-part-id="1" data-line-idx="3"
-  data-start="11.34" data-end="15.78">
-  <div class="done-mark">✓</div>
-  <div class="line-head">
-    <span class="role-tag" style="background:#E07A5F">S</span>
-    <span style="font-size:12px;color:var(--c-soft)">工作人员 Staff</span>
-    <span class="line-no">L4 · 4.44s</span>
-  </div>
-  <div class="line-en">This museum is not open to the public free of charge all year round.</div>
-  <div class="line-zh">该博物馆不是全年免费向公众开放。</div>
-  <div class="actions">
-    <button class="btn btn-play" data-line-key="1_3">▶ 听原音</button>
-    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
-    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
-    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
-  </div>
-</div>
-
-</div>
 
 
 <div class="footer">
   安全五点半 E. H. S. 训练营 · 跟读训练模块<br>
-  评分基于浏览器本地音频分析，结果仅作跟读流利度参考
+  评分由讯飞 ISE 提供，1 次跟读 1 次评分，结果仅作跟读参考
 </div>
 
 <div class="modal-mask" id="recModal">
@@ -262,9 +221,53 @@
 </div>
 
 <script>
-const PARTS_DATA = [{"id": 1, "title": "Part 1: 博物馆建造历史与门票", "context": "", "lines": [{"idx": 0, "role": "Visitor", "en": "When was this museum built?", "zh": "这座博物馆是什么时候建成的？", "start": 0.0, "end": 2.59, "duration": 2.59}, {"idx": 1, "role": "Staff", "en": "This museum was built more than 100 years ago.", "zh": "这座博物馆始建于一百多年前。", "start": 3.09, "end": 6.81, "duration": 3.72}, {"idx": 2, "role": "Visitor", "en": "Is admission to this museum free for the public?", "zh": "这家博物馆对公众免费开放吗？", "start": 7.31, "end": 10.84, "duration": 3.53}, {"idx": 3, "role": "Staff", "en": "This museum is not open to the public free of charge all year round.", "zh": "该博物馆不是全年免费向公众开放。", "start": 11.34, "end": 15.78, "duration": 4.44}]}];
+// ===== ISE 评分中转配置（2026-08-03 新增）=====
+const ISE_PROXY = 'https://assured-asus-continuously-marilyn.trycloudflare.com';
+const ISE_TOKEN = 'vol09-dongni-ise-2026-08-02-fixed-9f8a3b2c';
+// 评分阈值（5 分制 → 4 档展示）
+const SCORE_TIERS = [
+  { min: 4.5, grade: '优秀 Excellent', color: '#4A8B3A' },
+  { min: 3.5, grade: '良好 Good',      color: '#7CB069' },
+  { min: 2.5, grade: '还行 OK',        color: '#B5D4A0' },
+  { min: 0,   grade: '没读到 Try Again', color: '#E07A5F' },
+];
+function tierOf(score) {
+  for (const t of SCORE_TIERS) if (score >= t.min) return t;
+  return SCORE_TIERS[SCORE_TIERS.length - 1];
+}
+
+// ===== 数据加载（fetch 两个 JSON，合并为 PARTS_DATA）=====
+let PARTS_DATA = [];
+let TOTAL_LINES = 0;
+async function loadData() {
+  const [dResp, tResp] = await Promise.all([
+    fetch('dialogue_vol09.json'),
+    fetch('vol09_line_timings.json'),
+  ]);
+  if (!dResp.ok) throw new Error('dialogue_vol09.json ' + dResp.status);
+  if (!tResp.ok) throw new Error('vol09_line_timings.json ' + tResp.status);
+  const dialogue = await dResp.json();
+  const timings = await tResp.json();
+  const tMap = {};
+  timings.parts.forEach(p => { tMap[p.id] = p; });
+  PARTS_DATA = dialogue.parts.map(p => {
+    const tParts = tMap[p.id] || { lines: [] };
+    return {
+      id: p.id,
+      title: p.title,
+      lines: p.dialogue.map((d, i) => {
+        const t = tParts.lines[i] || {};
+        return {
+          idx: i, role: d.role, en: d.en, zh: d.zh,
+          start: t.start || 0, end: t.end || 0, duration: t.duration || 0,
+        };
+      }),
+    };
+  });
+  TOTAL_LINES = PARTS_DATA.reduce((s, p) => s + p.lines.length, 0);
+}
 const AUDIO_BASE = 'https://wangdn2026.github.io/ehs-english-cards/audio/';
-const TOTAL_LINES = 4;
+// TOTAL_LINES 改由 loadData() 动态计算
 
 // ====== 录音能力检测（极简版：2026-07-31 砍掉 file input 降级）======
 // 只能 hold（页内录音）；不支持 getUserMedia → 按钮置灰 + 提示文字，不弹任何东西
@@ -471,8 +474,12 @@ async function startHoldRecord(lineEl, ctx) {
         return;
       }
 
+      // 加 text 给 requestScore 用
+      const scoreCtx = { ...ctx, text: lineEl.querySelector('.line-en').textContent };
       const blob = new Blob(chunks, { type: mimeType || 'audio/webm' });
       const url = URL.createObjectURL(blob);
+      // 立即触发评分（异步，不阻塞 UI）
+      requestScore(blob, lineEl, scoreCtx);
 
       // 简单获取时长（不调 scorer）
       let duration = 0;
@@ -728,9 +735,196 @@ function bindLine(el) {
   });
 }
 
-(function init() {
+// ===== 渲染 5 段对话 (JS 动态生成 DOM) =====
+const ROLE_MAP = {
+  Visitor: { tag: 'V', label: '访客 Visitor', color: '#7BA7BC', cls: 'part-tag-Visitor' },
+  Staff:   { tag: 'S', label: '工作人员 Staff', color: '#E07A5F', cls: 'part-tag-Staff' },
+  PM:      { tag: 'P', label: '项目经理 PM', color: '#3D405B', cls: 'part-tag-PM' },
+  'EHS Manager': { tag: 'E', label: 'EHS 经理 EHS Manager', color: '#C9623F', cls: 'part-tag-EHS' },
+};
+function roleInfo(r) { return ROLE_MAP[r] || { tag: '?', label: r, color: '#888', cls: '' }; }
+
+function renderParts(container) {
+  const html = PARTS_DATA.map(part => {
+    const linesHtml = part.lines.map(l => {
+      const ri = roleInfo(l.role);
+      const dur = l.duration.toFixed(2);
+      return `
+<div class="line" data-line-key="${part.id}_${l.idx}" data-part-id="${part.id}" data-line-idx="${l.idx}"
+  data-start="${l.start}" data-end="${l.end}">
+  <div class="done-mark">✓</div>
+  <div class="line-head">
+    <span class="role-tag ${ri.cls}" style="background:${ri.color}">${ri.tag}</span>
+    <span class="role-label">${ri.label}</span>
+    <span class="line-no">L${l.idx + 1} · ${dur}s</span>
+  </div>
+  <div class="line-en">${escapeHtml(l.en)}</div>
+  <div class="line-zh">${escapeHtml(l.zh)}</div>
+  <div class="actions">
+    <button class="btn btn-play" data-line-key="${part.id}_${l.idx}">▶ 听原音</button>
+    <button class="btn btn-hold">🎤 <b>点这里录</b></button>
+    <button class="btn btn-replay" style="display:none">↺ 听自己</button>
+    <button class="btn btn-retry btn-retake" style="display:none">↻ 重录</button>
+  </div>
+  <div class="waveform">
+    ${Array.from({length: 28}, () => '<div class="wave-bar"></div>').join('')}
+  </div>
+  <div class="score-area"></div>
+</div>`;
+    }).join('');
+    return `
+<div class="part">
+  <div class="part-head">
+    <span class="part-id">${part.id}</span>
+    <span class="part-title">${escapeHtml(part.title)}</span>
+  </div>
+  ${linesHtml}
+</div>`;
+  }).join('');
+  container.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ===== ISE 评分 fetch =====
+async function blobToBase64(blob) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(String(r.result).split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(blob);
+  });
+}
+
+function parseScoreXml(xml) {
+  // 提取 read_chapter 属性（总分/准确/流利/完整/拒绝标记）
+  const chap = xml.match(/<read_chapter\s+([^>]+)>/);
+  if (!chap) return null;
+  const attrs = {};
+  chap[1].replace(/(\w+)="([^"]*)"/g, (_, k, v) => { attrs[k] = v; });
+  // 提取每个 word 节点
+  const words = [];
+  const wordRe = /<word\s+([^>]+)>/g;
+  let m;
+  while ((m = wordRe.exec(xml)) !== null) {
+    const a = {};
+    m[1].replace(/(\w+)="([^"]*)"/g, (_, k, v) => { a[k] = v; });
+    if (a.content) words.push({ word: a.content, score: parseFloat(a.total_score || '0') });
+  }
+  return {
+    total: parseFloat(attrs.total_score || '0'),
+    accuracy: parseFloat(attrs.accuracy_score || '0'),
+    fluency: parseFloat(attrs.fluency_score || '0'),
+    integrity: parseFloat(attrs.integrity_score || '0'),
+    isRejected: attrs.is_rejected === 'true',
+    rejectType: parseInt(attrs.reject_type || '0', 10),
+    wordCount: parseInt(attrs.word_count || '0', 10),
+    words,
+  };
+}
+
+async function requestScore(blob, lineEl, ctx) {
+  const scoreArea = lineEl.querySelector('.score-area');
+  // 显示 loading
+  scoreArea.innerHTML = '<span class="score-loading">评测中…</span>';
+  try {
+    const b64 = await blobToBase64(blob);
+    const resp = await fetch(ISE_PROXY + '/api/ise/score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Proxy-Token': ISE_TOKEN,
+      },
+      body: JSON.stringify({
+        audio_b64: b64,
+        text: ctx.text,
+        src_format: blob.type.includes('webm') ? 'webm' :
+                     blob.type.includes('mp4') ? 'm4a' :
+                     blob.type.includes('ogg') ? 'ogg' : 'webm',
+      }),
+    });
+    const data = await resp.json();
+    if (!data.ok) {
+      scoreArea.innerHTML = '<div class="score-error"><b>❌ 评分失败</b><br>' +
+        escapeHtml(data.err || '未知错误') +
+        '<br><button class="score-retry" data-retry="1">🔄 重试</button></div>';
+      lineEl.querySelector('.score-retry').addEventListener('click', () => requestScore(blob, lineEl, ctx));
+      return;
+    }
+    const sc = parseScoreXml(data.xml);
+    if (!sc) {
+      scoreArea.innerHTML = '<div class="score-error"><b>❌ 解析评分失败</b><br>XML 格式异常' +
+        '<br><button class="score-retry" data-retry="1">🔄 重试</button></div>';
+      lineEl.querySelector('.score-retry').addEventListener('click', () => requestScore(blob, lineEl, ctx));
+      return;
+    }
+    showScoreBox(lineEl, sc, blob, ctx);
+  } catch (err) {
+    scoreArea.innerHTML = '<div class="score-error"><b>❌ 网络错误</b><br>' +
+      escapeHtml(err.message || '未知') +
+      '<br><button class="score-retry" data-retry="1">🔄 重试</button></div>';
+    lineEl.querySelector('.score-retry').addEventListener('click', () => requestScore(blob, lineEl, ctx));
+  }
+}
+
+function showScoreBox(lineEl, sc, blob, ctx) {
+  const scoreArea = lineEl.querySelector('.score-area');
+  const t = tierOf(sc.total);
+  const pct = (sc.total / 5 * 100).toFixed(0);
+  const rej = sc.isRejected ? '<span style="color:#C0392B;margin-left:6px;font-size:11px">⚠ 评测被拒 (reject_type=' + sc.rejectType + ')</span>' : '';
+  const wordsHtml = sc.words.length > 0 ? `
+    <details class="score-words">
+      <summary>📝 单词级详情 (${sc.wordCount} 词)</summary>
+      <div class="score-words-list">
+        ${sc.words.map(w => {
+          const wt = tierOf(w.score);
+          return `<span class="score-word" style="border-left:3px solid ${wt.color}">
+            <b>${escapeHtml(w.word)}</b> <i style="color:${wt.color}">${w.score.toFixed(2)}</i>
+          </span>`;
+        }).join('')}
+      </div>
+    </details>` : '';
+  scoreArea.innerHTML = `
+    <div class="score-box">
+      <div class="score-header">
+        <span class="score-total" style="color:${t.color}">${sc.total.toFixed(2)}</span>
+        <span class="score-grade" style="background:${t.color}">${pct}分 · ${t.grade}</span>
+        ${rej}
+      </div>
+      <div class="score-detail">
+        <span>准确 <b style="color:${tierOf(sc.accuracy).color}">${sc.accuracy.toFixed(2)}</b></span>
+        <span>流利 <b style="color:${tierOf(sc.fluency).color}">${sc.fluency.toFixed(2)}</b></span>
+        <span>完整 <b style="color:${tierOf(sc.integrity).color}">${sc.integrity.toFixed(2)}</b></span>
+      </div>
+      ${wordsHtml}
+    </div>`;
+  // 保存到 localStorage（带分）
+  const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  stored[ctx.key] = { done: true, score: sc };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stored)); } catch (e) {}
+}
+
+
+(async function init() {
+  // 1) 加载对话数据 + 时间戳
+  const container = document.getElementById('partsContainer');
+  try {
+    await loadData();
+  } catch (err) {
+    console.error('加载数据失败', err);
+    container.innerHTML = '<div class="rec-error"><b>❌ 加载对话数据失败</b><br>' +
+      err.message + '<br>请检查网络后刷新页面重试</div>';
+    return;
+  }
+  // 2) 渲染 5 段 24 行
+  renderParts(container);
+  // 3) bindLine
   document.querySelectorAll('.line').forEach(bindLine);
+  // 4) 加载历史进度
   loadProgress();
+  updateProgress();
 
   const modal = document.getElementById('recModal');
   const modalTitle = document.getElementById('modalTitle');
