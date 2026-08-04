@@ -1,2 +1,8 @@
-# 本地备份（Python 脚本生成的）
+# 备份文件
 *.bak.*
+
+# Python 临时
+__pycache__/
+*.pyc
+_downgrade_*.py
+_inspect_*.py
