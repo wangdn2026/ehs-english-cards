@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "vol": "10",
+    "topic": "坐地铁 & 承包商绩效评定",
+    "topic_en": "Subway Rides & Contractor Performance Evaluation",
+    "difficulty": "★★☆",
+    "scheduled_live_date": "2026-08-12"
+  },
+  "parts": [
+    {
+      "id": 1,
+      "title": "Part 1: 坐地铁（日常交际）",
+      "dialogue": [
+        { "role": "Visitor", "en": "Excuse me. Which train line goes to downtown?", "zh": "打扰一下，哪条线路开往市中心？" },
+        { "role": "Staff", "en": "Take the red line.", "zh": "搭乘红线。" },
+        { "role": "Visitor", "en": "How often does the train come?", "zh": "列车多久发一班？" },
+        { "role": "Staff", "en": "Every ten minutes during normal hours.", "zh": "平时段每十分钟一班。（rush hour 高峰期会加密）" },
+        { "role": "Visitor", "en": "Where can I buy a subway ticket?", "zh": "我在哪里可以买地铁票？" },
+        { "role": "Staff", "en": "You can buy tickets at the vending machine over there.", "zh": "你可以在那边的自助售票机买票。" },
+        { "role": "Visitor", "en": "How much is a one-way fare?", "zh": "单程票价多少钱？" },
+        { "role": "Staff", "en": "Three dollars one way.", "zh": "单程 3 美元。" },
+        { "role": "Visitor", "en": "Is this incoming train express or local?", "zh": "马上到站这趟车是大站快车，还是站站都停的慢车？" },
+        { "role": "Staff", "en": "It's a local. It stops at every station.", "zh": "这是慢车，每一站都会停靠。" },
+        { "role": "Visitor", "en": "Do I need to transfer lines?", "zh": "我需要换乘吗？" },
+        { "role": "Staff", "en": "No transfer needed. But could I remind you, which stop will you get off at?", "zh": "不用换乘。顺便问一下，你准备在哪一站下车？" },
+        { "role": "Visitor", "en": "I'm not sure. Which stop should I get off at for the city square?", "zh": "我不太确定，去城市广场我应该在哪一站下车？" },
+        { "role": "Staff", "en": "Get off at City Center Station. Don't miss your stop.", "zh": "在市中心站下车，别坐过站了。" },
+        { "role": "Visitor", "en": "Thank you very much for your help!", "zh": "非常感谢你的帮忙！" },
+        { "role": "Staff", "en": "You're welcome. Have a nice trip.", "zh": "不客气，祝你旅途顺利。" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Part 2: 全场收尾安全（PM×EHS）",
+      "dialogue": [
+        { "role": "PM", "en": "The contractor's construction work is almost finished. What full-site closing safety tasks do we need to arrange first?", "zh": "承包商施工快要完工了，我们首先要安排哪些全场收尾安全工作？" },
+        { "role": "EHS Manager", "en": "First, the contractor leads full-site self-inspection. They need to restore site housekeeping, dismantle temporary safety facilities, and walk through the whole area to identify and eliminate potential hazards like leftover flammable materials.", "zh": "首先由承包商牵头全场自查，现场整洁复原、拆除临时安全设施，全域巡检清理残余的易燃物等隐患。" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Part 3: 承包商绩效评定（PM×EHS）",
+      "dialogue": [
+        { "role": "PM", "en": "After project handover, how do we assess this contractor's safety performance?", "zh": "项目移交完成后，我们怎么评定这家承包商的安全绩效？" },
+        { "role": "EHS Manager", "en": "We use the unified evaluation form. Key items cover site housekeeping, PPE compliance, fall protection, chemical management, daily toolbox talks and permit execution, plus injury incident records.", "zh": "使用统一绩效评估表，核心考核项包含现场整洁、劳保用品佩戴、防坠落、化学品管控、班前会、作业许可执行，同时结合各类工伤事故记录打分。" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Part 4: QBR 季度评审权重（PM×EHS）",
+      "dialogue": [
+        { "role": "PM", "en": "Is the safety score included in their overall quarterly business review rating?", "zh": "安全得分会计入他们整体季度业务评级吗？" },
+        { "role": "EHS Manager", "en": "Absolutely. EHS accounts for 20% of the total QBR score. Top-rated contractors get priority for new bids, while poor performers will face bidding limits or removal from our contractor list.", "zh": "当然，E. H. S. 安全占季度综合评审总分 20%。安全评级优秀的承包商新项目投标优先，表现不达标的会限制投标，甚至移出合格承包商名录。" }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Part 5: 季度评审影响服务费（PM×EHS）",
+      "dialogue": [
+        { "role": "PM", "en": "Will the final QBR score influence the contractor's service fees?", "zh": "最终季度评审分数会影响承包商的服务费结算吗？" },
+        { "role": "EHS Manager", "en": "Absolutely. If points are deducted for the 20% EHS section, we will deduct the service fee in the corresponding proportion.", "zh": "一定的。如果 E. H. S. 这 20% 板块扣分，我们会按对应比例扣除服务费。" }
+      ]
+    }
+  ]
+}
