@@ -116,6 +116,65 @@
 </div>
 
 <script>
+// ===== 常量与全局状态 =====
+const STORAGE_KEY = 'vol09_museum_contractor_done';
+const lineState = {};
+const audioPlayer = new Audio();
+audioPlayer.preload = 'auto';
+const AUDIO_BASE = 'https://wangdn2026.github.io/ehs-english-cards/audio/';
+const AUDIO_FILE = 'vol09_museum_contractor_full.mp3';
+
+// ===== 音频播放（按行跳转） =====
+function playSegment(btn, start, end) {
+  if (!audioPlayer.src) audioPlayer.src = AUDIO_BASE + AUDIO_FILE;
+  audioPlayer.currentTime = start;
+  audioPlayer.play().catch(() => {});
+  btn.classList.add('playing');
+  const onTimeUpdate = () => {
+    if (audioPlayer.currentTime >= end) {
+      audioPlayer.pause();
+      audioPlayer.removeEventListener('timeupdate', onTimeUpdate);
+      btn.classList.remove('playing');
+    }
+  };
+  audioPlayer.addEventListener('timeupdate', onTimeUpdate);
+}
+
+// ===== 进度持久化 =====
+function saveProgress() {
+  const doneKeys = Object.keys(lineState).filter(k => lineState[k] && lineState[k].done);
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(doneKeys));
+  } catch (e) {}
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const doneKeys = JSON.parse(raw);
+    if (!Array.isArray(doneKeys)) return;
+    doneKeys.forEach(k => {
+      lineState[k] = { done: true };
+      const el = document.querySelector('[data-line-key="' + k + '"]');
+      if (!el) return;
+      el.classList.add('done');
+      const markBtn = el.querySelector('.btn-mark');
+      const unmarkBtn = el.querySelector('.btn-unmark');
+      if (markBtn) markBtn.style.display = 'none';
+      if (unmarkBtn) unmarkBtn.style.display = 'inline-flex';
+    });
+  } catch (e) {}
+}
+
+function updateProgress() {
+  const doneCount = Object.values(lineState).filter(s => s && s.done).length;
+  const fill = document.getElementById('progFill');
+  const text = document.getElementById('progText');
+  if (fill) fill.style.width = TOTAL_LINES > 0 ? (doneCount / TOTAL_LINES * 100) + '%' : '0%';
+  if (text) text.textContent = doneCount + ' / ' + TOTAL_LINES + ' 已打卡';
+}
+
 // ===== 数据加载（fetch 两个 JSON，合并为 PARTS_DATA）=====
 let PARTS_DATA = [];
 let TOTAL_LINES = 0;
@@ -146,8 +205,7 @@ async function loadData() {
   });
   TOTAL_LINES = PARTS_DATA.reduce((s, p) => s + p.lines.length, 0);
 }
-const AUDIO_BASE = 'https://wangdn2026.github.io/ehs-english-cards/audio/';
-// TOTAL_LINES 改由 loadData() 动态计算
+// AUDIO_BASE 已在顶部定义
 
 
 // ====== 录音功能已砍（2026-08-04 降级到只听不录）======
@@ -185,7 +243,7 @@ function bindLine(el) {
       if (markBtn) markBtn.style.display = 'inline-flex';
       if (unmarkBtn) unmarkBtn.style.display = 'none';
     }
-    saveProgress(key);
+    saveProgress();
     updateProgress();
   };
   if (markBtn) markBtn.addEventListener('click', toggleMark);
