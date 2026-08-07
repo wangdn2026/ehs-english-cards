@@ -2,51 +2,224 @@
   "parts": [
     {
       "id": 1,
+      "title": "Part 1: 坐地铁（日常交际）",
       "lines": [
-        { "idx": 0, "role": "Visitor", "start": 0.00, "end": 4.00, "duration": 4.00, "en": "Excuse me. Which train line goes to downtown?" },
-        { "idx": 1, "role": "Staff", "start": 4.50, "end": 6.00, "duration": 1.50, "en": "Take the red line." },
-        { "idx": 2, "role": "Visitor", "start": 6.50, "end": 9.00, "duration": 2.50, "en": "How often does the train come?" },
-        { "idx": 3, "role": "Staff", "start": 9.50, "end": 12.50, "duration": 3.00, "en": "Every ten minutes during normal hours." },
-        { "idx": 4, "role": "Visitor", "start": 13.00, "end": 16.00, "duration": 3.00, "en": "Where can I buy a subway ticket?" },
-        { "idx": 5, "role": "Staff", "start": 16.50, "end": 21.00, "duration": 4.50, "en": "You can buy tickets at the vending machine over there." },
-        { "idx": 6, "role": "Visitor", "start": 21.50, "end": 24.00, "duration": 2.50, "en": "How much is a one-way fare?" },
-        { "idx": 7, "role": "Staff", "start": 24.50, "end": 26.50, "duration": 2.00, "en": "Three dollars one way." },
-        { "idx": 8, "role": "Visitor", "start": 27.00, "end": 30.00, "duration": 3.00, "en": "Is this incoming train express or local?" },
-        { "idx": 9, "role": "Staff", "start": 30.50, "end": 34.00, "duration": 3.50, "en": "It's a local. It stops at every station." },
-        { "idx": 10, "role": "Visitor", "start": 34.50, "end": 37.00, "duration": 2.50, "en": "Do I need to transfer lines?" },
-        { "idx": 11, "role": "Staff", "start": 37.50, "end": 43.50, "duration": 6.00, "en": "No transfer needed. But could I remind you, which stop will you get off at?" },
-        { "idx": 12, "role": "Visitor", "start": 44.00, "end": 49.50, "duration": 5.50, "en": "I'm not sure. Which stop should I get off at for the city square?" },
-        { "idx": 13, "role": "Staff", "start": 50.00, "end": 54.00, "duration": 4.00, "en": "Get off at City Center Station. Don't miss your stop." },
-        { "idx": 14, "role": "Visitor", "start": 54.50, "end": 57.00, "duration": 2.50, "en": "Thank you very much for your help!" },
-        { "idx": 15, "role": "Staff", "start": 57.50, "end": 60.00, "duration": 2.50, "en": "You're welcome. Have a nice trip." }
+        {
+          "idx": 0,
+          "role": "Visitor",
+          "start": 0.0,
+          "end": 7.296,
+          "duration": 7.296,
+          "en": "Excuse me. Which train line goes to downtown?"
+        },
+        {
+          "idx": 1,
+          "role": "Staff",
+          "start": 7.796,
+          "end": 11.06,
+          "duration": 3.264,
+          "en": "Take the red line."
+        },
+        {
+          "idx": 2,
+          "role": "Visitor",
+          "start": 11.56,
+          "end": 15.904,
+          "duration": 4.344,
+          "en": "How often does the train come?"
+        },
+        {
+          "idx": 3,
+          "role": "Staff",
+          "start": 16.404,
+          "end": 24.612,
+          "duration": 8.208,
+          "en": "Every ten minutes during normal hours."
+        },
+        {
+          "idx": 4,
+          "role": "Visitor",
+          "start": 25.112,
+          "end": 30.32,
+          "duration": 5.208,
+          "en": "Where can I buy a subway ticket?"
+        },
+        {
+          "idx": 5,
+          "role": "Staff",
+          "start": 30.82,
+          "end": 37.588,
+          "duration": 6.768,
+          "en": "You can buy tickets at the vending machine over there."
+        },
+        {
+          "idx": 6,
+          "role": "Visitor",
+          "start": 38.088,
+          "end": 42.456,
+          "duration": 4.368,
+          "en": "How much is a one-way fare?"
+        },
+        {
+          "idx": 7,
+          "role": "Staff",
+          "start": 42.956,
+          "end": 46.724,
+          "duration": 3.768,
+          "en": "Three dollars one way."
+        },
+        {
+          "idx": 8,
+          "role": "Visitor",
+          "start": 47.224,
+          "end": 56.008,
+          "duration": 8.784,
+          "en": "Is this incoming train express or local?"
+        },
+        {
+          "idx": 9,
+          "role": "Staff",
+          "start": 56.508,
+          "end": 63.492,
+          "duration": 6.984,
+          "en": "It's a local. It stops at every station."
+        },
+        {
+          "idx": 10,
+          "role": "Visitor",
+          "start": 63.992,
+          "end": 68.312,
+          "duration": 4.32,
+          "en": "Do I need to transfer lines?"
+        },
+        {
+          "idx": 11,
+          "role": "Staff",
+          "start": 68.812,
+          "end": 79.948,
+          "duration": 11.136,
+          "en": "No transfer needed. But could I remind you, which stop will you get off at?"
+        },
+        {
+          "idx": 12,
+          "role": "Visitor",
+          "start": 80.448,
+          "end": 90.192,
+          "duration": 9.744,
+          "en": "I'm not sure. Which stop should I get off at for the city square?"
+        },
+        {
+          "idx": 13,
+          "role": "Staff",
+          "start": 90.692,
+          "end": 98.516,
+          "duration": 7.824,
+          "en": "Get off at City Center Station. Don't miss your stop."
+        },
+        {
+          "idx": 14,
+          "role": "Visitor",
+          "start": 99.016,
+          "end": 103.792,
+          "duration": 4.776,
+          "en": "Thank you very much for your help!"
+        },
+        {
+          "idx": 15,
+          "role": "Staff",
+          "start": 104.292,
+          "end": 110.004,
+          "duration": 5.712,
+          "en": "You're welcome. Have a nice trip."
+        }
       ]
     },
     {
       "id": 2,
+      "title": "Part 2: 全场收尾安全（PM×EHS）",
       "lines": [
-        { "idx": 0, "role": "PM", "start": 60.50, "end": 69.50, "duration": 9.00, "en": "The contractor's construction work is almost finished. What full-site closing safety tasks do we need to arrange first?" },
-        { "idx": 1, "role": "EHS Manager", "start": 70.00, "end": 85.00, "duration": 15.00, "en": "First, the contractor leads full-site self-inspection. They need to restore site housekeeping, dismantle temporary safety facilities, and walk through the whole area to identify and eliminate potential hazards like leftover flammable materials." }
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 110.504,
+          "end": 123.872,
+          "duration": 13.368,
+          "en": "The contractor's construction work is almost finished. What full-site closing safety tasks do we need to arrange first?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 124.372,
+          "end": 150.58,
+          "duration": 26.208,
+          "en": "First, the contractor leads full-site self-inspection. They need to restore site housekeeping, dismantle temporary safety facilities, and walk through the whole area to identify and eliminate potential hazards like leftover flammable materials."
+        }
       ]
     },
     {
       "id": 3,
+      "title": "Part 3: 承包商绩效评定（PM×EHS）",
       "lines": [
-        { "idx": 0, "role": "PM", "start": 85.50, "end": 90.50, "duration": 5.00, "en": "After project handover, how do we assess this contractor's safety performance?" },
-        { "idx": 1, "role": "EHS Manager", "start": 91.00, "end": 102.50, "duration": 11.50, "en": "We use the unified evaluation form. Key items cover site housekeeping, PPE compliance, fall protection, chemical management, daily toolbox talks and permit execution, plus injury incident records." }
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 151.08,
+          "end": 162.048,
+          "duration": 10.968,
+          "en": "After project handover, how do we assess this contractor's safety performance?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 162.548,
+          "end": 191.564,
+          "duration": 29.016,
+          "en": "We use the unified evaluation form. Key items cover site housekeeping, PPE compliance, fall protection, chemical management, daily toolbox talks and permit execution, plus injury incident records."
+        }
       ]
     },
     {
       "id": 4,
+      "title": "Part 4: QBR 季度评审权重（PM×EHS）",
       "lines": [
-        { "idx": 0, "role": "PM", "start": 103.00, "end": 108.00, "duration": 5.00, "en": "Is the safety score included in their overall quarterly business review rating?" },
-        { "idx": 1, "role": "EHS Manager", "start": 108.50, "end": 120.00, "duration": 11.50, "en": "Absolutely. EHS accounts for 20% of the total QBR score. Top-rated contractors get priority for new bids, while poor performers will face bidding limits or removal from our contractor list." }
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 192.064,
+          "end": 201.352,
+          "duration": 9.288,
+          "en": "Is the safety score included in their overall quarterly business review rating?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 201.852,
+          "end": 232.956,
+          "duration": 31.104,
+          "en": "Absolutely. EHS accounts for 20% of the total QBR score. Top-rated contractors get priority for new bids, while poor performers will face bidding limits or removal from our contractor list."
+        }
       ]
     },
     {
       "id": 5,
+      "title": "Part 5: 季度评审影响服务费（PM×EHS）",
       "lines": [
-        { "idx": 0, "role": "PM", "start": 120.50, "end": 124.50, "duration": 4.00, "en": "Will the final QBR score influence the contractor's service fees?" },
-        { "idx": 1, "role": "EHS Manager", "start": 125.00, "end": 134.00, "duration": 9.00, "en": "Absolutely. If points are deducted for the 20% EHS section, we will deduct the service fee in the corresponding proportion." }
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 233.456,
+          "end": 243.44,
+          "duration": 9.984,
+          "en": "Will the final QBR score influence the contractor's service fees?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 243.94,
+          "end": 262.372,
+          "duration": 18.432,
+          "en": "Absolutely. If points are deducted for the 20% EHS section, we will deduct the service fee in the corresponding proportion."
+        }
       ]
     }
   ]
