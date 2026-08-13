@@ -1,0 +1,147 @@
+{
+  "parts": [
+    {
+      "id": 1,
+      "title": "Part 1: 动火原则与冷工替代",
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 0.0,
+          "end": 10.89,
+          "duration": 10.89,
+          "en": "When we need to do cutting work on a pipeline, can we start hot work directly?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 11.39,
+          "end": 59.05,
+          "duration": 47.66,
+          "en": "Absolutely not. The core principle for hot work control is: at first to check alternative (other) cold work solutions first. If mechanical bolting, flange connection or industrial adhesive glue or other cold work method can finish the job, we must cancel hot work. Or we can also dismantle and take parts to dedicated hot work shop rather than (instead of) doing it on site."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Part 2: 禁止动火的情况",
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 60.05,
+          "end": 70.12,
+          "duration": 10.07,
+          "en": "Could you list areas or in which situations that forbid (prohibit) hot work?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 70.62,
+          "end": 120.34,
+          "duration": 49.72,
+          "en": "First, areas filled with flammable vapor, liquid and dust are totally banned. Second: Sealed tanks that once stored flammables or combustibles can not be welded unless all explosion risks are removed. Third: we cannot do hot work within 35 feet of exposed combustibles like cardboard. Fourth: hot work is not allowed outside the designated area without approved permit."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Part 3: 风险评估步骤",
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 121.34,
+          "end": 132.46,
+          "duration": 11.12,
+          "en": "What steps do we need to follow to finish risk assessment before hot work starts?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 132.96,
+          "end": 174.6,
+          "duration": 41.64,
+          "en": "(1) We still need to check if cold work alternatives are available once more. We need to conduct a job safety analysis, risk assessment and review the results. (2) Confirm existing & potential hazards and methods to control or eliminate them, we have to figure out all risks ahead of time (in advance or beforehand)."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Part 4: 常见动火危害",
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 175.6,
+          "end": 185.79,
+          "duration": 10.19,
+          "en": "What common hazards and actions shall we focus on during hot work?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 186.29,
+          "end": 233.14,
+          "duration": 46.85,
+          "en": "Main hazards cover flammable or combustible materials nearby for they may trigger fire & explosion, and dust and gas cylinders may lead to explosive hazards. We also need to check ventilation condition in addition to full preparation of PPE for eye, hearing and respiratory protection, furthermore, review the risk for electric shock from spark-generating equipment and during cylinder transportation."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Part 5: 指定动火区硬性条件",
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 234.14,
+          "end": 246.01,
+          "duration": 11.87,
+          "en": "If we want to set a permanent designated hot work area, what conditions must it meet?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 246.51,
+          "end": 280.36,
+          "duration": 33.85,
+          "en": "(1) It must be separated fully by fire walls from other work areas. (2) No flammable or combustible substances are placed inside. (3) Adequate ventilation is required to exhaust welding fume. (4) Complying with local fire codes and other requirements from insurer (insurance company)."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Part 6: 日常管控流程",
+      "lines": [
+        {
+          "idx": 0,
+          "role": "PM",
+          "start": 281.36,
+          "end": 293.1,
+          "duration": 11.74,
+          "en": "After the designated hot work area is built, what control procedures should we follow daily?"
+        },
+        {
+          "idx": 1,
+          "role": "EHS Manager",
+          "start": 293.6,
+          "end": 348.61,
+          "duration": 55.01,
+          "en": "(1): Only certified qualified workers can operate here. (2): Inspect ignition risks before each hot work. (3) Test gas hoses and torches for leakage beforehand. (4) Provide appropriate PPE for different hot work tasks. (5) Guarantee (ensure) the ventilation equipment work well. (6) Take extra measures to mitigate evaluated risks if necessary. (ignite 点燃，激起的意思。 ignite the solid fuel 点燃固体燃料; how to re-ignite his passion 如何重新燃起他的热情？ignite public anger 激起公愤)"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "vol": "11",
+    "topic": "动火作业火源管控",
+    "scenario": "PM × EHS Manager",
+    "total_parts": 6,
+    "total_lines": 12,
+    "estimated_total_duration": 349.11,
+    "estimated_total_duration_min": "5 分 49 秒",
+    "tts_engine": "PRELIMINARY（未实测）",
+    "note": "TTS 升级方案（豆包/CosyVoice/GPT-SoVITS）定后实测重算"
+  }
+}

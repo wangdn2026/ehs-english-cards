@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "vol": "11",
+    "topic": "动火作业火源管控 & OSHA 动火基础",
+    "topic_en": "Hot Work (1): Fire Source Control, Basic OSHA Hot Work Requirements",
+    "difficulty": "★★★",
+    "scheduled_live_date": "2026-08-17"
+  },
+  "parts": [
+    {
+      "id": 1,
+      "title": "Part 1: 动火原则与冷工替代",
+      "dialogue": [
+        { "role": "PM", "en": "When we need to do cutting work on a pipeline, can we start hot work directly?", "zh": "我们要切割管道的时候，可以直接开动火作业吗？" },
+        { "role": "EHS Manager", "en": "Absolutely not. The core principle for hot work control is: at first to check alternative (other) cold work solutions first. If mechanical bolting, flange connection or industrial adhesive glue or other cold work method can finish the job, we must cancel hot work. Or we can also dismantle and take parts to dedicated hot work shop rather than (instead of) doing it on site.", "zh": "绝对不行。火源管控核心原则是优先评估冷工替代方案，如果机械螺栓联结、法兰对接、工业胶粘剂或其它冷工方法能完工，就必须取消动火；也可以拆工件送去专属动火车间，不在现场动火。" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Part 2: 禁止动火的情况",
+      "dialogue": [
+        { "role": "PM", "en": "Could you list areas or in which situations that forbid (prohibit) hot work?", "zh": "麻烦说说哪些区域或那些情况下严禁动火？" },
+        { "role": "EHS Manager", "en": "First, areas filled with flammable vapor, liquid and dust are totally banned. Second: Sealed tanks that once stored flammables or combustibles can not be welded unless all explosion risks are removed. Third: we cannot do hot work within 35 feet of exposed combustibles like cardboard. Fourth: hot work is not allowed outside the designated area without approved permit.", "zh": "首先充斥易燃蒸汽、液体、粉尘的区域禁止；存放过易燃或可燃物的密闭罐体，隐患未清零不能动火；纸张等可燃物外露 35 英尺范围内禁止动火；非指定动火区无审批许可不许动火，焊接设备严禁带进有限空间。" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Part 3: 风险评估步骤",
+      "dialogue": [
+        { "role": "PM", "en": "What steps do we need to follow to finish risk assessment before hot work starts?", "zh": "动火开工前，风险评估和危害辨识要做哪些内容？" },
+        { "role": "EHS Manager", "en": "(1) We still need to check if cold work alternatives are available once more. We need to conduct a job safety analysis, risk assessment and review the results. (2) Confirm existing & potential hazards and methods to control or eliminate them, we have to figure out all risks ahead of time (in advance or beforehand).", "zh": "（1）我们还是复核看是否还有冷工替代方案。我们需要开展工作危险分析和风险评估并复核评估结果。（2）确认现存和潜在隐患以及控制或消除方式，提前识别所有风险点。" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Part 4: 常见动火危害",
+      "dialogue": [
+        { "role": "PM", "en": "What common hazards and actions shall we focus on during hot work?", "zh": "动火作业最常出现的安全危害是哪几类和要做什么？" },
+        { "role": "EHS Manager", "en": "Main hazards cover flammable or combustible materials nearby for they may trigger fire & explosion, and dust and gas cylinders may lead to explosive hazards. We also need to check ventilation condition in addition to full preparation of PPE for eye, hearing and respiratory protection, furthermore, review the risk for electric shock from spark-generating equipment and during cylinder transportation.", "zh": "主要是周边易燃或可燃物引发火灾爆炸、粉尘与气瓶爆炸风险；还要核查通风条件，配齐眼部、听力、呼吸防护 PPE，以及打火设备触电、气瓶转运安全隐患。" }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Part 5: 指定动火区硬性条件",
+      "dialogue": [
+        { "role": "PM", "en": "If we want to set a permanent designated hot work area, what conditions must it meet?", "zh": "如果规划固定指定动火作业区，要满足哪些硬性条件？" },
+        { "role": "EHS Manager", "en": "(1) It must be separated fully by fire walls from other work areas. (2) No flammable or combustible substances are placed inside. (3) Adequate ventilation is required to exhaust welding fume. (4) Complying with local fire codes and other requirements from insurer (insurance company).", "zh": "必须用防火墙和其他区域完全隔离，内部不得存放任何易燃或可燃物；通风充足排出动火烟气，符合消防法规和保险要求。" }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Part 6: 日常管控流程",
+      "dialogue": [
+        { "role": "PM", "en": "After the designated hot work area is built, what control procedures should we follow daily?", "zh": "指定动火区建好后，日常要落地哪些管控流程？" },
+        { "role": "EHS Manager", "en": "(1): Only certified qualified workers can operate here. (2): Inspect ignition risks before each hot work. (3) Test gas hoses and torches for leakage beforehand. (4) Provide appropriate PPE for different hot work tasks. (5) Guarantee (ensure) the ventilation equipment work well. (6) Take extra measures to mitigate evaluated risks if necessary. (ignite 点燃，激起的意思。 ignite the solid fuel 点燃固体燃料; how to re-ignite his passion 如何重新燃起他的热情？ignite public anger 激起公愤)", "zh": "仅持证合格人员可作业；每次动火前排查引燃隐患，提前测试燃气软管、焊枪泄漏；为不同的动火作业任务配备合适的个人防护装备，保证通风设备正常运行，需要时，额外落实措施消减评估出的风险。" }
+      ]
+    }
+  ]
+}
